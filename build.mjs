@@ -36,7 +36,7 @@ const HEADER_TPL = `<!DOCTYPE html>
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body class="guide-page{{PAD}}">
 <div class="site-shell">
   <header class="site-bar">
     <a href="index.html" class="brand" aria-label="Apex Health — Resilience Self-Help Guides">
@@ -46,7 +46,6 @@ const HEADER_TPL = `<!DOCTYPE html>
     </a>
     <div class="bar-actions">
       <a class="bar-link" href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i><span class="label">All guides</span></a>
-      <button id="themeBtn" class="theme-btn" aria-label="Toggle theme"><i class="ti ti-moon" aria-hidden="true"></i></button>
     </div>
   </header>
   <main class="guide-frame">
@@ -77,6 +76,10 @@ const GUIDES = [
 ];
 
 function buildWrapped() {
+  // Guides whose fragments already pad their own text (and/or have a full-width
+  // sticky sub-nav) must NOT get the extra host gutter. Everything else does.
+  const NO_PAD = new Set(['ppr-series']);
+
   for (const g of GUIDES) {
     const fragPath = path.join(SRC, g.src);
     if (!fs.existsSync(fragPath)) {
@@ -84,10 +87,14 @@ function buildWrapped() {
       process.exit(1);
     }
     const frag = fs.readFileSync(fragPath, 'utf8');
-    const header = HEADER_TPL.replaceAll('{{TITLE}}', g.title).replaceAll('{{DESC}}', g.desc);
+    const padClass = NO_PAD.has(g.slug) ? '' : ' guide-pad';
+    const header = HEADER_TPL
+      .replaceAll('{{TITLE}}', g.title)
+      .replaceAll('{{DESC}}', g.desc)
+      .replaceAll('{{PAD}}', padClass);
     const out = header + '\n' + frag + '\n' + FOOTER;
     fs.writeFileSync(path.join(DIST, g.slug + '.html'), out, 'utf8');
-    console.log('  built  ' + g.slug + '.html');
+    console.log('  built  ' + g.slug + '.html' + (padClass ? '  (+gutter)' : ''));
   }
 }
 
