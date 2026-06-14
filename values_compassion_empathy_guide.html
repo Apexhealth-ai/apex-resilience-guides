@@ -1,0 +1,179 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.guide{display:flex;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-primary)}
+.gnav{width:186px;background:var(--color-background-secondary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;flex-shrink:0}
+.gnav-hdr{padding:14px 14px 10px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.gnav-hdr p{font-size:10px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+.nnav{width:100%;text-align:left;border:none;background:none;padding:8px 14px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s,color .12s}
+.nnav:hover{background:var(--color-background-primary);color:var(--color-text-primary)}
+.nnav.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border-right:2px solid var(--color-border-primary)}
+.ndot{width:6px;height:6px;border-radius:50%;background:var(--color-border-secondary);flex-shrink:0;transition:background .2s}
+.nnav.done .ndot{background:var(--color-text-success)}
+.nnav.active .ndot{background:var(--color-text-primary)}
+.gmain{flex:1;padding:1.5rem 1.75rem;min-width:0}
+.progw{height:3px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.5rem;overflow:hidden}
+.progf{height:100%;background:var(--color-text-success);border-radius:2px;transition:width .4s}
+.eyebrow{font-size:10px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:4px}
+.stitle{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.ssub{font-size:13px;color:var(--color-text-secondary);font-style:italic;margin-bottom:1.25rem}
+.body{font-size:13px;line-height:1.75;color:var(--color-text-secondary);margin-bottom:.75rem}
+.qt{border-left:2px solid var(--color-border-secondary);padding:8px 12px;margin:1rem 0;font-size:13px;font-style:italic;color:var(--color-text-secondary);border-radius:0}
+.ibox{background:var(--color-background-info);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 14px;margin:1rem 0;font-size:12px;color:var(--color-text-info);line-height:1.6;display:flex;gap:8px;align-items:flex-start}
+.ibox i{flex-shrink:0;font-size:14px;margin-top:1px}
+.rc{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0}
+.rlbl{font-size:10px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rlist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.rlist li{font-size:12px;color:var(--color-text-secondary);padding-left:14px;position:relative;line-height:1.55}
+.rlist li::before{content:'▸';position:absolute;left:0;color:var(--color-text-tertiary);font-size:10px;top:2px}
+textarea{width:100%;min-height:100px;padding:10px 12px;font-size:13px;font-family:var(--font-serif,Georgia,serif);line-height:1.7;color:var(--color-text-primary);background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);resize:vertical;margin-top:6px}
+textarea:focus{outline:none;border-color:var(--color-border-primary)}
+.jlbl{font-size:11px;color:var(--color-text-tertiary);font-style:italic;margin-top:1rem;display:block}
+.vgrid{display:flex;flex-wrap:wrap;gap:6px;margin:.75rem 0}
+.vchip{padding:4px 11px;border-radius:100px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;cursor:pointer;color:var(--color-text-secondary);transition:all .12s;font-weight:400}
+.vchip:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.vchip.sel{background:var(--color-background-success);border-color:var(--color-border-success);color:var(--color-text-success);font-weight:500}
+.vctr{font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px}
+.vctr span{color:var(--color-text-success);font-weight:500}
+.avrow{display:flex;gap:6px;margin-top:8px;align-items:center}
+.avinp{flex:1;padding:5px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.avbtn{padding:5px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px}
+.avbtn:hover{background:var(--color-background-secondary)}
+.cmg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1rem 0}
+.cmc{padding:12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
+.cmc.pos{background:var(--color-background-success)}
+.cmc.neg{background:var(--color-background-danger)}
+.cmttl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.cmc.pos .cmttl{color:var(--color-text-success)}
+.cmc.neg .cmttl{color:var(--color-text-danger)}
+.cmi{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;padding:3px 5px;border-radius:var(--border-radius-md);transition:background .1s}
+.cmi:hover{background:rgba(0,0,0,.05)}
+.cmi.ck{color:var(--color-text-primary);font-weight:500}
+.cmi i{font-size:13px;flex-shrink:0;margin-top:1px}
+.spg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:1rem 0}
+.spc{padding:12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);text-align:center;cursor:pointer;transition:all .15s}
+.spc:hover{border-color:var(--color-border-primary)}
+.spc.sel{border:1.5px solid var(--color-border-info);background:var(--color-background-info)}
+.spttl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin-bottom:6px}
+.spc.sel .spttl{color:var(--color-text-info)}
+.splist{list-style:none;margin-top:6px}
+.splist li{font-size:11px;color:var(--color-text-secondary);padding:3px 0;border-top:0.5px solid var(--color-border-tertiary);font-style:italic}
+.alist{display:flex;flex-direction:column;gap:6px;margin:1rem 0}
+.act{padding:9px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:flex-start;gap:9px;background:var(--color-background-primary);transition:all .12s;line-height:1.5}
+.act:hover{background:var(--color-background-secondary)}
+.act.done{background:var(--color-background-success);border-color:var(--color-border-success);color:var(--color-text-success)}
+.act i{font-size:14px;flex-shrink:0;margin-top:1px}
+.navbtns{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)}
+.nbn{padding:7px 14px;border-radius:var(--border-radius-md);font-size:12px;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:5px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);transition:background .12s}
+.nbn:hover{background:var(--color-background-secondary)}
+.nbn:disabled{opacity:.35;cursor:not-allowed}
+.sind{font-size:11px;color:var(--color-text-tertiary)}
+.sg{display:flex;flex-direction:column;gap:1rem}
+.sb{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;border:0.5px solid var(--color-border-tertiary)}
+.slbl{font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.supc{background:var(--color-background-warning);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-top:1.5rem}
+.supttl{font-size:12px;font-weight:500;color:var(--color-text-warning);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.suplist{list-style:none}
+.suplist li{font-size:12px;color:var(--color-text-secondary);padding:3px 0;line-height:1.5}
+.closing{text-align:center;padding:1.5rem 1rem}
+.cloico{font-size:28px;color:var(--color-text-success);display:block;margin-bottom:10px}
+.closing h3{font-size:16px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
+.closing p{font-size:13px;color:var(--color-text-secondary);line-height:1.7}
+</style>
+
+<h2 class="sr-only">Values, Compassion and Empathy — an interactive self-help guide for healthcare professionals</h2>
+
+<div class="guide">
+  <nav class="gnav" aria-label="Guide sections">
+    <div class="gnav-hdr"><p>Self-help guide</p></div>
+    <div id="NI"></div>
+  </nav>
+  <main class="gmain">
+    <div class="progw"><div class="progf" id="PG"></div></div>
+    <div id="CT"></div>
+  </main>
+</div>
+
+<script>
+var cur=0,
+S={texts:{},sv:new Set(),cv:[],pc:new Set(),nc:new Set(),ep:null,ac:new Set()},
+SECS=['About this guide','Your why','Your values','Compassion','Empathy','Your needs','Reconnecting','Values statement'],
+VALS=['Compassion','Integrity','Respect','Dignity','Excellence','Courage','Advocacy','Accountability','Empathy','Justice','Service','Kindness','Honesty','Collaboration','Curiosity','Resilience','Humility','Inclusion','Hope','Presence','Trust','Care','Belonging','Equity','Healing','Growth','Safety'],
+PS=['Feeling moved by others\u2019 suffering without being overwhelmed','Able to hold space for distress without losing your own footing','A sense of meaning and connection in your work','Satisfaction after caring interactions, even difficult ones','Able to switch off and restore between shifts','Curiosity and warmth towards patients and colleagues'],
+NS=['Emotional numbness or detachment from patients or colleagues','Dreading going in, or feeling nothing at the end of a difficult shift','Cynicism, irritability, or a sense that \u2018nothing I do matters\u2019','Intrusive memories or hypervigilance after difficult cases','Physical exhaustion that sleep does not resolve','Feeling unable to receive care or kindness from others'],
+AC=['Write down one moment from the past week where your presence made a difference to someone \u2014 however small.','Talk to a trusted colleague about why they chose this work. Listen for what still resonates in their story.','Recall a patient whose face you still remember. What did you give them? What did they give you?','Read a letter, card, or message from a patient or family member that you have kept.','Spend five minutes with the version of yourself who first stepped into this role. What would you say to them?','Name one thing \u2014 however small \u2014 that you still do in this role because you believe it matters.'];
+
+function sv(){document.querySelectorAll('textarea[data-k]').forEach(function(t){S.texts[t.dataset.k]=t.value;})}
+function rst(){document.querySelectorAll('textarea[data-k]').forEach(function(t){if(S.texts[t.dataset.k])t.value=S.texts[t.dataset.k];})}
+
+function rNav(){
+  document.getElementById('NI').innerHTML=SECS.map(function(s,i){
+    var c='nnav'+(i===cur?' active':S.texts['v'+i]?' done':'');
+    return '<button class="'+c+'" onclick="gTo('+i+')" aria-current="'+(i===cur?'step':'false')+'"><span class="ndot"></span>'+s+'</button>';
+  }).join('');
+}
+
+function uProg(){document.getElementById('PG').style.width=Math.round(cur/(SECS.length-1)*100)+'%';}
+
+function gTo(i){sv();S.texts['v'+cur]='1';cur=i;rSec();rNav();uProg();document.querySelector('.gmain').scrollTop=0;}
+
+function nb(){
+  return '<div class="navbtns"><button class="nbn" onclick="gTo('+(cur-1)+')" '+(cur===0?'disabled':'')+'>'+
+  '<i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>'+
+  '<span class="sind">'+(cur+1)+' of '+SECS.length+'</span>'+
+  '<button class="nbn" onclick="gTo('+(cur+1)+')" '+(cur===SECS.length-1?'disabled':'')+'>'+
+  (cur===SECS.length-2?'Finish':'Next')+' <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>';
+}
+
+function rSec(){
+  var h=[s0,s1,s2,s3,s4,s5,s6,s7][cur]();
+  document.getElementById('CT').innerHTML=h;
+  rst();
+}
+
+function s0(){return '<div class="eyebrow">Personal &amp; Professional Resilience</div><h2 class="stitle">Values, Compassion &amp; Empathy</h2><p class="ssub">Reconnecting with why you chose this work \u2014 and honouring what it costs you</p><div class="qt">\u201cTo care for others, you must first care for yourself. This is not selfishness \u2014 it is sustainability.\u201d</div><p class="body">You chose healthcare. That was not an accident. Behind that choice \u2014 however long ago it was made \u2014 were values, experiences, and a conviction about the kind of difference you wanted to make in the world. Those things are still in you, even on the days when they feel far away.</p><p class="body">This guide is an invitation to reconnect. To remember who you are beneath the fatigue, the clinical demands, and the pace. To explore what compassion and empathy mean to you \u2014 not as abstract professional competencies, but as lived, human experiences that shape how you give care and how much you need to receive it in return.</p><p class="body">There are no performance expectations here. This is a private conversation between you and yourself \u2014 with honesty, and with kindness.</p><div class="ibox"><i class="ti ti-heart" aria-hidden="true"></i><span>This guide may surface emotions. That is not a problem \u2014 it is the point. You are allowed to feel moved by your own story. Take your time with each section.</span></div><p class="body" style="font-size:11px;color:var(--color-text-tertiary);margin-top:.75rem;">Navigate using the panel on the left or the buttons below. Your reflections are saved as you move between sections.</p>'+nb();}
+
+function s1(){return '<div class="eyebrow">Section 1</div><h2 class="stitle">Your why</h2><p class="ssub">The story of how and why you chose a life in healthcare</p><p class="body">Every healthcare professional has a \u2018why\u2019 \u2014 a story that begins long before their first clinical placement. For some it was a single moment. For others, a gradual pull. For many, a person they loved or lost. That original calling is a source of profound resilience \u2014 but only when we can access it.</p><div class="ibox"><i class="ti ti-chart-bar" aria-hidden="true"></i><span>Healthcare professionals who can articulate their sense of purpose report significantly higher job satisfaction, lower burnout rates, and greater ability to cope with moral distress.</span></div><div class="rc"><div class="rlbl"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</div><ul class="rlist"><li>Why did you choose to work in healthcare? What was the original pull \u2014 even if it has evolved since?</li><li>Was there a person, a moment, or an experience that pointed you in this direction?</li><li>What did you imagine this work would look, feel, and mean \u2014 before you began?</li><li>When you were new to this role, what energised you most about it?</li><li>Is there a patient, family member, or colleague whose face comes to mind when you think of why this work matters?</li></ul></div><span class="jlbl">Your story \u2014 why did you choose this work?</span><textarea data-k="why1" placeholder="Write freely here\u2026"></textarea><div class="qt">\u201cThe secret of the care of the patient is in caring for the patient.\u201d \u2014 Francis Peabody, MD, 1927</div><div class="rc"><div class="rlbl"><i class="ti ti-refresh" aria-hidden="true"></i> Revisiting your why today</div><ul class="rlist"><li>Looking back at what you have written \u2014 what surprises you? What still holds true?</li><li>Has your \u2018why\u2019 changed or deepened over time? If so, how would you describe it today?</li><li>On a difficult day, what reminds you why you are still here?</li></ul></div><span class="jlbl">What your \u2018why\u2019 looks like today\u2026</span><textarea data-k="why2" placeholder="Write freely here\u2026"></textarea>'+nb();}
+
+function s2(){
+  var n=S.sv.size+S.cv.length;
+  var chips=VALS.map(function(v){return '<button class="vchip'+(S.sv.has(v)?' sel':'')+'" onclick="tV(\''+v+'\',this)">'+v+'</button>';}).join('');
+  var cust=S.cv.map(function(v,i){return '<button class="vchip sel" onclick="rmV('+i+')">'+v+' <i class="ti ti-x" style="font-size:10px" aria-hidden="true"></i></button>';}).join('');
+  return '<div class="eyebrow">Section 2</div><h2 class="stitle">Your values</h2><p class="ssub">Identifying what matters most \u2014 your professional and personal compass</p><p class="body">Values are the deeply held beliefs that guide how we behave, what we prioritise, and what gives our lives meaning. They are not aspirations \u2014 they are already part of you. Under pressure, we can lose touch with them, and this disconnection is one of the deepest sources of distress in healthcare.</p><div class="ibox"><i class="ti ti-chart-bar" aria-hidden="true"></i><span>Values-based practice is associated with improved patient outcomes, lower staff attrition, and greater professional identity resilience.</span></div><div class="rc"><div class="rlbl"><i class="ti ti-list-check" aria-hidden="true"></i> Values word bank \u2014 tap to select yours</div><p class="vctr">Selected: <span id="VCN">'+n+'</span></p><div class="vgrid" id="VG">'+chips+cust+'</div><div class="avrow"><input class="avinp" id="AVI" placeholder="Add your own value\u2026" onkeydown="if(event.key===\'Enter\')aV()"><button class="avbtn" onclick="aV()"><i class="ti ti-plus" aria-hidden="true"></i> Add</button></div></div><div class="rc"><div class="rlbl"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</div><ul class="rlist"><li>Which three values feel most central to who you are as a healthcare professional?</li><li>Is there a value you feel your current working environment makes difficult to live out? What is the impact of that?</li><li>Think of a moment when you felt truly at your best at work. What values were you living in that moment?</li></ul></div><span class="jlbl">Your top values and what they mean to you in practice\u2026</span><textarea data-k="vals1" placeholder="Write freely here\u2026"></textarea>'+nb();
+}
+
+function s3(){
+  var pos=PS.map(function(s,i){var c=S.pc.has(i);return '<div class="cmi'+(c?' ck':'')+'" onclick="tP('+i+',this)"><i class="ti '+(c?'ti-circle-check':'ti-circle')+'" aria-hidden="true"></i><span>'+s+'</span></div>';}).join('');
+  var neg=NS.map(function(s,i){var c=S.nc.has(i);return '<div class="cmi'+(c?' ck':'')+'" onclick="tN('+i+',this)"><i class="ti '+(c?'ti-circle-check':'ti-circle')+'" aria-hidden="true"></i><span>'+s+'</span></div>';}).join('');
+  return '<div class="eyebrow">Section 3</div><h2 class="stitle">Compassion</h2><p class="ssub">The heart of healthcare \u2014 and what happens when it becomes depleted</p><p class="body">Compassion is not an infinite resource. It requires tending, protecting, and replenishing. Compassion fatigue is a real and serious condition \u2014 specifically the cost of caring: the accumulated weight of being repeatedly exposed to others\u2019 pain, grief, fear, and loss. It is a signal, not a failure.</p><p class="body" style="font-size:11px;color:var(--color-text-tertiary);font-style:italic;">Tap the signs you recognise in yourself right now.</p><div class="cmg"><div class="cmc pos"><div class="cmttl">Signs you are compassion-full</div>'+pos+'</div><div class="cmc neg"><div class="cmttl">Signs of compassion fatigue</div>'+neg+'</div></div><div class="ibox"><i class="ti ti-heart" aria-hidden="true"></i><span>Compassion satisfaction \u2014 the positive, energising feeling that comes from helping effectively \u2014 is the natural counterbalance to compassion fatigue. It is worth noticing and naming when it happens.</span></div><div class="rc"><div class="rlbl"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</div><ul class="rlist"><li>When did you last feel real compassion satisfaction \u2014 a moment when caring felt genuinely good? Describe it.</li><li>What depletes your compassion most quickly? What replenishes it?</li><li>How do you know when you are running low? What are your personal early warning signs?</li></ul></div><div class="qt">\u201cOnly when we know our own darkness well can we be present with the darkness of others.\u201d \u2014 Pema Chodron</div><span class="jlbl">Your honest reflection on where you are right now with compassion\u2026</span><textarea data-k="comp1" placeholder="Write freely here\u2026"></textarea>'+nb();
+}
+
+function s4(){
+  var cols=[
+    {id:'under',t:'Under-empathy',it:['Distant, clinical, detached','\u2018I must stay professional\u2019','Patients feel unseen','Lower satisfaction for both']},
+    {id:'healthy',t:'Healthy empathy',it:['Present, attuned, connected','\u2018I am with you in this\u2019','Patients feel heard and safe','Higher outcomes and meaning']},
+    {id:'over',t:'Over-empathy',it:['Absorbed, overwhelmed, lost','\u2018I cannot stop thinking about them\u2019','Boundaries become unclear','Risk of compassion fatigue']}
+  ];
+  var sc=cols.map(function(c){return '<div class="spc'+(S.ep===c.id?' sel':'')+'" onclick="sE(\''+c.id+'\',this)"><div class="spttl">'+c.t+'</div><ul class="splist">'+c.it.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';}).join('');
+  return '<div class="eyebrow">Section 4</div><h2 class="stitle">Empathy</h2><p class="ssub">Feeling with others \u2014 and allowing others to feel with you</p><p class="body">Healthy empathy requires boundaries \u2014 not walls, but a permeable membrane that allows you to be genuinely present with others\u2019 experiences without losing yourself in them. This is sometimes called empathic accuracy with self-care.</p><div class="ibox"><i class="ti ti-chart-bar" aria-hidden="true"></i><span>Bren\xe9 Brown\u2019s research identifies empathy as the skill of communicating \u2018you are not alone\u2019, while maintaining your own emotional stability. The goal is connection, not absorption.</span></div><p class="body" style="font-size:11px;color:var(--color-text-tertiary);font-style:italic;">Where do you sit on this spectrum most of the time? Tap to select.</p><div class="spg">'+sc+'</div><div class="rc"><div class="rlbl"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</div><ul class="rlist"><li>Think of a patient or situation where you felt deeply empathic. What did that feel like? What did it cost you?</li><li>How do you currently protect yourself emotionally during or after highly distressing encounters?</li><li>Is there someone in your own life who truly makes you feel seen and not alone?</li><li>If a colleague came to you clearly struggling, what would you offer them? Can you offer the same to yourself?</li></ul></div><span class="jlbl">Your reflections on how you experience and express empathy\u2026</span><textarea data-k="emp1" placeholder="Write freely here\u2026"></textarea>'+nb();
+}
+
+function s5(){return '<div class="eyebrow">Section 5</div><h2 class="stitle">Your needs as a carer</h2><p class="ssub">The permission you rarely give yourself \u2014 to need, and to receive</p><p class="body">One of the most overlooked dimensions of healthcare is this: the person who gives care also needs to receive it. Not as a reward, not as a luxury \u2014 but as a fundamental human need. Many healthcare professionals find it genuinely difficult to receive care. But the inability to receive care is not a sign of strength \u2014 it is often a sign of depletion.</p><div class="ibox"><i class="ti ti-info-circle" aria-hidden="true"></i><span>The oxygen mask principle is not just advice for air travel. You cannot give what you do not have. Self-care in healthcare is not self-indulgence \u2014 it is clinical responsibility.</span></div><div class="rc"><div class="rlbl"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</div><ul class="rlist"><li>What do you need most right now \u2014 physically, emotionally, professionally? Be honest, even if it feels indulgent.</li><li>Who in your life offers you genuine care \u2014 not just practical help, but real emotional presence?</li><li>When someone offers you care, support, or kindness, what is your instinct? Do you accept it, deflect it, minimise it?</li><li>Is there something you have been carrying alone that you could share \u2014 with a colleague, a friend, or a professional?</li><li>What do you do to genuinely restore yourself? Not just rest \u2014 but truly replenish?</li></ul></div><div class="qt">\u201cYou yourself, as much as anybody in the entire universe, deserve your love and affection.\u201d \u2014 Sharon Salzberg</div><span class="jlbl">What do you need \u2014 and what would it look like to honour that need?</span><textarea data-k="need1" placeholder="Write freely here\u2026"></textarea>'+nb();}
+
+function s6(){
+  var acts=AC.map(function(a,i){var d=S.ac.has(i);return '<div class="act'+(d?' done':'')+'" onclick="tA('+i+',this)"><i class="ti '+(d?'ti-circle-check':'ti-circle')+'" aria-hidden="true"></i><span>'+a+'</span></div>';}).join('');
+  return '<div class="eyebrow">Section 6</div><h2 class="stitle">Reconnecting when the flame flickers</h2><p class="ssub">What to do when you feel distant from your purpose</p><p class="body">There will be periods in every healthcare career when the flame that drew you to this work feels very low. This is not moral failure. It is the inevitable consequence of sustained exposure to human suffering without adequate restoration. Reconnecting with purpose is not about forcing feelings you do not have.</p><div class="ibox"><i class="ti ti-chart-bar" aria-hidden="true"></i><span>Viktor Frankl observed that meaning can be found even in the most difficult circumstances \u2014 but it must be chosen, not waited for.</span></div><p class="body" style="font-size:11px;color:var(--color-text-tertiary);font-style:italic;">Small acts of reconnection \u2014 tap to mark when done.</p><div class="alist">'+acts+'</div><div class="rc"><div class="rlbl"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</div><ul class="rlist"><li>Which of the reconnection acts above speaks most to you right now? Why that one?</li><li>If you imagine yourself in ten years\u2019 time, still in healthcare and still finding meaning \u2014 what does that person look like?</li><li>What is one thing you want to commit to \u2014 for yourself, not for performance \u2014 to sustain your sense of purpose?</li></ul></div><span class="jlbl">Your reflections on reconnecting with meaning and purpose\u2026</span><textarea data-k="rec1" placeholder="Write freely here\u2026"></textarea>'+nb();
+}
+
+function s7(){return '<div class="eyebrow">Section 7</div><h2 class="stitle">My personal values statement</h2><p class="ssub">Drawing on your reflections across this guide</p><p class="body">Write a short personal statement \u2014 in your own words \u2014 that captures who you are as a healthcare professional, what you stand for, and what you are committed to. Write it for yourself, not for an audience.</p><div class="sg"><div class="sb"><div class="slbl"><i class="ti ti-heart" aria-hidden="true"></i> I chose this work because\u2026</div><textarea data-k="st1" style="min-height:75px" placeholder="In your own words\u2026"></textarea></div><div class="sb"><div class="slbl"><i class="ti ti-star" aria-hidden="true"></i> What matters most to me is\u2026</div><textarea data-k="st2" style="min-height:75px" placeholder="In your own words\u2026"></textarea></div><div class="sb"><div class="slbl"><i class="ti ti-sun" aria-hidden="true"></i> I am at my best when\u2026</div><textarea data-k="st3" style="min-height:75px" placeholder="In your own words\u2026"></textarea></div><div class="sb"><div class="slbl"><i class="ti ti-check" aria-hidden="true"></i> I will know I am living my values when\u2026</div><textarea data-k="st4" style="min-height:75px" placeholder="What does a values-aligned day look, feel, and sound like for you?"></textarea></div></div><div class="supc"><div class="supttl"><i class="ti ti-info-circle" aria-hidden="true"></i> When you need more support</div><p style="font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:8px;">If this guide has brought feelings to the surface that feel heavy or hard to carry alone, that is not a sign that something is wrong with you \u2014 it is a sign that you care deeply, and that you are human. Please reach out.</p><ul class="suplist"><li><strong style="font-weight:500;">Your GP or doctor</strong> \u2014 your first point of contact for physical and mental health support</li><li><strong style="font-weight:500;">A qualified mental health practitioner</strong> \u2014 a counsellor, psychologist, or therapist</li><li><strong style="font-weight:500;">A trusted friend, family member, or colleague</strong> \u2014 someone who will listen with care and without judgement</li></ul></div><div class="closing"><i class="ti ti-heart cloico" aria-hidden="true"></i><h3>Thank you for taking this time to come back to yourself.</h3><p>The world needs healthcare professionals who care deeply.</p><p>And the world needs you to be here for the long run.</p></div>'+nb();}
+
+function tV(v,b){if(S.sv.has(v))S.sv.delete(v);else S.sv.add(v);b.classList.toggle('sel');document.getElementById('VCN').textContent=S.sv.size+S.cv.length;}
+function aV(){var i=document.getElementById('AVI'),v=i.value.trim();if(!v)return;S.cv.push(v);i.value='';sv();rSec();}
+function rmV(i){S.cv.splice(i,1);sv();rSec();}
+function tP(i,el){if(S.pc.has(i))S.pc.delete(i);else S.pc.add(i);el.classList.toggle('ck');el.querySelector('i').className='ti '+(S.pc.has(i)?'ti-circle-check':'ti-circle');}
+function tN(i,el){if(S.nc.has(i))S.nc.delete(i);else S.nc.add(i);el.classList.toggle('ck');el.querySelector('i').className='ti '+(S.nc.has(i)?'ti-circle-check':'ti-circle');}
+function sE(id,el){S.ep=id;document.querySelectorAll('.spc').forEach(function(c){c.classList.remove('sel');});el.classList.add('sel');}
+function tA(i,el){if(S.ac.has(i))S.ac.delete(i);else S.ac.add(i);el.classList.toggle('done');el.querySelector('i').className='ti '+(S.ac.has(i)?'ti-circle-check':'ti-circle');}
+
+rSec();rNav();uProg();
+</script>

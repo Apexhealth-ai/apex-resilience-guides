@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post-Incident Structured Debrief — Apex Health Resilience Self-Help Guides</title>
+<meta name="description" content="A guided, confidential walk-through for processing a difficult clinical event, stage by stage.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="site-shell">
+  <header class="site-bar">
+    <a href="index.html" class="brand" aria-label="Apex Health — Resilience Self-Help Guides">
+      <img src="assets/apex-logo.png" alt="Apex Health" class="brand-logo">
+      <span class="brand-divider" aria-hidden="true"></span>
+      <span class="brand-series">Resilience Self-Help Guides</span>
+    </a>
+    <div class="bar-actions">
+      <a class="bar-link" href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i><span class="label">All guides</span></a>
+      <button id="themeBtn" class="theme-btn" aria-label="Toggle theme"><i class="ti ti-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+  <main class="guide-frame">
+
+
+<h2 class="sr-only">Post-Incident Structured Debrief — an interactive seven-stage guide for processing difficult events in healthcare</h2>
+
+<style>
+.principle-box{background:var(--color-background-secondary);border-left:2px solid var(--color-border-secondary);border-radius:0;padding:12px 16px;margin:0 0 1.25rem}
+.stage-wrap{animation:fadeIn 0.25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+textarea{width:100%;min-height:96px;font-size:14px;line-height:1.6;resize:vertical;box-sizing:border-box}
+.em-btn{padding:8px 4px;font-size:12px;cursor:pointer;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);width:100%}
+.em-btn.on{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.note-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 16px;font-size:14px;line-height:1.6;color:var(--color-text-secondary);font-style:italic;margin:0 0 1.25rem}
+.q-label{font-size:14px;color:var(--color-text-secondary);margin:0 0 6px;line-height:1.5}
+.q-block{margin:0 0 1.25rem}
+</style>
+
+<div style="padding:0.5rem 0">
+
+<div style="border:0.5px solid var(--color-border-warning);background:var(--color-background-warning);border-radius:var(--border-radius-md);padding:11px 14px;margin-bottom:1.25rem;font-size:13px;color:var(--color-text-warning);line-height:1.5">
+<strong>If you are in acute distress right now</strong> — please close this guide and contact your GP, a mental health professional, or a trusted person. This guide is for when you are stable enough to reflect.
+</div>
+
+<p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 2px;letter-spacing:0.04em">PERSONAL & PROFESSIONAL RESILIENCE</p>
+<h1 style="font-size:22px;font-weight:500;margin:0 0 4px;font-family:var(--font-serif)">Post-Incident Structured Debrief</h1>
+<p style="font-size:14px;color:var(--color-text-secondary);margin:0 0 1.25rem;line-height:1.6">A seven-stage guide to processing difficult events — with honesty, structure, and compassion.</p>
+
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.25rem">
+<span id="stage-label" style="font-size:13px;color:var(--color-text-secondary);white-space:nowrap">Stage 1 of 7</span>
+<div style="flex:1;height:3px;background:var(--color-background-secondary);border-radius:2px">
+<div id="prog" style="height:100%;border-radius:2px;background:var(--color-text-primary);width:14.3%;transition:width 0.35s"></div>
+</div>
+</div>
+
+<div id="stage-content" class="stage-wrap"></div>
+
+<div id="nav-row" style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)">
+<button id="prev-btn" onclick="nav(-1)"><i class="ti ti-arrow-left" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:4px"></i>Previous</button>
+<button id="next-btn" onclick="nav(1)">Next stage<i class="ti ti-arrow-right" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-left:4px"></i></button>
+</div>
+
+</div>
+
+<script>
+const EMOTIONS=["Shock","Grief","Guilt","Shame","Anger","Fear","Helplessness","Sadness","Numbness","Confusion","Frustration","Disbelief","Anxiety","Loneliness","Relief","Emptiness","Betrayal","Inadequacy","Compassion","Pride"];
+const selEm=new Set();
+const R={};
+let cur=0;
+
+const STAGES=[
+{id:1,icon:"ti-shield-check",title:"Before You Begin",sub:"Grounding yourself — checking in before you go in",
+intro:"Before engaging with the incident itself, it is important to establish that you are in a state that allows for reflection rather than re-traumatisation. This stage is not about the incident — it is about you, right now, in this moment. If at any point you feel significantly overwhelmed, stop. Close the guide. Breathe. Return when you are ready.",
+principle:{label:"Trauma-informed principle",text:"Proceeding from a place of relative safety and stability is the foundation of all effective trauma processing. This is not avoidance — it is preparation."},
+items:[
+{t:"slider",id:"s1_score",label:"On a scale of 0–10 (where 0 = completely calm and 10 = completely overwhelmed), how are you feeling right now?"},
+{t:"check",id:"s1_safe",label:"I feel physically safe and in a private, uninterrupted space where I can think."},
+{t:"check",id:"s1_time",label:"Enough time has passed since the incident for some of the acute shock or adrenaline to settle. (This guide is most helpful after 24–72 hours.)"},
+{t:"check",id:"s1_person",label:"There is someone I can tell that I am doing this — a colleague, partner, or friend — so they can check in on me afterwards."},
+{t:"textarea",id:"s1_settle",label:"If your score was 7 or higher, what would help you feel more settled before you continue?"},
+{t:"note",text:"Three-breath grounding exercise: Breathe in slowly for 4 counts. Hold for 2. Breathe out for 6. Repeat three times. Notice your feet on the floor. Notice the chair beneath you. You are here. You are safe. You are not in the incident — you are reflecting on it."},
+{t:"textarea",id:"s1_after",label:"How do you feel now? Note your score and any physical sensations you notice."},
+]},
+{id:2,icon:"ti-clipboard-list",title:"The Facts",sub:"A clear, structured account of what happened — as objectively as possible",
+intro:"This stage is about establishing the factual account of the incident as clearly and objectively as possible. You are not yet exploring feelings or interpretations here — just the sequence of events as they occurred. Write in the past tense, use neutral language where you can, and imagine describing events to a trusted colleague who was not present.",
+principle:{label:"Why this matters",text:"Establishing a clear factual account reduces the tendency for the mind to fill in gaps with catastrophic interpretations. It anchors the experience in reality, which is the first step in making sense of it."},
+items:[
+{t:"textarea",id:"s2_type",label:"1. Briefly describe the type of incident (e.g. patient death, clinical error, violent encounter, near-miss). You do not need to use anyone's name."},
+{t:"textarea",id:"s2_seq",label:"2. What were the key events in chronological order? What happened first, then next, then after that?"},
+{t:"textarea",id:"s2_who",label:"3. Who else was involved — colleagues, patients, family members? What role did each person play?"},
+{t:"textarea",id:"s2_actions",label:"4. What actions did you take? What decisions were made — by you or by others?"},
+{t:"textarea",id:"s2_ctx",label:"5. When and where did this occur? What were the broader circumstances (e.g. short-staffed, end of a long shift, first time in this situation)?"},
+]},
+{id:3,icon:"ti-brain",title:"Your Thoughts",sub:"What was running through your mind — during and after the incident?",
+intro:"Now move from the facts to your cognitive response — what you were thinking as things unfolded, and in the hours and days since. Our thoughts in and around an incident often contain important information: about our values, our fears, our professional identity, and the assumptions we carry about what we 'should' be able to do. This is not about judging your thinking — simply notice and name it.",
+principle:{label:"Cognitive processing",text:"Thoughts that remain unnamed often operate below consciousness, driving feelings and behaviours without our awareness. Naming them is the beginning of working with them rather than being driven by them."},
+items:[
+{t:"textarea",id:"s3_first",label:"1. What was your first thought when you realised something significant was happening?"},
+{t:"textarea",id:"s3_during",label:"2. What were you telling yourself during the incident? (e.g. 'I need to hold it together', 'I don't know what to do', 'This is my fault')"},
+{t:"textarea",id:"s3_return",label:"3. What has your mind been returning to most since the incident? What thought keeps coming back?"},
+{t:"textarea",id:"s3_replay",label:"4. Have you found yourself replaying the event — going over what you did or didn't do, or what could have been different?"},
+{t:"textarea",id:"s3_critical",label:"5. What are the most self-critical thoughts you have had? Write them down — not to reinforce them, but to see them clearly."},
+{t:"textarea",id:"s3_identity",label:"6. Is there a thought or belief about yourself as a professional that this incident has challenged or threatened?"},
+{t:"reflect",id:"s3_reflect",prompts:["Looking at what you have written — which thoughts are facts, and which are interpretations or judgements?","If a trusted colleague had the same thoughts about themselves after the same incident, what would you say to them?"]},
+]},
+{id:4,icon:"ti-heart",title:"Your Feelings",sub:"The emotional reality — named, honoured, and not minimised",
+intro:"Healthcare culture frequently expects emotional containment. But unacknowledged emotion does not disappear. It accumulates. This stage asks you to name what you felt and what you are still feeling. There are no wrong answers here — including relief, numbness, anger, guilt, shame, grief, or even the disturbing absence of feeling. Emotions are not moral judgements. They are information.",
+principle:{label:"Research note",text:"Studies on post-traumatic growth consistently show that the ability to identify and name emotional responses — including the most difficult ones — is a stronger predictor of recovery than the severity of the event itself."},
+items:[
+{t:"emotions",id:"s4_em",label:"Select all the emotions you have experienced in relation to this incident:"},
+{t:"textarea",id:"s4_sig",label:"1. Looking at what you selected — which emotion feels most significant right now? Describe it in more detail."},
+{t:"textarea",id:"s4_surprise",label:"2. Were there any feelings you had during the incident that surprised you, or that you have judged yourself for having?"},
+{t:"textarea",id:"s4_avoid",label:"3. Is there an emotion you have been avoiding or suppressing since the incident? What might it mean to let yourself feel it?"},
+{t:"textarea",id:"s4_release",label:"4. Have you been able to cry, express anger, or release emotion since this happened? If not, what has got in the way?"},
+{t:"textarea",id:"s4_now",label:"5. How are you feeling right now, in this moment, as you write this?"},
+]},
+{id:5,icon:"ti-walk",title:"Your Body",sub:"What your body is holding — and what it needs",
+intro:"Distressing events are not only experienced in the mind — they are held in the body. The autonomic nervous system encodes threat and trauma physically: in our muscles, our gut, our breathing, our sleep, and our energy levels. These physical responses are not weakness — they are the body doing its job.",
+principle:{label:"Somatic awareness",text:"Research by Bessel van der Kolk and others shows that trauma is stored somatically — in the body — as much as cognitively. Body-based awareness and release are a necessary part of full processing and recovery."},
+items:[
+{t:"textarea",id:"s5_sleep",label:"1. Since the incident, have you noticed changes in your sleep? (Difficulty falling asleep, waking, disturbing dreams, oversleeping?)"},
+{t:"textarea",id:"s5_appetite",label:"2. Have you noticed changes in your appetite, digestion, or physical energy?"},
+{t:"textarea",id:"s5_tension",label:"3. Where in your body do you notice tension, tightness, or discomfort when you think about the incident now?"},
+{t:"textarea",id:"s5_intrusive",label:"4. Have you experienced any intrusive physical responses — a racing heart, shakiness, nausea, or difficulty breathing — when reminded of the event?"},
+{t:"textarea",id:"s5_care",label:"5. How has your body been asking for care since the incident? Have you been responding to those requests?"},
+{t:"note",text:"Simple body-care practices after an incident: walk in fresh air, reduce caffeine, drink water, move gently, sleep without screens, eat something warm. These are not small things — they are physiological recovery."},
+]},
+{id:6,icon:"ti-candle",title:"Meaning & Learning",sub:"Making sense of what happened — and what it is asking of you",
+intro:"This stage is not about finding a silver lining or forcing optimism onto a painful event. It is about the harder, deeper work of meaning-making: trying to understand what this experience reveals about the nature of the work, your values, the system, or yourself. It also asks about learning — not the performative 'lessons learned' of formal reports, but genuine, personal insights.",
+principle:{label:"Moral injury",text:"When we act — or are prevented from acting — in ways that violate our deeply held values, the result can be moral injury: a wound to the conscience. Naming it is the first step in healing it."},
+items:[
+{t:"textarea",id:"s6_hind",label:"1. With the benefit of hindsight, is there anything you would have done differently? Be specific — and be fair to the person you were at the time, with the information you had."},
+{t:"textarea",id:"s6_ctrl",label:"2. What was within your control in this situation? What was genuinely outside your control?"},
+{t:"textarea",id:"s6_guilt",label:"3. Are you carrying any guilt or shame about this incident? If so, is that guilt proportionate to your actual role and responsibility?"},
+{t:"textarea",id:"s6_vals",label:"4. Was there a point where you felt your values were compromised — where you had to act against what you believed was right? What happened?"},
+{t:"textarea",id:"s6_system",label:"5. What does this incident reveal about the system, team, or context you are working in? Is there something that needs to change at an organisational level?"},
+{t:"textarea",id:"s6_taught",label:"6. What has this experience taught you — about clinical practice, about yourself, about the nature of this work?"},
+{t:"textarea",id:"s6_trade",label:"7. Is there anything in this experience that, despite the pain, you would not trade away — because of what it has given you or shown you?"},
+{t:"quote",text:"Between stimulus and response there is a space. In that space is our power to choose our response. In our response lies our growth and our freedom.",attr:"Viktor Frankl"},
+]},
+{id:7,icon:"ti-sunrise",title:"Moving Forward",sub:"Your care and recovery plan — what you need, and what you will do",
+intro:"The final stage is not about returning to normal, as if this experience never happened. It is about carrying it with you in a way that is integrated, rather than buried — that allows you to continue doing this work with your whole self, rather than increasingly fractured parts. Moving forward does not mean moving on. It means honouring what happened and making conscious choices about what you do next.",
+principle:{label:"Post-traumatic growth",text:"Research by Tedeschi and Calhoun (2004) shows that many people who experience significant adversity subsequently report positive changes in their sense of personal strength, relationships, and appreciation of life. This does not negate the suffering — it co-exists with it."},
+items:[
+{t:"textarea",id:"s7_need",label:"1. What do you need most right now — physically, emotionally, professionally? Name it as specifically as you can."},
+{t:"textarea",id:"s7_who",label:"2. Who will you talk to about this? Is there a colleague, supervisor, mentor, or friend who you trust with this experience?"},
+{t:"textarea",id:"s7_formal",label:"3. Is there a formal support pathway you need or want to access — Occupational Health, an employee assistance programme, a supervisor, or a professional debrief?"},
+{t:"textarea",id:"s7_action",label:"4. Is there any action — clinical, procedural, or personal — that needs to follow from this incident?"},
+{t:"textarea",id:"s7_24h",label:"5. What will you do in the next 24 hours to care for yourself? Be specific and realistic."},
+{t:"textarea",id:"s7_worse",label:"6. What will you do if you notice that symptoms are persisting or worsening — intrusive memories, sleep disruption, emotional numbness, or increasing anxiety?"},
+{t:"closing"},
+]},
+];
+
+function saveFields(){
+  document.querySelectorAll('#stage-content textarea').forEach(el=>{if(el.id)R[el.id]=el.value});
+  const sl=document.getElementById('s1_score_range');
+  if(sl)R['s1_score']=sl.value;
+  ['s1_safe','s1_time','s1_person'].forEach(k=>{
+    const cb=document.getElementById(k+'_cb');
+    if(cb)R[k]=cb.checked;
+  });
+}
+
+function nav(d){
+  saveFields();
+  cur=Math.max(0,Math.min(STAGES.length-1,cur+d));
+  renderStage();
+  window.scrollTo(0,0);
+}
+
+function renderStage(){
+  const s=STAGES[cur];
+  document.getElementById('stage-label').textContent=`Stage ${s.id} of ${STAGES.length}`;
+  document.getElementById('prog').style.width=`${(s.id/STAGES.length)*100}%`;
+  document.getElementById('prev-btn').style.visibility=cur===0?'hidden':'visible';
+  const nb=document.getElementById('next-btn');
+  nb.style.display=cur===STAGES.length-1?'none':'';
+
+  let h=`<div class="stage-wrap">`;
+  h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+    <i class="ti ${s.icon}" aria-hidden="true" style="font-size:20px;color:var(--color-text-secondary)"></i>
+    <h2 style="font-size:20px;font-weight:500;margin:0;font-family:var(--font-serif)">${s.title}</h2>
+  </div>
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px">${s.sub}</p>
+  <p style="font-size:14px;line-height:1.7;margin:0 0 1rem">${s.intro}</p>`;
+
+  if(s.principle){
+    h+=`<div class="principle-box">
+      <p style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-secondary);margin:0 0 4px">${s.principle.label}</p>
+      <p style="font-size:13px;line-height:1.6;margin:0;font-style:italic">${s.principle.text}</p>
+    </div>`;
+  }
+
+  s.items.forEach(item=>{
+    if(item.t==='slider'){
+      const v=R['s1_score']||3;
+      h+=`<div class="q-block">
+        <p class="q-label">${item.label}</p>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:12px;color:var(--color-text-secondary)">0 Calm</span>
+          <input type="range" id="s1_score_range" min="0" max="10" step="1" value="${v}" style="flex:1" oninput="document.getElementById('sv').textContent=this.value">
+          <span style="font-size:12px;color:var(--color-text-secondary)">10 Overwhelmed</span>
+        </div>
+        <p style="font-size:26px;font-weight:500;text-align:center;margin:6px 0 0;font-family:var(--font-serif)" id="sv">${v}</p>
+      </div>`;
+    } else if(item.t==='check'){
+      const chk=R[item.id]?'checked':'';
+      h+=`<div style="display:flex;align-items:flex-start;gap:10px;margin:0 0 1rem">
+        <input type="checkbox" id="${item.id}_cb" ${chk} style="margin-top:2px;flex-shrink:0">
+        <label for="${item.id}_cb" style="font-size:14px;line-height:1.6;cursor:pointer">${item.label}</label>
+      </div>`;
+    } else if(item.t==='textarea'){
+      const v=R[item.id]||'';
+      h+=`<div class="q-block"><p class="q-label">${item.label}</p>
+        <textarea id="${item.id}" placeholder="Write here...">${v}</textarea></div>`;
+    } else if(item.t==='emotions'){
+      h+=`<div class="q-block"><p class="q-label">${item.label}</p>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px">`;
+      EMOTIONS.forEach(e=>{
+        const on=selEm.has(e)?'on':'';
+        h+=`<button class="em-btn ${on}" onclick="toggleEm('${e}',this)">${e}</button>`;
+      });
+      h+=`</div></div>`;
+    } else if(item.t==='note'){
+      h+=`<div class="note-box">${item.text}</div>`;
+    } else if(item.t==='reflect'){
+      const v=R[item.id]||'';
+      h+=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:16px;margin:0 0 1.25rem">
+        <p style="font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-text-secondary);margin:0 0 10px">Reflect & Explore</p>`;
+      item.prompts.forEach(p=>{h+=`<p style="font-size:14px;margin:0 0 8px;line-height:1.5">&#x25B8; ${p}</p>`;});
+      h+=`<textarea id="${item.id}" style="margin-top:8px" placeholder="Your response...">${v}</textarea></div>`;
+    } else if(item.t==='quote'){
+      h+=`<div style="border-left:2px solid var(--color-border-secondary);padding:12px 16px;margin:1.25rem 0;border-radius:0">
+        <p style="font-size:15px;line-height:1.7;margin:0 0 6px;font-style:italic">"${item.text}"</p>
+        <p style="font-size:13px;color:var(--color-text-secondary);margin:0">— ${item.attr}</p>
+      </div>`;
+    } else if(item.t==='closing'){
+      const cqs=[
+        "How do I feel now compared to when I began this debrief?",
+        "What is the most important thing I have named or understood today?",
+        "What is one small thing I will do in the next few hours to take care of myself?",
+        "Is there anything I need to say — to a patient's family, to a colleague, to myself — that I have not yet been able to say?"
+      ];
+      h+=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:18px;margin:1.25rem 0">
+        <p style="font-size:13px;font-weight:500;margin:0 0 10px">A Closing Check-In</p>
+        <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 12px">Before you close this guide, pause and notice:</p>`;
+      cqs.forEach((q,i)=>{
+        const v=R[`cl${i}`]||'';
+        h+=`<p style="font-size:14px;margin:0 0 5px;line-height:1.5">&#x25B8; ${q}</p>
+          <textarea id="cl${i}" style="min-height:72px;margin-bottom:12px" placeholder="Your thoughts...">${v}</textarea>`;
+      });
+      h+=`</div>`;
+      h+=`<div style="border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:18px;margin:1.25rem 0">
+        <p style="font-size:13px;font-weight:500;margin:0 0 8px">When You Need More Support</p>
+        <p style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin:0 0 10px">This guide supports structured self-reflection — it does not replace professional support. Please reach out to:</p>
+        <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.8">
+          <p style="margin:0 0 4px"><i class="ti ti-stethoscope" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>Your GP or doctor — for physical and mental health concerns</p>
+          <p style="margin:0 0 4px"><i class="ti ti-user-heart" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>A qualified mental health practitioner — counsellor, psychologist, or trauma-specialist therapist</p>
+          <p style="margin:0 0 4px"><i class="ti ti-users" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>A trusted colleague, mentor, or manager — someone who understands the healthcare context</p>
+          <p style="margin:0"><i class="ti ti-heart" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>A trusted friend or family member — someone who will listen without judgement</p>
+        </div>
+        <p style="font-size:13px;font-style:italic;margin:12px 0 0;line-height:1.6;color:var(--color-text-secondary)">What happened to you matters. How you feel about it matters. You do not have to carry this alone.</p>
+      </div>`;
+      h+=`<div style="text-align:center;margin:1.75rem 0 0.5rem">
+        <p style="font-size:18px;font-weight:500;margin:0 0 6px;font-family:var(--font-serif)">You have done something courageous today.</p>
+        <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1.25rem;line-height:1.6;font-style:italic">Looking honestly at a difficult experience — and choosing to process it rather than bury it — is an act of professional and personal integrity.</p>
+        <button onclick="dlResponses()" style="font-size:14px;padding:10px 20px">
+          <i class="ti ti-download" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>Download my responses
+        </button>
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:8px 0 0">Responses are stored only in this browser session. Download to keep a private record.</p>
+      </div>`;
+    }
+  });
+
+  h+=`</div>`;
+  const sc=document.getElementById('stage-content');
+  sc.innerHTML=h;
+}
+
+function toggleEm(name,btn){
+  if(selEm.has(name)){selEm.delete(name);btn.classList.remove('on')}
+  else{selEm.add(name);btn.classList.add('on')}
+}
+
+function dlResponses(){
+  saveFields();
+  let t='POST-INCIDENT STRUCTURED DEBRIEF — MY RESPONSES\n';
+  t+='Confidential — for personal use only\n';
+  t+='='.repeat(50)+'\n';
+  STAGES.forEach(s=>{
+    t+=`\n\nSTAGE ${s.id}: ${s.title.toUpperCase()}\n${'—'.repeat(40)}\n`;
+    s.items.forEach(item=>{
+      if(item.t==='slider'&&R['s1_score'])t+=`\nDistress level (0-10): ${R['s1_score']}\n`;
+      if(item.t==='check'&&R[item.id]!==undefined)t+=`\n${item.label}\nAnswer: ${R[item.id]?'Yes':'No'}\n`;
+      if(item.t==='textarea'&&R[item.id])t+=`\n${item.label}\n${R[item.id]}\n`;
+      if(item.t==='reflect'&&R[item.id])t+=`\nReflection:\n${R[item.id]}\n`;
+      if(item.t==='emotions'&&selEm.size>0)t+=`\nEmotions selected: ${Array.from(selEm).join(', ')}\n`;
+      if(item.t==='closing'){
+        const cqs=["How I feel now vs when I began","Most important thing I understood","One small thing I will do","What I still need to say"];
+        cqs.forEach((q,i)=>{if(R[`cl${i}`])t+=`\n${q}:\n${R[`cl${i}`]}\n`});
+      }
+    });
+  });
+  const blob=new Blob([t],{type:'text/plain'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='Post_Incident_Debrief_Responses.txt';a.click();
+  URL.revokeObjectURL(url);
+}
+
+renderStage();
+</script>
+
+  </main>
+  <footer class="site-foot">
+    <strong>Private.</strong> This tool runs entirely in your browser — nothing you type is sent to Apex Health or stored on a server.
+    <div class="foot-row">
+      <a href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to all guides</a>
+      <span>© Apex Health Group · Resilience Self-Help Guides</span>
+    </div>
+  </footer>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

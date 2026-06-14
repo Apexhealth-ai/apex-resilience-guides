@@ -1,0 +1,389 @@
+
+<h2 class="sr-only">Peer Coaching Circle — Interactive Guide for healthcare professionals</h2>
+<style>
+*{box-sizing:border-box}
+.nav-bar{display:flex;gap:4px;flex-wrap:wrap;padding:0 0 1rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.5rem}
+.nav-btn{background:none;border:0.5px solid transparent;border-radius:var(--border-radius-md);padding:6px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap}
+.nav-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-btn.active{background:var(--color-background-secondary);border-color:var(--color-border-secondary);color:var(--color-text-primary);font-weight:500}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem}
+.section{}
+.setup-row{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:start;font-size:14px;line-height:1.6}
+.setup-row:last-child{border-bottom:none}
+.setup-label{font-weight:500;font-size:12px;color:var(--color-text-secondary);padding-top:2px}
+.rule-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.rule-row:last-child{border-bottom:none}
+.phase-btn{width:100%;text-align:left;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.phase-btn.active{background:var(--color-background-secondary);border-color:var(--color-border-secondary)}
+.phase-num{width:28px;height:28px;border-radius:50%;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+.phase-det{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem 1.25rem;margin-top:-4px;margin-bottom:8px}
+.q-cat-btn{background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer}
+.q-cat-btn.active{background:var(--color-background-secondary);border-color:var(--color-border-secondary);color:var(--color-text-primary);font-weight:500}
+.q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.q-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 16px;font-size:14px;line-height:1.5}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{padding:7px 0;font-size:14px;line-height:1.5;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;gap:8px}
+.checklist li:last-child{border-bottom:none}
+.host-script{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:8px}
+.field-label{font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
+textarea{width:100%;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);padding:8px 12px;font-size:14px;font-family:var(--font-sans);color:var(--color-text-primary);resize:vertical;min-height:72px;margin-top:4px}
+input[type=text]{width:100%;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);padding:8px 12px;font-size:14px;font-family:var(--font-sans);color:var(--color-text-primary);margin-top:4px}
+.timer-display{font-size:52px;font-weight:500;font-variant-numeric:tabular-nums;text-align:center;letter-spacing:-2px}
+.info-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.75rem 1rem;margin:0.75rem 0;font-size:14px;line-height:1.6}
+.vs-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.vs-card{border-radius:var(--border-radius-md);padding:10px 14px;font-size:13px;line-height:1.5;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary)}
+@media(max-width:500px){.vs-row{grid-template-columns:1fr}.setup-row{grid-template-columns:1fr}}
+</style>
+
+<div style="padding:1rem 0 0">
+<div class="nav-bar" id="mainNav">
+  <button class="nav-btn active" data-sec="overview" onclick="showSec(this)"><i class="ti ti-info-circle" aria-hidden="true"></i> Overview</button>
+  <button class="nav-btn" data-sec="setup" onclick="showSec(this)"><i class="ti ti-users" aria-hidden="true"></i> Setup</button>
+  <button class="nav-btn" data-sec="rules" onclick="showSec(this)"><i class="ti ti-list-check" aria-hidden="true"></i> Ground rules</button>
+  <button class="nav-btn" data-sec="roles" onclick="showSec(this)"><i class="ti ti-badge" aria-hidden="true"></i> Roles</button>
+  <button class="nav-btn" data-sec="session" onclick="showSec(this)"><i class="ti ti-clock" aria-hidden="true"></i> Session flow</button>
+  <button class="nav-btn" data-sec="questions" onclick="showSec(this)"><i class="ti ti-message-circle" aria-hidden="true"></i> Questions</button>
+  <button class="nav-btn" data-sec="toolkits" onclick="showSec(this)"><i class="ti ti-tool" aria-hidden="true"></i> Toolkits</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section" id="sec-overview">
+  <div style="border-left:2px solid var(--color-border-secondary);padding:.75rem 1rem;margin-bottom:1rem;font-size:15px;color:var(--color-text-secondary);font-style:italic">"None of us is as smart as all of us together." — Ken Blanchard</div>
+  <p style="font-size:15px;line-height:1.7;margin-bottom:1rem">A peer coaching circle brings a small group of colleagues together on a regular basis — not to share problems over coffee, but to offer each other structured, intentional, coaching-quality support. Unlike mentoring or supervision, peer coaching is <span style="font-weight:500">horizontal</span>: everyone is both coach and coachee.</p>
+  <div class="card">
+    <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Research basis</div>
+    <p style="font-size:14px;line-height:1.6;margin:0">Peer coaching is associated with improved problem-solving, increased self-awareness, stronger professional identity, and reduced isolation — particularly in high-demand contexts like healthcare. Groups using structured peer coaching report significantly higher psychological safety.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:1rem">
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;text-align:center"><div style="font-size:24px;font-weight:500">4–6</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Ideal group size</div></div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;text-align:center"><div style="font-size:24px;font-weight:500">90 min</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Recommended session</div></div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;text-align:center"><div style="font-size:24px;font-weight:500">Monthly</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Recommended frequency</div></div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;text-align:center"><div style="font-size:24px;font-weight:500">7</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Session phases</div></div>
+  </div>
+  <div style="border-left:2px solid var(--color-border-secondary);padding:.75rem 1rem;margin-top:1.5rem;font-size:14px;color:var(--color-text-secondary);font-style:italic">"Coaching is unlocking a person's potential to maximise their own performance. It is helping them to learn rather than teaching them." — Sir John Whitmore</div>
+  <p style="font-size:14px;line-height:1.7;color:var(--color-text-secondary);margin-top:1rem;text-align:center;font-style:italic">The circle holds what none of us can hold alone. Use it well. Protect it fiercely. Come back to it often.</p>
+</div>
+
+<!-- SETUP -->
+<div class="section" id="sec-setup">
+  <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem">Getting established takes a small amount of planning — and pays back many times over.</p>
+  <div class="card">
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-users" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Group size</div><div>4–6 members is ideal. Fewer than 4 reduces diversity of perspective; more than 6 makes meaningful depth difficult within a single session.</div></div>
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-user-check" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Who to invite</div><div>Peers at broadly similar seniority levels. Cross-specialty circles are particularly enriching. Avoid direct line management relationships — this changes the dynamic significantly.</div></div>
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-calendar-repeat" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Frequency</div><div>Monthly — regular enough to build trust and continuity, infrequent enough to allow life between sessions.</div></div>
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-clock" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Duration</div><div>75–90 minutes per session. This allows for full check-in, a substantive presenting issue, coaching, and check-out without rushed endings.</div></div>
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-device-laptop" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Format</div><div>In person is ideal. Virtual works well once trust is established. Hybrid is the most common and workable arrangement.</div></div>
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-shield-check" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Commitment</div><div>All members commit to attending consistently. Agree from the start: three consecutive absences without notice is grounds for a conversation.</div></div>
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-arrows-exchange" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Rotating roles</div><div>Host/facilitator and presenter roles rotate each session. This ensures shared ownership and prevents the circle feeling like one person's group.</div></div>
+    <div class="setup-row"><div class="setup-label"><i class="ti ti-lock" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Confidentiality</div><div>Must be explicit and absolute. Nothing shared in the circle is discussed outside it — with anyone, including mutual colleagues. Non-negotiable.</div></div>
+  </div>
+  <div class="info-box"><i class="ti ti-info-circle" aria-hidden="true" style="margin-right:6px"></i>For a <span style="font-weight:500">60-minute session</span>, reduce the coaching phase to 20 minutes and reflection to 5 minutes. Always keep the check-in and check-out — they are non-negotiable for psychological safety.</div>
+</div>
+
+<!-- GROUND RULES -->
+<div class="section" id="sec-rules">
+  <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem">Read aloud at the start of <span style="font-weight:500">every</span> session — not just the first. Check each rule to affirm it for today's session.</p>
+  <div class="card" id="rules-card">
+    <div class="rule-row"><input type="checkbox" id="r1" style="margin-top:3px;flex-shrink:0"><label for="r1" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">Confidentiality:</span> What is shared in the circle stays in the circle. Always.</label></div>
+    <div class="rule-row"><input type="checkbox" id="r2" style="margin-top:3px;flex-shrink:0"><label for="r2" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">Non-judgement:</span> We listen without evaluation. There is no advice unless invited.</label></div>
+    <div class="rule-row"><input type="checkbox" id="r3" style="margin-top:3px;flex-shrink:0"><label for="r3" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">Curiosity over certainty:</span> We ask questions. We do not tell people what they should do.</label></div>
+    <div class="rule-row"><input type="checkbox" id="r4" style="margin-top:3px;flex-shrink:0"><label for="r4" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">Equal voice:</span> Every member's situation and experience matters equally.</label></div>
+    <div class="rule-row"><input type="checkbox" id="r5" style="margin-top:3px;flex-shrink:0"><label for="r5" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">Presence:</span> We are fully here — phones away, minds open, hearts engaged.</label></div>
+    <div class="rule-row"><input type="checkbox" id="r6" style="margin-top:3px;flex-shrink:0"><label for="r6" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">Honesty with care:</span> We speak truthfully and with genuine compassion.</label></div>
+    <div class="rule-row"><input type="checkbox" id="r7" style="margin-top:3px;flex-shrink:0"><label for="r7" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">The presenter leads:</span> The presenter decides what to share, how deep to go, and when to stop.</label></div>
+    <div class="rule-row" style="border-bottom:none"><input type="checkbox" id="r8" style="margin-top:3px;flex-shrink:0"><label for="r8" style="font-size:14px;line-height:1.6;cursor:pointer"><span style="font-weight:500">No fixing:</span> Our role is to help each other think, not to solve each other's problems.</label></div>
+  </div>
+  <div id="rules-affirm" style="display:none;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 16px;text-align:center;font-size:14px;font-weight:500"><i class="ti ti-circle-check" aria-hidden="true" style="margin-right:6px"></i>All ground rules affirmed. The circle is open.</div>
+  <p style="font-size:13px;color:var(--color-text-secondary);font-style:italic;text-align:center;margin-top:1rem"><i class="ti ti-printer" aria-hidden="true" style="margin-right:4px"></i>Tip: Laminate one copy per member. It takes 90 seconds to read and sets the entire tone.</p>
+</div>
+
+<!-- ROLES -->
+<div class="section" id="sec-roles">
+  <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem">The most common failures of peer coaching circles come from role confusion. Click each role to explore its responsibilities.</p>
+  <div class="card" style="margin-bottom:8px">
+    <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="toggleRole('host')">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:0.5px solid var(--color-border-tertiary)"><i class="ti ti-adjustments-horizontal" style="font-size:18px" aria-hidden="true"></i></div>
+      <div style="flex:1"><div style="font-weight:500;font-size:15px">The host / facilitator</div><div style="font-size:13px;color:var(--color-text-secondary)">Holds the space and the process</div></div>
+      <i class="ti ti-chevron-down" id="chev-host" style="font-size:16px;color:var(--color-text-secondary);transition:transform .2s" aria-hidden="true"></i>
+    </div>
+    <div id="det-host" style="display:none;margin-top:1rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)">
+      <ul class="checklist">
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Opens and closes the session with the ground rules and a check-in / check-out</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Keeps the group on time through each phase</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Holds the coaching frame — gently redirecting if members move into advice-giving or storytelling</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Invites questions from the group and ensures equal participation — no one voice dominates</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Notices the energy of the group and names it if something important needs acknowledging</li>
+        <li><i class="ti ti-x" style="color:var(--color-text-danger);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Does <span style="font-weight:500">not</span> offer their own questions or insights during the coaching phase — their role is process, not content</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Closes with the presenter's commitment and group reflection</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Completes the session record and passes it to the group</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:8px">
+    <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="toggleRole('presenter')">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:0.5px solid var(--color-border-tertiary)"><i class="ti ti-speakerphone" style="font-size:18px" aria-hidden="true"></i></div>
+      <div style="flex:1"><div style="font-weight:500;font-size:15px">The presenter</div><div style="font-size:13px;color:var(--color-text-secondary)">Brings a real situation and owns their own thinking</div></div>
+      <i class="ti ti-chevron-down" id="chev-presenter" style="font-size:16px;color:var(--color-text-secondary);transition:transform .2s" aria-hidden="true"></i>
+    </div>
+    <div id="det-presenter" style="display:none;margin-top:1rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)">
+      <ul class="checklist">
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Prepares briefly before the session: what is the situation? What do I want to think through?</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Presents the issue clearly and concisely — 3 to 5 minutes maximum</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Sets the coaching contract: "I want to explore..." / "I would find it most helpful if..."</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Listens to questions without immediately defending or justifying — lets them land first</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Leads the reflection at the end: what has shifted? What is clearer? What will they do?</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Makes one concrete commitment before the session closes</li>
+        <li><i class="ti ti-info-circle" style="color:var(--color-text-info);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Is not obliged to share more than they choose. They determine the depth.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="toggleRole('member')">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:0.5px solid var(--color-border-tertiary)"><i class="ti ti-ear" style="font-size:18px" aria-hidden="true"></i></div>
+      <div style="flex:1"><div style="font-weight:500;font-size:15px">The circle member</div><div style="font-size:13px;color:var(--color-text-secondary)">Listens deeply and asks questions that open thinking</div></div>
+      <i class="ti ti-chevron-down" id="chev-member" style="font-size:16px;color:var(--color-text-secondary);transition:transform .2s" aria-hidden="true"></i>
+    </div>
+    <div id="det-member" style="display:none;margin-top:1rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)">
+      <ul class="checklist">
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Listens with full attention — without formulating your own response or relating to your own experience</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Asks open questions only: What, How, When, Who, or "Tell me more about..."</li>
+        <li><i class="ti ti-x" style="color:var(--color-text-danger);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Never gives advice unless the presenter explicitly asks — and even then, offer it tentatively</li>
+        <li><i class="ti ti-x" style="color:var(--color-text-danger);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Never finishes the presenter's sentences or assumes you know where they are going</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Notices what the presenter is <span style="font-weight:500">not</span> saying as much as what they are</li>
+        <li><i class="ti ti-check" style="color:var(--color-text-success);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>Trusts the presenter's expertise in their own situation — your job is not to solve, but to illuminate</li>
+        <li><i class="ti ti-lock" style="color:var(--color-text-secondary);font-size:14px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>After the session, keeps everything heard in that room</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SESSION FLOW -->
+<div class="section" id="sec-session">
+  <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem">A 90-minute session has seven phases. Click any phase to see guidance and the host's script. Use the timer to track time during a live session.</p>
+  <div class="card" style="text-align:center;margin-bottom:1.5rem">
+    <div class="timer-display" id="timerDisplay">10:00</div>
+    <div style="font-size:14px;color:var(--color-text-secondary);margin-top:4px" id="timerPhase">Check-in (10 min)</div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:1rem;flex-wrap:wrap">
+      <button id="startBtn" onclick="timerStart()" style="background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 18px;font-size:14px;cursor:pointer"><i class="ti ti-player-play" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Start</button>
+      <button id="pauseBtn" onclick="timerPause()" style="display:none;background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 18px;font-size:14px;cursor:pointer"><i class="ti ti-player-pause" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Pause</button>
+      <button onclick="timerReset()" style="background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:7px 18px;font-size:14px;cursor:pointer"><i class="ti ti-refresh" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Reset</button>
+      <button onclick="timerNext()" style="background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:7px 18px;font-size:14px;cursor:pointer"><i class="ti ti-arrow-right" aria-hidden="true" style="font-size:13px;margin-right:4px"></i>Next phase</button>
+    </div>
+  </div>
+  <div id="phaseList"></div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="section" id="sec-questions">
+  <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem">Filter by category. Use these during Phase 5 — the coaching round. Open questions only: they help the presenter hear their own thinking more clearly.</p>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem" id="qFilters">
+    <button class="q-cat-btn active" data-cat="all" onclick="filterQ(this)">All</button>
+    <button class="q-cat-btn" data-cat="situation" onclick="filterQ(this)">Exploring the situation</button>
+    <button class="q-cat-btn" data-cat="options" onclick="filterQ(this)">Options &amp; resources</button>
+    <button class="q-cat-btn" data-cat="values" onclick="filterQ(this)">Values &amp; identity</button>
+    <button class="q-cat-btn" data-cat="forward" onclick="filterQ(this)">The way forward</button>
+    <button class="q-cat-btn" data-cat="clarify" onclick="filterQ(this)">Clarifying</button>
+  </div>
+  <div class="q-grid" id="qContainer"></div>
+  <div style="margin-top:1.5rem">
+    <h3 style="font-size:14px;font-weight:500;margin-bottom:8px">Avoid vs. use — these are NOT coaching questions</h3>
+    <div id="vsContainer"></div>
+  </div>
+</div>
+
+<!-- TOOLKITS -->
+<div class="section" id="sec-toolkits">
+  <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem">Interactive templates for before and after sessions.</p>
+  <div style="display:flex;gap:4px;margin-bottom:1rem" id="tkNav">
+    <button class="nav-btn active" data-tk="prep" onclick="showTk(this)">A — Presenter prep</button>
+    <button class="nav-btn" data-tk="record" onclick="showTk(this)">B — Session record</button>
+    <button class="nav-btn" data-tk="reflect" onclick="showTk(this)">C — Personal reflection</button>
+  </div>
+  <div id="tk-prep">
+    <div class="card">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:1rem">Before your session — complete this 10 minutes before</div>
+      <div style="margin-bottom:1rem"><div class="field-label">The situation I want to bring to the circle</div><textarea id="p-sit" placeholder="Describe the situation you want to explore today..."></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">What I have already tried or considered</div><textarea id="p-try" placeholder="What approaches, conversations, or actions have you taken so far?"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">What I most want to get from this session</div><textarea id="p-want" placeholder="What would a really good outcome look like?"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">The kind of support that would be most useful</div><textarea id="p-sup" placeholder="e.g. thinking it through, being challenged, exploring options, being heard..." style="min-height:60px"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">One thing I am ready to be honest about today, even if uncomfortable</div><textarea id="p-hon" placeholder="What are you ready to say out loud today?" style="min-height:60px"></textarea></div>
+      <button onclick="clearFields(['p-sit','p-try','p-want','p-sup','p-hon'])" style="font-size:13px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;padding:0"><i class="ti ti-trash" aria-hidden="true" style="margin-right:4px"></i>Clear form</button>
+    </div>
+  </div>
+  <div id="tk-record" style="display:none">
+    <div class="card">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:1rem">Session record — complete immediately after each session</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:1rem">
+        <div><div class="field-label">Session number</div><input type="text" id="r-num" placeholder="#"></div>
+        <div><div class="field-label">Date</div><input type="text" id="r-date" placeholder="dd/mm/yyyy"></div>
+        <div><div class="field-label">Location / platform</div><input type="text" id="r-loc" placeholder="Room or virtual"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:1rem">
+        <div><div class="field-label">Host</div><input type="text" id="r-host" placeholder="Name"></div>
+        <div><div class="field-label">Presenter</div><input type="text" id="r-pres" placeholder="Name"></div>
+        <div><div class="field-label">Members present</div><input type="text" id="r-count" placeholder="Number"></div>
+      </div>
+      <div style="margin-bottom:1rem"><div class="field-label">Presenting issue / topic</div><textarea id="r-iss" placeholder="Brief summary of what was brought to the circle today..."></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">Key insights or shifts from this session</div><textarea id="r-ins" placeholder="What moved? What was noticed? What emerged?"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">Action / commitment from the presenter</div><textarea id="r-act" placeholder="What did the presenter commit to doing, and by when?" style="min-height:60px"></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+        <div><div class="field-label">Next session date</div><input type="text" id="r-nd" placeholder="dd/mm/yyyy"></div>
+        <div><div class="field-label">Next presenter</div><input type="text" id="r-np" placeholder="Name"></div>
+      </div>
+      <button onclick="clearFields(['r-num','r-date','r-loc','r-host','r-pres','r-count','r-iss','r-ins','r-act','r-nd','r-np'])" style="font-size:13px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;padding:0"><i class="ti ti-trash" aria-hidden="true" style="margin-right:4px"></i>Clear form</button>
+    </div>
+  </div>
+  <div id="tk-reflect" style="display:none">
+    <div class="card">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:1rem">Personal reflection — complete privately after every session</div>
+      <div style="margin-bottom:1rem">
+        <div class="field-label">My role today was</div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button id="rb-host" onclick="pickRole('host')" style="background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 14px;font-size:13px;cursor:pointer">Host</button>
+          <button id="rb-presenter" onclick="pickRole('presenter')" style="background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 14px;font-size:13px;cursor:pointer">Presenter</button>
+          <button id="rb-member" onclick="pickRole('member')" style="background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 14px;font-size:13px;cursor:pointer">Circle member</button>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem"><div class="field-label">The question I asked (or heard) that felt most powerful</div><textarea id="rf-q" placeholder="Which question opened something up today?"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">What the presenting issue stirred in me personally</div><textarea id="rf-stir" placeholder="What resonated? What did you notice in yourself?"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">Something I noticed about my own listening or questioning today</div><textarea id="rf-lis" placeholder="Where were you genuinely curious? Where did you drift?"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">One thing I am taking away for my own situation or practice</div><textarea id="rf-take" placeholder="What are you carrying forward?" style="min-height:60px"></textarea></div>
+      <div style="margin-bottom:1rem"><div class="field-label">What I want to bring to the next session</div><textarea id="rf-next" placeholder="Is there something beginning to form for you?" style="min-height:60px"></textarea></div>
+      <button onclick="clearFields(['rf-q','rf-stir','rf-lis','rf-take','rf-next'])" style="font-size:13px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;padding:0"><i class="ti ti-trash" aria-hidden="true" style="margin-right:4px"></i>Clear form</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const allSecs=['overview','setup','rules','roles','session','questions','toolkits'];
+function showSec(btn){
+  const id=btn.dataset.sec;
+  allSecs.forEach(s=>{document.getElementById('sec-'+s).style.display='none'});
+  document.getElementById('sec-'+id).style.display='block';
+  document.querySelectorAll('#mainNav .nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+allSecs.forEach(s=>{
+  const el=document.getElementById('sec-'+s);
+  if(el)el.style.display='none';
+});
+document.getElementById('sec-overview').style.display='block';
+
+document.querySelectorAll('#rules-card input[type=checkbox]').forEach(cb=>{
+  cb.addEventListener('change',()=>{
+    const all=[...document.querySelectorAll('#rules-card input[type=checkbox]')];
+    document.getElementById('rules-affirm').style.display=all.every(c=>c.checked)?'block':'none';
+  });
+});
+
+function toggleRole(r){
+  const d=document.getElementById('det-'+r),c=document.getElementById('chev-'+r);
+  const open=d.style.display!=='none';
+  d.style.display=open?'none':'block';
+  c.style.transform=open?'':'rotate(180deg)';
+}
+
+const phases=[
+  {n:1,title:'Check-in',time:'10 min',mins:10,desc:'Arriving together — leaving the outside world at the door. A deliberate invitation for each person to be present, to name where they are arriving from.',host:"Welcome everyone. Before we begin — let's check in. I'd like each of us to share: how are you arriving today? One or two sentences — what's the headline of where you're at right now? I'll start.",note:'Each person checks in. No cross-talk, no problem-solving, no follow-up questions. Simply listen.'},
+  {n:2,title:'Ground rules',time:'3 min',mins:3,desc:'Naming the container — making the space safe. The host reads the ground rules, reminding everyone of the kind of space this is.',host:"Before we begin our coaching work, let's remind ourselves of our ground rules — because they are what make this space different. [Read or invite reading.] Does everyone affirm these for today's session?",note:'Brief but important. It resets the frame. Especially important when a new member joins.'},
+  {n:3,title:'Presenting the issue',time:'8 min',mins:8,desc:'The presenter shares their situation. The group listens without interrupting. This is a presentation — not a discussion. The group takes notes on what they notice and questions that arise.',host:"Now to our presenting member. You have around 5 to 8 minutes to share your situation. Help us understand: what is happening, what you have tried, and what kind of support would be most useful from us today. The floor is yours.",followup:"Thank you. Before we move into questions — can you tell us: what would a really good outcome from this session look like for you? What would you like to leave with?",note:'The presenter is not performing. They are thinking aloud with support.'},
+  {n:4,title:'Clarifying questions',time:'7 min',mins:7,desc:'Understanding, not exploring. Clarifying questions serve one purpose: to ensure the group has understood accurately before coaching begins. They are factual, not exploratory.',host:"We'll now take a few minutes for any clarifying questions — to help make sure we've understood the situation accurately. These aren't coaching questions yet. Who has a clarifying question?",note:'These are not the coaching. That comes next.'},
+  {n:5,title:'The coaching round',time:'30 min',mins:30,desc:'The heart of the circle. The group asks open, coaching-quality questions. The presenter thinks aloud. No advice. No problem-solving. The only goal is to help the presenter hear their own thinking more clearly.',host:"Now for our coaching round. The role of the group is to ask open questions that help [name] think — not to advise or solve. Let's take our time. There is no rush. Who would like to begin?",note:'The host intervenes if a question becomes advice. "Have you thought about just telling them directly?" is advice in disguise.'},
+  {n:6,title:'Reflection & commitment',time:'10 min',mins:10,desc:"The floor returns to the presenter. This is their moment to integrate: to say what has shifted, what is clearer, and what they will do. The group listens without comment.",host:"Thank you everyone. [Name], the floor is yours. We'd love to hear: what has shifted for you through this conversation? What feels clearer? And what is the one thing you're committing to do?",followup:"And in terms of an action — even a small one — what will you do, and by when? Would you be willing to share that with the group as your commitment for today?",note:'The presenter is not expected to have solved the problem — only to have moved. Even a small shift is valuable.'},
+  {n:7,title:'Group learning & check-out',time:'12 min',mins:12,desc:'Integrating the learning — for everyone, not just the presenter. The issue presented often resonates across the group in ways only revealed here. This is also where the session is consciously closed.',host:"Before we close — a round for the group. In one or two sentences, what are you taking away from today's session? It might be something you heard, something you noticed in yourself as a coach, or a question that opened something up for you personally.",close:"Thank you. What was shared in this circle stays here. We'll confirm our next session date, the next presenter, and who will host. Before we go — how are you leaving? One word or one sentence.",note:'Consciously close the session. Everyone learns — not just the presenter.'},
+];
+
+const pl=document.getElementById('phaseList');
+phases.forEach((p,i)=>{
+  const d=document.createElement('div');
+  d.innerHTML=`<div class="phase-btn" id="pb${i}" onclick="togglePhase(${i})"><div class="phase-num">${p.n}</div><div style="flex:1"><div style="font-weight:500;font-size:14px">${p.title}</div><div style="font-size:12px;color:var(--color-text-secondary)">${p.time}</div></div><button onclick="event.stopPropagation();setTPhase(${i})" style="background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:4px 10px;font-size:12px;cursor:pointer;color:var(--color-text-secondary)"><i class="ti ti-clock" aria-hidden="true" style="font-size:12px;margin-right:3px"></i>Set timer</button><i class="ti ti-chevron-down" id="pc${i}" style="font-size:16px;color:var(--color-text-secondary);transition:transform .2s" aria-hidden="true"></i></div><div class="phase-det" id="pd${i}" style="display:none"><p style="font-size:14px;line-height:1.6;color:var(--color-text-secondary);margin-bottom:12px">${p.desc}</p><div class="host-script"><div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px"><i class="ti ti-message" aria-hidden="true" style="margin-right:4px"></i>Host says</div><p style="font-size:13px;font-style:italic;line-height:1.6;margin:0">"${p.host}"</p></div>${p.followup?`<div class="host-script" style="margin-top:8px"><div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px"><i class="ti ti-message" aria-hidden="true" style="margin-right:4px"></i>Host then asks</div><p style="font-size:13px;font-style:italic;line-height:1.6;margin:0">"${p.followup}"</p></div>`:''} ${p.close?`<div class="host-script" style="margin-top:8px"><div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px"><i class="ti ti-door-exit" aria-hidden="true" style="margin-right:4px"></i>Host closes</div><p style="font-size:13px;font-style:italic;line-height:1.6;margin:0">"${p.close}"</p></div>`:''}<div style="font-size:12px;color:var(--color-text-secondary);font-style:italic;margin-top:8px"><i class="ti ti-info-circle" aria-hidden="true" style="margin-right:4px"></i>${p.note}</div></div>`;
+  pl.appendChild(d);
+});
+
+function togglePhase(i){
+  const det=document.getElementById('pd'+i),chev=document.getElementById('pc'+i),btn=document.getElementById('pb'+i);
+  const open=det.style.display!=='none';
+  det.style.display=open?'none':'block';
+  chev.style.transform=open?'':'rotate(180deg)';
+  btn.classList.toggle('active',!open);
+}
+
+let tIdx=0,tSec=600,tRunning=false,tInterval=null;
+function fmtTime(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function updTimer(){document.getElementById('timerDisplay').textContent=fmtTime(tSec);document.getElementById('timerPhase').textContent=phases[tIdx].title+' ('+phases[tIdx].time+')'}
+function setTPhase(i){timerPause();tIdx=i;tSec=phases[i].mins*60;updTimer()}
+function timerStart(){if(tRunning)return;tRunning=true;document.getElementById('startBtn').style.display='none';document.getElementById('pauseBtn').style.display='';tInterval=setInterval(()=>{if(tSec>0){tSec--;updTimer()}else{timerPause();document.getElementById('timerDisplay').textContent='00:00'}},1000)}
+function timerPause(){clearInterval(tInterval);tRunning=false;document.getElementById('startBtn').style.display='';document.getElementById('pauseBtn').style.display='none'}
+function timerReset(){timerPause();tSec=phases[tIdx].mins*60;updTimer()}
+function timerNext(){timerPause();tIdx=(tIdx+1)%phases.length;tSec=phases[tIdx].mins*60;updTimer()}
+updTimer();
+
+const qs=[
+  {cat:'situation',t:'What is at the heart of this for you?'},
+  {cat:'situation',t:"What do you already know about this situation that you haven't yet said out loud?"},
+  {cat:'situation',t:'What are you most afraid of here?'},
+  {cat:'situation',t:'What would need to be true for this to feel more manageable?'},
+  {cat:'situation',t:'What assumptions are you making about what is possible or not possible?'},
+  {cat:'situation',t:"Who else's perspective might be important here that you haven't fully considered?"},
+  {cat:'situation',t:"If you weren't worried about getting it wrong, what would you do?"},
+  {cat:'options',t:'What have you already tried? What happened as a result?'},
+  {cat:'options',t:"What options do you have that you haven't fully explored yet?"},
+  {cat:'options',t:'What would the most courageous version of you do in this situation?'},
+  {cat:'options',t:"What resources — people, knowledge, time — do you have available that you haven't used yet?"},
+  {cat:'options',t:'What would you advise a colleague in exactly this situation?'},
+  {cat:'options',t:"Is there a version of this situation where it works out better than you're imagining? What would that require?"},
+  {cat:'options',t:'What is the smallest step that would still move this forward?'},
+  {cat:'values',t:'What does this situation ask of you that feels hardest?'},
+  {cat:'values',t:'What matters most to you about how you handle this?'},
+  {cat:'values',t:'How does this connect to the kind of professional — or person — you want to be?'},
+  {cat:'values',t:'What would you need to let go of to move forward?'},
+  {cat:'values',t:"What is this situation teaching you that you didn't expect?"},
+  {cat:'values',t:'Where is the growth in this for you, even though it is hard?'},
+  {cat:'forward',t:'What feels different for you now compared to when we began?'},
+  {cat:'forward',t:'What has become clearer?'},
+  {cat:'forward',t:'What is the one thing you are taking away from this conversation?'},
+  {cat:'forward',t:'What is the first step you will take — and by when?'},
+  {cat:'forward',t:'What might get in the way, and how will you handle that?'},
+  {cat:'forward',t:"Who will you tell about what you've decided today?"},
+  {cat:'clarify',t:'Just to check — you said [X]. Can you say a bit more about what you mean by that?'},
+  {cat:'clarify',t:'How long has this situation been going on?'},
+  {cat:'clarify',t:'Who else is directly involved?'},
+  {cat:'clarify',t:'Have you had a chance to speak to anyone about this yet?'},
+  {cat:'clarify',t:'When you say [specific word], what does that mean for you in this context?'},
+];
+const qc=document.getElementById('qContainer');
+qs.forEach(q=>{const c=document.createElement('div');c.className='q-card';c.dataset.cat=q.cat;c.textContent=q.t;qc.appendChild(c)});
+
+const vs=[
+  {a:'"Have you tried just...?"',u:'"What have you considered that you haven\'t tried yet?"'},
+  {a:'"I think you should..."',u:'"What feels most right to you?"'},
+  {a:'"In my experience..."',u:'"What does your experience tell you?"'},
+  {a:'"The problem is..."',u:'"What is at the heart of this for you?"'},
+  {a:'"Why didn\'t you...?"',u:'"What got in the way?"'},
+  {a:'"That happened to me too..."',u:'"What\'s that like for you?"'},
+];
+const vc=document.getElementById('vsContainer');
+vs.forEach(v=>{const r=document.createElement('div');r.className='vs-row';r.innerHTML=`<div class="vs-card"><div style="font-size:11px;font-weight:500;color:var(--color-text-danger);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px"><i class="ti ti-x" aria-hidden="true" style="margin-right:3px"></i>Avoid</div><div style="font-size:13px;color:var(--color-text-secondary);font-style:italic">${v.a}</div></div><div class="vs-card"><div style="font-size:11px;font-weight:500;color:var(--color-text-success);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px"><i class="ti ti-check" aria-hidden="true" style="margin-right:3px"></i>Use instead</div><div style="font-size:13px">${v.u}</div></div>`;vc.appendChild(r)});
+
+function filterQ(btn){
+  const cat=btn.dataset.cat;
+  document.querySelectorAll('#qFilters .q-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#qContainer .q-card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none'});
+}
+
+function showTk(btn){
+  const id=btn.dataset.tk;
+  ['prep','record','reflect'].forEach(k=>{document.getElementById('tk-'+k).style.display=k===id?'':'none'});
+  document.querySelectorAll('#tkNav .nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function clearFields(ids){ids.forEach(id=>{const e=document.getElementById(id);if(e)e.value=''})}
+
+function pickRole(r){
+  ['host','presenter','member'].forEach(k=>{const b=document.getElementById('rb-'+k);b.style.background='none';b.style.borderColor='var(--color-border-tertiary)'});
+  const b=document.getElementById('rb-'+r);b.style.background='var(--color-background-secondary)';b.style.borderColor='var(--color-border-secondary)';
+}
+</script>

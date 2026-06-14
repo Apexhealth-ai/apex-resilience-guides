@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindfulness &amp; Regulation Skills — Apex Health Resilience Self-Help Guides</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sage: #4A7C6B;
+  --sage-light: #E6F0EC;
+  --sage-mid: #8DB5A5;
+  --sage-dark: #2D5247;
+  --warm: #C8956C;
+  --warm-light: #FAF0E8;
+  --text: #2A2A2A;
+  --text-2: #5C5C5C;
+  --text-3: #8A8A8A;
+  --border: #DDD9D3;
+  --bg: #FAFAF8;
+  --white: #FFFFFF;
+  --red-light: #FDECEA;
+  --red: #C0392B;
+  --green-light: #E8F5EE;
+  --green: #27AE60;
+  --blue-light: #EAF2FB;
+  --blue: #2980B9;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 0 4rem;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.logo {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--sage-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-dot {
+  width: 8px; height: 8px;
+  background: var(--sage);
+  border-radius: 50%;
+}
+.series-badge {
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 0.75rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 68px;
+  z-index: 99;
+}
+.nav-btn {
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  background: var(--white);
+  color: var(--text-2);
+  transition: all 0.15s;
+}
+.nav-btn:hover { border-color: var(--sage-mid); color: var(--sage-dark); }
+.nav-btn.active {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: var(--white);
+}
+
+/* PANELS */
+.panel { display: none; padding: 2rem; }
+.panel.active { display: block; }
+
+/* HERO */
+.hero {
+  background: var(--sage-light);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #C5DDD6;
+}
+.hero-quote {
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--sage-dark);
+  margin-bottom: 0.75rem;
+}
+.hero-body { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+/* SECTION HEADING */
+.s-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}
+.s-icon {
+  width: 34px; height: 34px;
+  background: var(--sage-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.s-title { font-family: 'Lora', serif; font-size: 19px; font-weight: 500; color: var(--sage-dark); }
+.s-intro { font-size: 13px; color: var(--text-2); line-height: 1.7; margin-bottom: 1.25rem; }
+
+/* WHY BOX */
+.why {
+  border-left: 3px solid var(--sage-mid);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  background: var(--white);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.why strong { color: var(--sage-dark); }
+
+/* CARDS */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.card-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.card-hint {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 0.75rem;
+}
+
+/* STEP ROWS */
+.step-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.step-num {
+  min-width: 22px; height: 22px;
+  background: var(--sage-light);
+  color: var(--sage);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* PROGRESS */
+.pbar-wrap {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.pbar {
+  height: 4px;
+  background: var(--sage);
+  border-radius: 2px;
+  transition: width 0.35s ease;
+  width: 0%;
+}
+
+/* GROUNDING ITEMS */
+.g-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 7px;
+  user-select: none;
+}
+.g-item.current { border-color: var(--sage); border-width: 1.5px; background: var(--sage-light); }
+.g-item.done { background: var(--sage-light); border-color: var(--sage-mid); opacity: 0.8; }
+.g-chk {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: transparent;
+  transition: all 0.2s;
+}
+.g-item.done .g-chk { background: var(--sage); border-color: var(--sage); color: white; }
+.g-sense { font-size: 11px; font-weight: 500; color: var(--sage); margin-bottom: 2px; letter-spacing: 0.02em; }
+.g-text { font-size: 12.5px; color: var(--text-2); line-height: 1.4; }
+.g-done-msg {
+  font-size: 13px; font-weight: 500; color: var(--sage-dark);
+  padding: 8px 0; display: none;
+}
+
+/* BREATH */
+.breath-sel-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.b-sel {
+  padding: 5px 13px; font-size: 12px; font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  border: 1px solid var(--border);
+  border-radius: 20px; cursor: pointer;
+  background: var(--white); color: var(--text-2);
+  transition: all 0.15s;
+}
+.b-sel.active { background: var(--sage); border-color: var(--sage); color: white; }
+.b-desc { font-size: 12px; color: var(--text-3); margin-bottom: 1rem; font-style: italic; }
+
+.breath-area {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1.25rem 0;
+}
+.b-circle {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  border: 2.5px solid var(--sage-mid);
+  background: var(--sage-light);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  transition: transform 0.9s ease, background 0.5s;
+}
+.b-phase { font-size: 12px; font-weight: 500; color: var(--sage-dark); }
+.b-count-big { font-size: 28px; font-weight: 500; color: var(--sage-dark); line-height: 1; margin-top: 2px; }
+.b-label { font-size: 13px; color: var(--text-3); margin-bottom: 0.75rem; min-height: 20px; text-align: center; }
+.b-cycles { font-size: 12px; color: var(--text-3); margin-top: 0.75rem; }
+.b-cycles span { font-weight: 500; color: var(--sage); }
+
+/* SCAN */
+.scan-inst {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  min-height: 80px;
+  padding: 12px 0 4px;
+}
+.scan-inst strong { display: block; color: var(--sage-dark); font-weight: 500; margin-bottom: 4px; font-size: 14px; }
+
+/* WINDOW OF TOLERANCE */
+.tolerance-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+.zone {
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: opacity 0.12s;
+}
+.zone:hover { opacity: 0.88; }
+.zone + .zone { border-top: 1px solid var(--border); }
+.zone.hyper { background: var(--red-light); }
+.zone.win { background: var(--green-light); }
+.zone.hypo { background: var(--blue-light); }
+.zone-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.zone.hyper .zone-title { color: var(--red); }
+.zone.win .zone-title { color: var(--green); }
+.zone.hypo .zone-title { color: var(--blue); }
+.zone-desc { font-size: 12px; line-height: 1.5; }
+.zone.hyper .zone-desc { color: #a33; }
+.zone.win .zone-desc { color: #27804a; }
+.zone.hypo .zone-desc { color: #2471a3; }
+.zone-info {
+  display: none;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  background: var(--white);
+}
+
+/* STOP */
+.stop-row {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.stop-row:last-child { border-bottom: none; }
+.stop-letter {
+  min-width: 32px; height: 32px;
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 500; font-family: 'Lora', serif;
+  flex-shrink: 0;
+}
+.stop-body .stop-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.stop-body .stop-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.45; }
+
+/* VOCAB */
+.vc-cat { font-size: 12px; font-weight: 500; color: var(--text-3); margin: 1rem 0 0.35rem; }
+.vc-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+.vc {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--text-2);
+  cursor: pointer;
+  background: var(--white);
+  transition: all 0.12s;
+}
+.vc:hover, .vc.sel { background: var(--sage-light); border-color: var(--sage-mid); color: var(--sage-dark); }
+.vc-detail {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--sage-light);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border-left: 3px solid var(--sage-mid);
+}
+.vc-detail strong { color: var(--sage-dark); }
+
+/* REFLECT */
+.reflect {
+  background: var(--warm-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  border: 1px solid #ECD9C9;
+}
+.reflect-title { font-size: 12px; font-weight: 500; color: var(--warm); margin-bottom: 0.6rem; letter-spacing: 0.02em; }
+.reflect-q {
+  font-size: 13px; color: var(--text-2); line-height: 1.6;
+  padding-left: 10px;
+  border-left: 2px solid #E8C4A8;
+  margin-bottom: 6px;
+}
+
+/* GRID 2 */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 540px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* PLAN */
+.plan-field { margin-bottom: 1.125rem; }
+.plan-label { font-size: 13px; font-weight: 500; display: block; margin-bottom: 4px; }
+.plan-hint { font-size: 11.5px; color: var(--text-3); margin-bottom: 6px; }
+textarea.plan-ta {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  resize: vertical;
+  min-height: 68px;
+  line-height: 1.6;
+  transition: border-color 0.15s;
+}
+textarea.plan-ta:focus { outline: none; border-color: var(--sage-mid); }
+
+/* BUTTONS */
+button.primary {
+  padding: 7px 22px;
+  font-size: 13px; font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sage);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+button.primary:hover { background: var(--sage-dark); }
+button.secondary {
+  padding: 7px 16px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+button.secondary:hover { border-color: var(--sage-mid); color: var(--sage-dark); }
+button.secondary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-row { display: flex; gap: 8px; align-items: center; margin-top: 0.75rem; flex-wrap: wrap; }
+
+/* NAV CARDS */
+.nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+.nav-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.125rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nav-card:hover { border-color: var(--sage-mid); background: var(--sage-light); }
+.nc-icon { font-size: 22px; margin-bottom: 6px; }
+.nc-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; color: var(--sage-dark); }
+.nc-sub { font-size: 11.5px; color: var(--text-3); }
+
+/* TIMELINE (3-min breathing space) */
+.tl { display: grid; grid-template-columns: 28px 1fr; gap: 6px 12px; align-items: start; }
+.tl-num {
+  width: 28px; height: 28px;
+  background: var(--sage-light); color: var(--sage-dark);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 500;
+  flex-shrink: 0;
+}
+.tl-line { width: 1px; background: var(--border); min-height: 14px; margin: 0 auto; }
+.tl-body { padding-bottom: 12px; }
+.tl-body .tl-t { font-size: 13px; font-weight: 500; color: var(--sage-dark); margin-bottom: 2px; }
+.tl-body .tl-d { font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
+
+/* SUPPORT BOX */
+.support-box {
+  background: var(--sage-light);
+  border-radius: var(--radius);
+  padding: 1.125rem 1.5rem;
+  margin-top: 0;
+  border: 1px solid #C5DDD6;
+}
+.support-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text-2); margin-bottom: 7px; line-height: 1.5; }
+.support-icon { color: var(--sage); flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+/* FOOTER */
+.guide-footer {
+  text-align: center;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+}
+.footer-main { font-family: 'Lora', serif; font-size: 15px; color: var(--sage-dark); margin-bottom: 4px; }
+.footer-sub { font-size: 12px; color: var(--text-3); font-style: italic; }
+
+/* COPY CONFIRM */
+.copy-confirm { font-size: 12px; color: var(--sage); font-weight: 500; display: none; }
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:14px;left:14px;z-index:1000;display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;color:#1F2C5C;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;padding:6px 12px 6px 8px;border-radius:24px;border:1px solid #DDD9D3;box-shadow:0 2px 8px rgba(0,0,0,0.06);text-decoration:none;transition:all .15s" onmouseover="this.style.background='#E8EBF3';this.style.borderColor='#1F2C5C';" onmouseout="this.style.background='#FFFFFF';this.style.borderColor='#DDD9D3';"><img src="assets/apex-logo.png" alt="Apex Health" style="height:18px;width:auto;display:block"><span style="border-left:1px solid #DDD9D3;padding-left:8px">&larr; All guides</span></a>
+<div class="shell">
+
+  <div class="site-header">
+    <div class="header-inner">
+      <div class="logo"><div class="logo-dot"></div>Mindfulness &amp; Regulation Skills</div>
+      <div class="series-badge">Personal &amp; Professional Resilience — Self-Help Guide Series</div>
+    </div>
+  </div>
+
+  <div class="nav" id="nav">
+    <button class="nav-btn active" data-s="intro">Overview</button>
+    <button class="nav-btn" data-s="ground">🌱 Grounding</button>
+    <button class="nav-btn" data-s="breath">🌬️ Breathing</button>
+    <button class="nav-btn" data-s="scan">🧘 Body scan</button>
+    <button class="nav-btn" data-s="emote">🧠 Emotions</button>
+    <button class="nav-btn" data-s="daily">☀️ Mindfulness</button>
+    <button class="nav-btn" data-s="plan">📋 My plan</button>
+  </div>
+
+  <!-- ═══ OVERVIEW ═══ -->
+  <div class="panel active" id="p-intro">
+    <div class="hero">
+      <div class="hero-quote">"You cannot pour from an empty cup."</div>
+      <div class="hero-body">Working in healthcare is meaningful, demanding, and emotionally intensive. Over time, the accumulation of pressure, pace, and responsibility can leave us feeling depleted, anxious, or disconnected — even when we love what we do.<br><br>These skills are simple, evidence-based, and available to you at any moment — including right now. Use what helps. Return to what works. Skip what doesn't feel right for you today.</div>
+    </div>
+
+    <p style="font-size:14px;font-weight:500;margin-bottom:0.6rem;color:var(--sage-dark)">Your window of tolerance — tap each zone to learn more</p>
+    <div class="tolerance-wrap">
+      <div class="zone hyper" onclick="zClick('hyper')">
+        <div class="zone-title">Hyperarousal — too much</div>
+        <div class="zone-desc">Panic, anxiety, overwhelm, anger, racing thoughts, hypervigilance</div>
+      </div>
+      <div class="zone win" onclick="zClick('win')">
+        <div class="zone-title">Window of tolerance — just right</div>
+        <div class="zone-desc">Calm, present, able to think clearly, connected, resourceful</div>
+      </div>
+      <div class="zone hypo" onclick="zClick('hypo')">
+        <div class="zone-title">Hypoarousal — too little</div>
+        <div class="zone-desc">Numbness, shutdown, disconnection, fatigue, emptiness, fog</div>
+      </div>
+    </div>
+    <div class="zone-info" id="zinfo"></div>
+
+    <div class="nav-cards">
+      <div class="nav-card" onclick="sw('ground')"><div class="nc-icon">🌱</div><div class="nc-title">Grounding</div><div class="nc-sub">5-4-3-2-1 guided</div></div>
+      <div class="nav-card" onclick="sw('breath')"><div class="nc-icon">🌬️</div><div class="nc-title">Breathing</div><div class="nc-sub">Box, 4-7-8, sigh</div></div>
+      <div class="nav-card" onclick="sw('scan')"><div class="nc-icon">🧘</div><div class="nc-title">Body scan</div><div class="nc-sub">5-minute guided</div></div>
+      <div class="nav-card" onclick="sw('emote')"><div class="nc-icon">🧠</div><div class="nc-title">Emotions</div><div class="nc-sub">STOP + vocabulary</div></div>
+      <div class="nav-card" onclick="sw('daily')"><div class="nc-icon">☀️</div><div class="nc-title">Mindfulness</div><div class="nc-sub">3-minute space</div></div>
+      <div class="nav-card" onclick="sw('plan')"><div class="nc-icon">📋</div><div class="nc-title">My plan</div><div class="nc-sub">Personal choices</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ GROUNDING ═══ -->
+  <div class="panel" id="p-ground">
+    <div class="s-head"><div class="s-icon">🌱</div><div class="s-title">Grounding techniques</div></div>
+    <p class="s-intro">Grounding techniques shift your attention away from distressing thoughts and back into the here and now — your body, your senses, your immediate physical environment. Especially useful during anxiety, overwhelm, or racing thoughts.</p>
+    <div class="why"><strong>Why this helps:</strong> Grounding activates the prefrontal cortex — the thinking brain — which calms the amygdala (the alarm centre). By anchoring yourself in sensory experience, you interrupt the stress spiral and signal safety to your nervous system.</div>
+
+    <div class="card">
+      <div class="card-title">The 5-4-3-2-1 grounding method — tap each step as you complete it</div>
+      <div class="pbar-wrap"><div class="pbar" id="gbar"></div></div>
+      <div class="g-done-msg" id="gdone">✓ Well done — take one slow breath and notice how you feel compared to when you started.</div>
+      <div id="gsteps">
+        <div class="g-item current" onclick="gStep(0)" id="gi0">
+          <div class="g-chk" id="gc0">✓</div>
+          <div><div class="g-sense">5 THINGS YOU CAN SEE</div><div class="g-text">Look carefully around you — notice colours, shapes, light, shadows, and textures you might normally overlook.</div></div>
+        </div>
+        <div class="g-item" onclick="gStep(1)" id="gi1">
+          <div class="g-chk" id="gc1">✓</div>
+          <div><div class="g-sense">4 THINGS YOU CAN TOUCH</div><div class="g-text">Feel the texture, temperature, and weight of things near you — your chair, your clothing, a surface.</div></div>
+        </div>
+        <div class="g-item" onclick="gStep(2)" id="gi2">
+          <div class="g-chk" id="gc2">✓</div>
+          <div><div class="g-sense">3 THINGS YOU CAN HEAR</div><div class="g-text">Listen for sounds both nearby and in the distance — close your eyes if it helps you focus.</div></div>
+        </div>
+        <div class="g-item" onclick="gStep(3)" id="gi3">
+          <div class="g-chk" id="gc3">✓</div>
+          <div><div class="g-sense">2 THINGS YOU CAN SMELL</div><div class="g-text">Or two things you like the smell of — real or remembered. Even the air around you counts.</div></div>
+        </div>
+        <div class="g-item" onclick="gStep(4)" id="gi4">
+          <div class="g-chk" id="gc4">✓</div>
+          <div><div class="g-sense">1 THING YOU CAN TASTE</div><div class="g-text">Even the taste of the air or a recent drink counts. Take a moment to notice it fully.</div></div>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:1rem"><button class="secondary" onclick="gReset()">Reset</button></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Feet on the floor</div>
+        <div class="step-row"><div class="step-num">1</div><span>Sit upright with both feet flat on the floor.</span></div>
+        <div class="step-row"><div class="step-num">2</div><span>Press gently downward and feel the ground beneath you.</span></div>
+        <div class="step-row"><div class="step-num">3</div><span>Say to yourself: "I am here. I am safe. I am present."</span></div>
+        <div class="step-row"><div class="step-num">4</div><span>Breathe slowly for 60 seconds.</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Cold water reset</div>
+        <div class="step-row"><div class="step-num">1</div><span>Run cold water over your wrists or splash your face.</span></div>
+        <div class="step-row"><div class="step-num">2</div><span>Focus entirely on the sensation of the temperature.</span></div>
+        <div class="step-row"><div class="step-num">3</div><span>This activates the dive reflex, slowing heart rate quickly.</span></div>
+        <div class="step-row"><div class="step-num">4</div><span>Breathe steadily as you do this.</span></div>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <div class="reflect-title">▸ Reflect &amp; notice</div>
+      <div class="reflect-q">When do you most need a grounding technique? What are your early warning signals?</div>
+      <div class="reflect-q">Which of these techniques felt most natural or accessible to you?</div>
+      <div class="reflect-q">Where in your day could you practise grounding, even briefly?</div>
+    </div>
+  </div>
+
+  <!-- ═══ BREATHING ═══ -->
+  <div class="panel" id="p-breath">
+    <div class="s-head"><div class="s-icon">🌬️</div><div class="s-title">Breathing for regulation</div></div>
+    <p class="s-intro">Your breath is the one part of the autonomic nervous system you can consciously control — and this makes it your most immediately accessible regulation tool. Making your exhale longer than your inhale activates the parasympathetic nervous system.</p>
+    <div class="why"><strong>Why this helps:</strong> Research shows that slow, controlled breathing reduces cortisol, lowers blood pressure, and improves cognitive performance. It is one of the fastest evidence-based interventions for acute stress.</div>
+
+    <div class="card">
+      <div class="card-title">Interactive breathing guide — choose a technique and follow the circle</div>
+      <div class="breath-sel-row">
+        <button class="b-sel active" id="bsbox" onclick="selBreath('box')">Box (4-4-4-4)</button>
+        <button class="b-sel" id="bs478" onclick="selBreath('478')">4-7-8 calming</button>
+        <button class="b-sel" id="bssigh" onclick="selBreath('sigh')">Physiological sigh</button>
+      </div>
+      <div class="b-desc" id="bdesc">Used by military and emergency services worldwide. Inhale for 4 — hold for 4 — exhale for 4 — hold for 4. Repeat 4 cycles.</div>
+      <div class="breath-area">
+        <div class="b-circle" id="bcircle">
+          <div class="b-phase" id="bphase">Ready</div>
+          <div class="b-count-big" id="bcount">—</div>
+        </div>
+        <div class="b-label" id="blabel">Press start to begin</div>
+        <div class="btn-row">
+          <button class="primary" id="bstart" onclick="toggleBreath()">Start</button>
+          <button class="secondary" onclick="resetBreath()">Reset</button>
+        </div>
+        <div class="b-cycles">Cycles completed: <span id="bcycles">0</span></div>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <div class="reflect-title">▸ Reflect &amp; notice</div>
+      <div class="reflect-q">When do you notice that your breathing becomes shallow or rapid?</div>
+      <div class="reflect-q">Which breathing technique felt most accessible to you? Why?</div>
+      <div class="reflect-q">Could you set a reminder once a day this week to practise one of these techniques?</div>
+    </div>
+  </div>
+
+  <!-- ═══ BODY SCAN ═══ -->
+  <div class="panel" id="p-scan">
+    <div class="s-head"><div class="s-icon">🧘</div><div class="s-title">Body awareness &amp; scan</div></div>
+    <p class="s-intro">Much of our stress and emotion is stored not in our thoughts, but in our bodies — in tension, tightness, fatigue, or discomfort. A body scan trains you to notice these physical experiences with curiosity rather than judgement.</p>
+    <div class="why"><strong>Why this helps:</strong> Research by Jon Kabat-Zinn and others shows that body scan practices significantly reduce symptoms of anxiety, chronic pain, and exhaustion when practised regularly — even for as little as ten minutes.</div>
+
+    <div class="card">
+      <div class="card-title">5-minute body scan — step-by-step guided experience</div>
+      <div class="pbar-wrap"><div class="pbar" id="scanbar"></div></div>
+      <div class="scan-inst" id="scaninst">Find a comfortable position — seated or lying down. Close your eyes or soften your gaze. Press <em>Start scan</em> when you are ready.</div>
+      <div class="btn-row">
+        <button class="primary" id="scanbtn" onclick="startScan()">Start scan</button>
+        <button class="secondary" onclick="resetScan()">Reset</button>
+        <span style="font-size:12px;color:var(--text-3)" id="scanlbl"></span>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <div class="reflect-title">▸ Reflect &amp; notice</div>
+      <div class="reflect-q">Where in your body do you tend to hold stress or tension most? (Jaw? Shoulders? Stomach?)</div>
+      <div class="reflect-q">Were there any areas you had difficulty feeling — or areas that surprised you?</div>
+      <div class="reflect-q">What do you think your body has been trying to tell you lately?</div>
+    </div>
+  </div>
+
+  <!-- ═══ EMOTIONS ═══ -->
+  <div class="panel" id="p-emote">
+    <div class="s-head"><div class="s-icon">🧠</div><div class="s-title">Emotional regulation skills</div></div>
+    <p class="s-intro">Emotions are not problems to be solved — they are signals to be understood. Emotional regulation is not about suppressing what you feel; it is about developing the capacity to experience feelings without being overwhelmed, and to choose how you respond.</p>
+    <div class="why"><strong>Why this helps:</strong> Dr. Dan Siegel's research shows that labelling emotions with precise language reduces activity in the amygdala and increases prefrontal regulation — naming your feelings literally calms your brain. This is sometimes called "name it to tame it".</div>
+
+    <div class="card">
+      <div class="card-title">The STOP technique — creating a pause</div>
+      <div class="stop-row">
+        <div class="stop-letter">S</div>
+        <div class="stop-body"><div class="stop-name">Stop</div><div class="stop-desc">Whatever you are doing, pause for a moment. Just stop.</div></div>
+      </div>
+      <div class="stop-row">
+        <div class="stop-letter">T</div>
+        <div class="stop-body"><div class="stop-name">Take a breath</div><div class="stop-desc">One slow, deliberate breath in and out. Feel it fully.</div></div>
+      </div>
+      <div class="stop-row">
+        <div class="stop-letter">O</div>
+        <div class="stop-body"><div class="stop-name">Observe</div><div class="stop-desc">What is happening right now — in your body, your thoughts, your emotions? Just notice.</div></div>
+      </div>
+      <div class="stop-row">
+        <div class="stop-letter">P</div>
+        <div class="stop-body"><div class="stop-name">Proceed</div><div class="stop-desc">Choose your next action with intention rather than react from impulse.</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Expanding your emotional vocabulary — tap any word to explore its meaning</div>
+      <div class="card-hint">The more precisely you can name it, the more you can regulate it.</div>
+
+      <div class="vc-cat">Instead of "stressed" — try:</div>
+      <div class="vc-grid">
+        <div class="vc" onclick="vShow(this,'overwhelmed')">overwhelmed</div>
+        <div class="vc" onclick="vShow(this,'pressured')">pressured</div>
+        <div class="vc" onclick="vShow(this,'stretched')">stretched</div>
+        <div class="vc" onclick="vShow(this,'depleted')">depleted</div>
+        <div class="vc" onclick="vShow(this,'flooded')">flooded</div>
+        <div class="vc" onclick="vShow(this,'frantic')">frantic</div>
+        <div class="vc" onclick="vShow(this,'fragile')">fragile</div>
+      </div>
+      <div class="vc-cat">Instead of "angry" — try:</div>
+      <div class="vc-grid">
+        <div class="vc" onclick="vShow(this,'frustrated')">frustrated</div>
+        <div class="vc" onclick="vShow(this,'resentful')">resentful</div>
+        <div class="vc" onclick="vShow(this,'irritated')">irritated</div>
+        <div class="vc" onclick="vShow(this,'indignant')">indignant</div>
+        <div class="vc" onclick="vShow(this,'hurt')">hurt</div>
+        <div class="vc" onclick="vShow(this,'betrayed')">betrayed</div>
+        <div class="vc" onclick="vShow(this,'powerless')">powerless</div>
+      </div>
+      <div class="vc-cat">Instead of "sad" — try:</div>
+      <div class="vc-grid">
+        <div class="vc" onclick="vShow(this,'grieving')">grieving</div>
+        <div class="vc" onclick="vShow(this,'disappointed')">disappointed</div>
+        <div class="vc" onclick="vShow(this,'lonely')">lonely</div>
+        <div class="vc" onclick="vShow(this,'despondent')">despondent</div>
+        <div class="vc" onclick="vShow(this,'melancholic')">melancholic</div>
+        <div class="vc" onclick="vShow(this,'disheartened')">disheartened</div>
+      </div>
+      <div class="vc-cat">Instead of "fine" — try:</div>
+      <div class="vc-grid">
+        <div class="vc" onclick="vShow(this,'settled')">settled</div>
+        <div class="vc" onclick="vShow(this,'content')">content</div>
+        <div class="vc" onclick="vShow(this,'calm')">calm</div>
+        <div class="vc" onclick="vShow(this,'energised')">energised</div>
+        <div class="vc" onclick="vShow(this,'grounded_f')">grounded</div>
+        <div class="vc" onclick="vShow(this,'hopeful')">hopeful</div>
+        <div class="vc" onclick="vShow(this,'connected')">connected</div>
+      </div>
+      <div class="vc-detail" id="vcdetail"></div>
+    </div>
+
+    <div class="reflect">
+      <div class="reflect-title">▸ Reflect &amp; notice</div>
+      <div class="reflect-q">What emotions do you find it hardest to sit with? What do you usually do with them?</div>
+      <div class="reflect-q">Think of a recent emotional reaction. Using the vocabulary above, can you name it more precisely?</div>
+      <div class="reflect-q">What would it mean for you to respond to that emotion rather than react to it?</div>
+    </div>
+  </div>
+
+  <!-- ═══ MINDFULNESS ═══ -->
+  <div class="panel" id="p-daily">
+    <div class="s-head"><div class="s-icon">☀️</div><div class="s-title">Everyday mindfulness</div></div>
+    <p class="s-intro">Mindfulness is not meditation — although meditation is one way to practise it. At its simplest, mindfulness is paying attention to your present experience with openness and without judgement. It can be practised in the shower, on a commute, eating lunch, or walking between wards.</p>
+    <div class="why"><strong>Why this helps:</strong> Even brief mindfulness moments — as short as 90 seconds — can interrupt habitual stress patterns and reset your physiological state. The key is intention and repetition, not duration.</div>
+
+    <div class="card">
+      <div class="card-title">The 3-minute breathing space (MBCT)</div>
+      <div class="tl">
+        <div class="tl-num">1</div>
+        <div class="tl-body"><div class="tl-t">Arrive — minute 1</div><div class="tl-d">Ask yourself: "What is here right now?" Notice your thoughts, feelings, and body sensations without trying to change them.</div></div>
+        <div class="tl-line"></div><div></div>
+        <div class="tl-num">2</div>
+        <div class="tl-body"><div class="tl-t">Gather — minute 2</div><div class="tl-d">Bring your full attention to the physical sensation of your breathing. Notice each inhale and exhale. When your mind wanders, gently return.</div></div>
+        <div class="tl-line"></div><div></div>
+        <div class="tl-num">3</div>
+        <div class="tl-body" style="padding-bottom:0"><div class="tl-t">Expand — minute 3</div><div class="tl-d">Widen your awareness outward from your breath to your whole body, then to the room, then to sounds around you. Carry this into the next activity.</div></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Mindful micro-moments</div>
+        <div class="step-row"><div class="step-num">1</div><span>One mindful cup of tea or coffee — no phone, just taste and warmth.</span></div>
+        <div class="step-row"><div class="step-num">2</div><span>Three conscious breaths before entering a room.</span></div>
+        <div class="step-row"><div class="step-num">3</div><span>Pause at the threshold of a door. Notice what you are carrying.</span></div>
+        <div class="step-row"><div class="step-num">4</div><span>Look at the sky for 30 seconds without thinking.</span></div>
+        <div class="step-row"><div class="step-num">5</div><span>Notice five sounds during a walk or commute.</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">The mindful check-in</div>
+        <p style="font-size:12.5px;color:var(--text-2);margin-bottom:0.75rem;line-height:1.5">Three times a day, pause and ask yourself:</p>
+        <div class="step-row"><div class="step-num">1</div><span>How is my body right now?</span></div>
+        <div class="step-row"><div class="step-num">2</div><span>How is my mood right now?</span></div>
+        <div class="step-row"><div class="step-num">3</div><span>What do I need most in this moment?</span></div>
+        <div class="step-row"><div class="step-num">4</div><span>Then offer yourself one small thing in response.</span></div>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <div class="reflect-title">▸ Reflect &amp; notice</div>
+      <div class="reflect-q">What one mindful micro-moment could you realistically build into each day this week?</div>
+      <div class="reflect-q">When in your day do you feel most disconnected from the present moment?</div>
+      <div class="reflect-q">If you could offer yourself one compassionate thought right now, what would it be?</div>
+    </div>
+  </div>
+
+  <!-- ═══ PLAN ═══ -->
+  <div class="panel" id="p-plan">
+    <div class="s-head"><div class="s-icon">📋</div><div class="s-title">My personal regulation plan</div></div>
+    <p class="s-intro">Looking back through this guide, note your personal choices below. Use this as your anchor — return to it, revise it, and share it with someone who can support you.</p>
+
+    <div class="card">
+      <div class="plan-field">
+        <label class="plan-label">When I feel overwhelmed or anxious, I will try:</label>
+        <div class="plan-hint">e.g. 5-4-3-2-1 grounding, box breathing, cold water reset…</div>
+        <textarea class="plan-ta" id="p1" placeholder="Write your choices here…"></textarea>
+      </div>
+      <div class="plan-field">
+        <label class="plan-label">When I feel shut down or disconnected, I will try:</label>
+        <div class="plan-hint">e.g. movement, cold water, physiological sigh, connecting with someone…</div>
+        <textarea class="plan-ta" id="p2" placeholder="Write your choices here…"></textarea>
+      </div>
+      <div class="plan-field">
+        <label class="plan-label">My daily mindfulness practice will be:</label>
+        <div class="plan-hint">e.g. 3-minute breathing space after lunch, mindful cup of tea each morning…</div>
+        <textarea class="plan-ta" id="p3" placeholder="Write your practice here…"></textarea>
+      </div>
+      <div class="plan-field">
+        <label class="plan-label">The person I will share this with or who can support me:</label>
+        <div class="plan-hint">e.g. name and relationship…</div>
+        <textarea class="plan-ta" id="p4" placeholder="Name someone here…" style="min-height:48px"></textarea>
+      </div>
+      <div class="btn-row">
+        <button class="secondary" onclick="copyPlan()">⎘ Copy plan to clipboard</button>
+        <span class="copy-confirm" id="cconf">✓ Copied!</span>
+      </div>
+    </div>
+
+    <div class="support-box">
+      <p style="font-size:13px;font-weight:500;color:var(--sage-dark);margin-bottom:0.5rem">When you need more support</p>
+      <p style="font-size:12.5px;color:var(--text-2);line-height:1.6;margin-bottom:0.875rem">These techniques are powerful tools — and they are not a substitute for professional support when you need it. If difficult feelings are frequent, persistent, or significantly affecting your daily life, please reach out.</p>
+      <div class="support-item"><span class="support-icon">⚕</span><span><strong>Your GP or doctor</strong> — your first point of contact for mental and physical health concerns</span></div>
+      <div class="support-item"><span class="support-icon">⚕</span><span><strong>A qualified mental health practitioner</strong> — a counsellor, psychologist, or therapist trained to support you</span></div>
+      <div class="support-item"><span class="support-icon">♥</span><span><strong>A trusted friend, family member, or colleague</strong> — someone who will listen with care and without judgement</span></div>
+    </div>
+
+    <div class="guide-footer">
+      <div class="footer-main">You have taken time for yourself today. That matters.</div>
+      <div class="footer-sub">Every breath taken with awareness is a small act of resilience.</div>
+    </div>
+  </div>
+
+</div><!-- /shell -->
+
+<script>
+// ── NAVIGATION ──────────────────────────────────────────────
+const panelMap = {intro:'p-intro',ground:'p-ground',breath:'p-breath',scan:'p-scan',emote:'p-emote',daily:'p-daily',plan:'p-plan'};
+function sw(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(panelMap[id]).classList.add('active');
+  document.querySelector('[data-s="'+id+'"]').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => sw(b.dataset.s)));
+
+// ── WINDOW OF TOLERANCE ──────────────────────────────────────
+const zText = {
+  hyper: '↑ You may be in hyperarousal. Skills to help you come DOWN: box breathing, 4-7-8 breathing, 5-4-3-2-1 grounding, body scan, or cold water on your wrists. Even one slow breath can begin to shift things.',
+  win: '✓ You are in your window of tolerance — a calm and resourceful state where you can think clearly and respond with intention. Practise your mindfulness skills here to make this zone easier to return to.',
+  hypo: '↓ You may be in hypoarousal. Skills to help you come UP: gentle movement, a cold water splash on your face, the physiological sigh, or briefly connecting with another person. Even standing up and stretching can help.'
+};
+function zClick(z) {
+  const el = document.getElementById('zinfo');
+  el.style.display = 'block';
+  el.textContent = zText[z];
+  el.style.borderColor = z==='hyper'?'#e8b0ac':z==='win'?'#a3d4b5':'#a3c4e8';
+}
+
+// ── GROUNDING ────────────────────────────────────────────────
+const gDone = new Set();
+function gStep(i) {
+  gDone.add(i);
+  for (let n = 0; n < 5; n++) {
+    const item = document.getElementById('gi'+n);
+    item.classList.remove('current','done');
+    if (gDone.has(n)) {
+      item.classList.add('done');
+    } else if (n === (gDone.size === 5 ? -1 : Math.max(-1,...gDone)+1)) {
+      item.classList.add('current');
+    } else if (gDone.size === 0 && n === 0) {
+      item.classList.add('current');
+    }
+  }
+  document.getElementById('gbar').style.width = Math.round(gDone.size/5*100) + '%';
+  if (gDone.size === 5) document.getElementById('gdone').style.display = 'block';
+}
+function gReset() {
+  gDone.clear();
+  for (let n = 0; n < 5; n++) {
+    const item = document.getElementById('gi'+n);
+    item.classList.remove('done','current');
+    if (n===0) item.classList.add('current');
+  }
+  document.getElementById('gbar').style.width = '0%';
+  document.getElementById('gdone').style.display = 'none';
+}
+
+// ── BREATHING ────────────────────────────────────────────────
+const bTech = {
+  box:  { phases:['Breathe in','Hold','Breathe out','Hold'], counts:[4,4,4,4], desc:'Used by military and emergency services worldwide. Inhale for 4 — hold for 4 — exhale for 4 — hold for 4. Repeat 4 cycles.' },
+  '478':{ phases:['Breathe in','Hold','Breathe out'], counts:[4,7,8], desc:'Ideal before sleep or difficult meetings. The extended exhale activates the parasympathetic nervous system. Repeat 3–4 cycles.' },
+  sigh: { phases:['Inhale','Top-up sniff','Long exhale'], counts:[3,1,6], desc:'One or two physiological sighs rapidly reduce acute stress by releasing built-up CO₂ from the lungs.' }
+};
+let bCur='box', bRun=false, bTimer=null, bPhase=0, bTick=0, bCycles=0;
+function selBreath(t) {
+  bCur = t;
+  document.querySelectorAll('.b-sel').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bs'+t).classList.add('active');
+  document.getElementById('bdesc').textContent = bTech[t].desc;
+  resetBreath();
+}
+function toggleBreath() {
+  if (bRun) { bRun=false; clearInterval(bTimer); document.getElementById('bstart').textContent='Resume'; }
+  else { bRun=true; document.getElementById('bstart').textContent='Pause'; runBreath(); }
+}
+function runBreath() {
+  const t = bTech[bCur];
+  updBreath(t);
+  bTimer = setInterval(() => {
+    bTick++;
+    if (bTick >= t.counts[bPhase]) {
+      bTick=0; bPhase++;
+      if (bPhase >= t.phases.length) { bPhase=0; bCycles++; document.getElementById('bcycles').textContent=bCycles; }
+      updBreath(t);
+    } else {
+      document.getElementById('bcount').textContent = t.counts[bPhase] - bTick;
+    }
+  }, 1000);
+}
+function updBreath(t) {
+  const ph = t.phases[bPhase];
+  document.getElementById('bphase').textContent = ph;
+  document.getElementById('blabel').textContent = ph;
+  document.getElementById('bcount').textContent = t.counts[bPhase];
+  const c = document.getElementById('bcircle');
+  const expanding = ph.toLowerCase().includes('in') || ph.toLowerCase().includes('inhale') || ph.toLowerCase().includes('sniff') || ph.toLowerCase().includes('hold');
+  c.style.transform = expanding ? 'scale(1.22)' : 'scale(1)';
+  c.style.background = ph.toLowerCase().includes('hold') ? 'var(--sage-mid)' : expanding ? '#C5DDD6' : 'var(--sage-light)';
+}
+function resetBreath() {
+  bRun=false; clearInterval(bTimer); bPhase=0; bTick=0; bCycles=0;
+  document.getElementById('bstart').textContent='Start';
+  document.getElementById('bphase').textContent='Ready';
+  document.getElementById('blabel').textContent='Press start to begin';
+  document.getElementById('bcount').textContent='—';
+  document.getElementById('bcycles').textContent='0';
+  const c = document.getElementById('bcircle');
+  c.style.transform='scale(1)'; c.style.background='var(--sage-light)';
+}
+
+// ── BODY SCAN ────────────────────────────────────────────────
+const scanSteps = [
+  {t:'Settle in',d:'Find a comfortable position — seated or lying down. Close your eyes or soften your gaze. Take three slow breaths and let your body settle.',s:25},
+  {t:'Crown of the head',d:'Bring attention to the very top of your head. Simply notice any sensations — warmth, tension, tingling, or nothing at all. There is no right answer here.',s:30},
+  {t:'Face and jaw',d:'Move your awareness to your face and jaw. Notice any tension around your forehead, eyes, jaw, or mouth. You do not need to change anything — just notice.',s:30},
+  {t:'Neck and shoulders',d:'Bring attention to your neck and shoulders. This is where many of us carry our stress. Simply notice what is there with gentle curiosity.',s:35},
+  {t:'Chest and upper back',d:'Move to your chest and upper back. Notice the rise and fall of your chest as you breathe. What does this area feel like from the inside?',s:35},
+  {t:'Arms and hands',d:'Bring awareness to your arms, down to your hands and fingertips. Notice temperature, weight, any tingling or pulsing. Breathe into any tension you find.',s:30},
+  {t:'Stomach and lower back',d:'Move to your stomach and lower back. Notice any gripping, tightness, or softness. On the inhale, breathe gently into this area. On the exhale, let it soften.',s:35},
+  {t:'Hips, legs and feet',d:'Continue down through your hips, thighs, knees, calves, all the way to the soles of your feet. Notice the weight and warmth of your legs.',s:35},
+  {t:'Complete',d:'Take three slow, final breaths. When you feel ready, gently open your eyes. Notice how you feel compared to when you started. Well done.',s:20}
+];
+let sStep=-1, sTimer=null, sRun=false;
+function startScan() {
+  if (sRun) { sRun=false; clearInterval(sTimer); document.getElementById('scanbtn').textContent='Resume'; return; }
+  if (sStep===-1) sStep=0;
+  sRun=true; document.getElementById('scanbtn').textContent='Pause';
+  runScanStep();
+}
+function runScanStep() {
+  if (sStep >= scanSteps.length) {
+    document.getElementById('scanbtn').textContent='Complete ✓';
+    document.getElementById('scanbtn').disabled=true; sRun=false; return;
+  }
+  const s = scanSteps[sStep];
+  document.getElementById('scaninst').innerHTML = '<strong>'+s.t+'</strong>'+s.d;
+  document.getElementById('scanbar').style.width = Math.round(sStep/scanSteps.length*100)+'%';
+  document.getElementById('scanlbl').textContent = 'Step '+(sStep+1)+' of '+scanSteps.length;
+  let cd=s.s; clearInterval(sTimer);
+  sTimer = setInterval(()=>{ cd--; if(cd<=0){ clearInterval(sTimer); sStep++; if(sRun) runScanStep(); }}, 1000);
+}
+function resetScan() {
+  clearInterval(sTimer); sStep=-1; sRun=false;
+  document.getElementById('scaninst').textContent='Find a comfortable position — seated or lying down. Close your eyes or soften your gaze. Press Start scan when you are ready.';
+  document.getElementById('scanbar').style.width='0%';
+  document.getElementById('scanlbl').textContent='';
+  const btn=document.getElementById('scanbtn'); btn.textContent='Start scan'; btn.disabled=false;
+}
+
+// ── VOCABULARY ───────────────────────────────────────────────
+const vDefs = {
+  overwhelmed:'Too much to process at once — demands exceed your capacity to respond.',
+  pressured:'External expectations or deadlines creating a sense of urgency or constraint.',
+  stretched:'Pulled in too many directions; operating beyond comfortable capacity.',
+  depleted:'Drained of energy, emotional reserves, or the capacity to give more.',
+  flooded:'Overwhelmed to the point of difficulty thinking clearly or functioning normally.',
+  frantic:'Hurried and disorganised — urgency mixed with a sense of disorientation.',
+  fragile:'Close to the edge — easily affected by things that would normally feel manageable.',
+  frustrated:'Blocked from a goal or expectation — held back from what you wanted.',
+  resentful:'Lingering displeasure about perceived unfairness or being taken for granted.',
+  irritated:'Minor but persistent friction or annoyance — a rubbing-against quality.',
+  indignant:'Righteous anger in response to something perceived as unjust or unfair.',
+  hurt:'Emotional pain caused by another\'s words, actions, or absence.',
+  betrayed:'Trust has been broken — a deep wound to a sense of safety or loyalty.',
+  powerless:'A felt absence of agency or influence over a situation that matters to you.',
+  grieving:'Processing a loss — this can include people, roles, hopes, or a version of yourself.',
+  disappointed:'A gap between what was hoped for and what actually occurred.',
+  lonely:'A longing for connection, belonging, or being truly understood by another.',
+  despondent:'Loss of hope; a heavy sense that things cannot or will not improve.',
+  melancholic:'A gentle, reflective sadness — often carrying depth and a kind of quiet meaning.',
+  disheartened:'Courage or enthusiasm has been eroded by setbacks or repeated difficulty.',
+  settled:'A quiet, stable inner calm — not forcing anything, simply resting in what is.',
+  content:'Satisfaction with things as they are, without needing anything more right now.',
+  calm:'Inner stillness — low arousal, clear thinking, a steady and present quality.',
+  energised:'A positive, activated state — ready and willing to engage and act.',
+  grounded_f:'Connected to the present moment and to yourself — rooted and centred.',
+  hopeful:'Oriented toward positive possibility; open to what may come.',
+  connected:'Feeling in relationship — with others, with yourself, and with this present moment.'
+};
+function vShow(el, w) {
+  document.querySelectorAll('.vc').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const d = document.getElementById('vcdetail');
+  const name = w==='grounded_f' ? 'grounded' : w;
+  d.style.display='block';
+  d.innerHTML = '<strong>'+name.charAt(0).toUpperCase()+name.slice(1)+':</strong> ' + (vDefs[w]||'A nuanced emotional state worth exploring further.');
+}
+
+// ── PLAN ─────────────────────────────────────────────────────
+function copyPlan() {
+  const fields=[['p1','When overwhelmed or anxious:'],['p2','When shut down or disconnected:'],['p3','Daily mindfulness practice:'],['p4','Person to share this with:']];
+  const text = fields.map(([id,lbl])=>{const v=document.getElementById(id).value.trim(); return v ? lbl+'\n'+v : '';}).filter(Boolean).join('\n\n');
+  if (!text) return;
+  const full = 'My personal regulation plan\n\n'+text+'\n\n— Mindfulness & Regulation Skills Guide';
+  if (navigator.clipboard) navigator.clipboard.writeText(full).then(()=>{
+    const c=document.getElementById('cconf'); c.style.display='inline';
+    setTimeout(()=>c.style.display='none', 2500);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+/* ============================================================
+   Apex Health · Resilience Series — Site Chrome
+   Header, footer, and shell for the guide pages and index.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { color: var(--color-accent-hover); text-decoration: underline; }
+
+.site-shell {
+  max-width: 880px;
+  margin: 0 auto;
+  background: var(--color-background-primary);
+  min-height: 100vh;
+  box-shadow: 0 0 60px rgba(0,0,0,0.04);
+}
+
+/* ───────── Top bar ───────── */
+.site-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 24px;
+  background: var(--color-background-primary);
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(180%) blur(6px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.brand:hover { text-decoration: none; opacity: 0.85; }
+.brand-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+.brand-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--color-border-secondary);
+  display: inline-block;
+}
+.brand-series {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+  font-size: 13.5px;
+  letter-spacing: 0.005em;
+}
+
+.bar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.bar-link {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  padding: 6px 10px;
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background .15s, color .15s;
+}
+.bar-link:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.theme-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all .15s;
+}
+.theme-btn:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-primary);
+}
+
+/* ───────── Guide footer ───────── */
+.site-foot {
+  padding: 28px 24px 40px;
+  border-top: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-primary);
+  font-size: 12.5px;
+  color: var(--color-text-tertiary);
+  line-height: 1.6;
+}
+.site-foot strong {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+.site-foot .foot-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.site-foot .foot-row a {
+  font-size: 12.5px;
+}
+
+/* ───────── Mobile ───────── */
+@media (max-width: 720px) {
+  .site-shell { box-shadow: none; }
+  .site-bar { padding: 12px 16px; }
+  .brand-series { display: none; }
+  .bar-link span.label { display: none; }
+}
+
+/* ───────── Index landing ───────── */
+.lp-hero {
+  padding: 56px 32px 32px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+.lp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--apex-red-deep);
+  background: var(--apex-red-soft);
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+[data-theme='dark'] .lp-eyebrow {
+  color: var(--apex-red);
+  background: var(--apex-red-soft);
+}
+.lp-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1.15;
+  color: var(--apex-navy);
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+[data-theme='dark'] .lp-title { color: var(--color-text-primary); }
+.lp-title em {
+  font-style: normal;
+  color: var(--apex-red-deep);
+}
+.lp-sub {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  max-width: 620px;
+  margin: 0;
+}
+.lp-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+.lp-pills .pill {
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 0.5px solid var(--color-border-secondary);
+  color: var(--color-text-secondary);
+  background: var(--color-background-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lp-section-title {
+  padding: 32px 32px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+}
+
+.lp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 8px 32px 24px;
+}
+@media (min-width: 640px) {
+  .lp-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.lp-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 22px 20px;
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+  position: relative;
+  overflow: hidden;
+}
+.lp-card:hover {
+  border-color: var(--color-accent);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(24, 95, 165, 0.06);
+}
+.lp-card-num {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--color-accent);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+}
+.lp-card-title {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+.lp-card-desc {
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+.lp-card-foot {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.lp-card.featured {
+  background: linear-gradient(135deg, var(--color-accent-soft) 0%, var(--color-background-primary) 70%);
+  border-color: var(--color-border-info);
+  grid-column: 1 / -1;
+}
+
+/* The featured card hosts a different colour treatment for the accent dot */
+.lp-overarching {
+  margin: 8px 32px 0;
+  padding: 16px 18px;
+  border: 0.5px dashed var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  background: var(--color-background-secondary);
+}
+.lp-overarching strong {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+/* ───────── Embedded guide container ───────── */
+.guide-frame {
+  padding: 0;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+.guide-frame .ppr-wrap,
+.guide-frame > div { color: var(--color-text-primary); }

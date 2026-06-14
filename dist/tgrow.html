@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TGROW Resilience Tool — Apex Health Resilience Self-Help Guides</title>
+<meta name="description" content="A five-stage self-coaching reflection: Topic, Goal, Reality, Options, Way Forward.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="site-shell">
+  <header class="site-bar">
+    <a href="index.html" class="brand" aria-label="Apex Health — Resilience Self-Help Guides">
+      <img src="assets/apex-logo.png" alt="Apex Health" class="brand-logo">
+      <span class="brand-divider" aria-hidden="true"></span>
+      <span class="brand-series">Resilience Self-Help Guides</span>
+    </a>
+    <div class="bar-actions">
+      <a class="bar-link" href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i><span class="label">All guides</span></a>
+      <button id="themeBtn" class="theme-btn" aria-label="Toggle theme"><i class="ti ti-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+  <main class="guide-frame">
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+#tg{padding:1.5rem 0;font-family:var(--font-sans)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.t-screen{display:none}
+.t-screen.t-show{display:block}
+.t-prog{margin-bottom:2rem;display:none}
+.t-steps{display:flex;align-items:flex-start}
+.t-step{display:flex;flex-direction:column;align-items:center;flex:1}
+.t-dot{width:34px;height:34px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:14px;color:var(--color-text-secondary);flex-shrink:0}
+.t-dot.active{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.t-dot.done{background:#E1F5EE;border-color:#5DCAA5;color:#0F6E56}
+.t-slabel{font-size:11px;color:var(--color-text-tertiary);margin-top:5px;text-align:center;max-width:60px}
+.t-slabel.active{color:#0F6E56;font-weight:500}
+.t-conn{height:0.5px;flex:0.8;background:var(--color-border-tertiary);margin-top:17px}
+.t-shead{display:flex;align-items:flex-start;gap:1.25rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.t-letter{font-family:var(--font-serif);font-size:4.5rem;line-height:1;font-weight:400;color:#1D9E75;width:70px;text-align:center;flex-shrink:0}
+.t-letter.amber{color:#BA7517}
+.t-stitle{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.t-ssub{font-size:14px;color:var(--color-text-secondary);font-style:italic}
+.t-info{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.875rem 1.1rem;margin-bottom:1.25rem;font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+.t-info.amber{background:#FAEEDA;color:#633806}
+.t-plabel{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.t-pi{display:flex;gap:.75rem;margin-bottom:.625rem;align-items:flex-start}
+.t-pn{font-size:12px;font-weight:500;color:#1D9E75;min-width:20px;padding-top:2px;flex-shrink:0}
+.t-pn.amber{color:#BA7517}
+.t-pt{font-size:14px;color:var(--color-text-primary);line-height:1.6}
+.t-slrow{display:flex;align-items:center;gap:12px;margin:.5rem 0 .25rem}
+.t-sllabel{font-size:12px;color:var(--color-text-tertiary);min-width:14px}
+.t-slval{font-size:15px;font-weight:500;color:#1D9E75;min-width:24px;text-align:center}
+.t-slval.amber{color:#BA7517}
+.t-wlabel{font-size:13px;font-weight:500;color:var(--color-text-secondary);margin-bottom:.5rem;margin-top:1.25rem;display:block}
+textarea.t-ta{width:100%;min-height:160px;resize:vertical;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary);background:var(--color-background-primary);line-height:1.7}
+textarea.t-ta:focus{outline:none;border-color:#1D9E75;box-shadow:0 0 0 2px #E1F5EE}
+textarea.t-ta.amber:focus{border-color:#EF9F27;box-shadow:0 0 0 2px #FAEEDA}
+textarea.t-ta::placeholder{color:var(--color-text-tertiary);font-style:italic}
+.t-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;padding-top:1.25rem;border-top:0.5px solid var(--color-border-tertiary)}
+.t-count{font-size:13px;color:var(--color-text-tertiary)}
+.t-btn{font-size:14px;display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans)}
+.t-btn.primary{background:#1D9E75;border-color:#5DCAA5;color:#fff;font-weight:500}
+.t-btn.primary:hover{background:#0F6E56}
+.t-tip{background:#E1F5EE;border-radius:var(--border-radius-md);padding:.875rem 1rem;font-size:13px;color:#0F6E56;display:flex;gap:8px;align-items:flex-start;margin-bottom:1.5rem;line-height:1.6}
+.t-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem}
+.t-table th{padding:8px 12px;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);text-align:left}
+.t-table td{padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:14px;color:var(--color-text-primary)}
+.t-table td:first-child{font-family:var(--font-serif);font-size:19px;color:#1D9E75;width:36px}
+.t-table td:nth-child(2){font-weight:500;width:110px}
+.t-table td:nth-child(3){color:var(--color-text-secondary);font-style:italic}
+.t-sup-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:.625rem;font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+</style>
+
+<div id="tg">
+<h2 class="sr-only">TGROW Resilience Self-Coaching Tool — an interactive five-stage self-reflection guide</h2>
+
+<div class="t-prog" id="prog">
+  <div class="t-steps">
+    <div class="t-step" data-s="1"><div class="t-dot" id="d1">T</div><div class="t-slabel" id="dl1">Topic</div></div>
+    <div class="t-conn"></div>
+    <div class="t-step" data-s="2"><div class="t-dot" id="d2">G</div><div class="t-slabel" id="dl2">Goal</div></div>
+    <div class="t-conn"></div>
+    <div class="t-step" data-s="3"><div class="t-dot" id="d3">R</div><div class="t-slabel" id="dl3">Reality</div></div>
+    <div class="t-conn"></div>
+    <div class="t-step" data-s="4"><div class="t-dot" id="d4">O</div><div class="t-slabel" id="dl4">Options</div></div>
+    <div class="t-conn"></div>
+    <div class="t-step" data-s="5"><div class="t-dot" id="d5">W</div><div class="t-slabel" id="dl5">Way Forward</div></div>
+    <div class="t-conn"></div>
+    <div class="t-step" data-s="6"><div class="t-dot" id="d6"><i class="ti ti-heart" style="font-size:13px" aria-hidden="true"></i></div><div class="t-slabel" id="dl6">Closing</div></div>
+  </div>
+</div>
+
+<!-- Screen 0: Welcome -->
+<div class="t-screen t-show" id="s0">
+  <p style="font-size:11px;font-weight:500;color:#1D9E75;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.625rem">Personal &amp; Professional Resilience</p>
+  <h1 style="font-family:var(--font-serif);font-size:36px;font-weight:400;color:var(--color-text-primary);margin-bottom:.375rem">TGROW</h1>
+  <p style="font-size:16px;color:var(--color-text-secondary);font-style:italic;margin-bottom:1.25rem">A Reflective Conversation with Yourself</p>
+  <p style="font-size:15px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:1.25rem">This guide gives you a private, structured space to think through a situation — at your own pace, in your own words. Resilience is not about being unaffected by challenges. It is about working through difficulty, recovering your balance, and growing stronger as a result.</p>
+  <div class="t-tip"><i class="ti ti-bulb" style="font-size:18px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i><span>Find a quiet moment. Take a few slow breaths before you begin. Treat this as a conversation between you and your most trusted, non-judgemental self.</span></div>
+  <table class="t-table"><thead><tr><th colspan="2">Stage</th><th>What you are exploring</th></tr></thead><tbody>
+    <tr><td>T</td><td>Topic</td><td>What is this about? What do I want to focus on?</td></tr>
+    <tr><td>G</td><td>Goal</td><td>What do I want to achieve or feel differently about?</td></tr>
+    <tr><td>R</td><td>Reality</td><td>What is actually happening right now?</td></tr>
+    <tr><td>O</td><td>Options</td><td>What could I do? What choices do I have?</td></tr>
+    <tr><td>W</td><td>Way Forward</td><td>What am I going to do? What is my first step?</td></tr>
+  </tbody></table>
+  <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.7">Work through each stage in order. You do not have to complete the whole guide in one sitting — pause and come back if you need to. There are no right or wrong answers. Write freely and honestly. No one else needs to see what you write.</p>
+</div>
+
+<!-- Screen 1: T -->
+<div class="t-screen" id="s1">
+  <div class="t-shead">
+    <div class="t-letter">T</div>
+    <div><div class="t-stitle">Topic</div><div class="t-ssub">Setting the scene — what do you want to focus on today?</div></div>
+  </div>
+  <div class="t-info">Before diving into solutions, it helps to name what is actually on your mind. This stage is about bringing clarity to the situation you want to explore — without analysis or judgement. Simply describe it.</div>
+  <div class="t-plabel">Reflection prompts</div>
+  <div class="t-pi"><span class="t-pn">1.</span><span class="t-pt">In a few words or sentences, what is the situation or challenge you would like to think about?</span></div>
+  <div class="t-pi"><span class="t-pn">2.</span><span class="t-pt">How long has this been on your mind?</span></div>
+  <div class="t-pi"><span class="t-pn">3.</span>
+    <div style="flex:1"><span class="t-pt">On a scale of 1–10, how significant does this feel to you right now? What makes it that number?</span>
+      <div class="t-slrow"><span class="t-sllabel">1</span><input type="range" min="1" max="10" value="5" style="flex:1;accent-color:#1D9E75" oninput="document.getElementById('sv1').textContent=this.value"><span class="t-sllabel">10</span><span class="t-slval" id="sv1">5</span></div>
+    </div>
+  </div>
+  <div class="t-pi"><span class="t-pn">4.</span><span class="t-pt">Is there a specific moment, event, or conversation that triggered this for you?</span></div>
+  <label class="t-wlabel">Your reflection on this topic…</label>
+  <textarea class="t-ta" id="ta1" placeholder="Write freely here — this space is just for you…"></textarea>
+</div>
+
+<!-- Screen 2: G -->
+<div class="t-screen" id="s2">
+  <div class="t-shead">
+    <div class="t-letter">G</div>
+    <div><div class="t-stitle">Goal</div><div class="t-ssub">What do you want to achieve, feel, or resolve?</div></div>
+  </div>
+  <div class="t-info">Now that you have named the topic, shift your focus towards what you actually want. Goals in this context do not have to be grand — they might be as simple as feeling calmer, having a clearer mind, or knowing your next step.</div>
+  <div class="t-plabel">Reflection prompts</div>
+  <div class="t-pi"><span class="t-pn">1.</span><span class="t-pt">What outcome would make this situation feel better or more manageable to you?</span></div>
+  <div class="t-pi"><span class="t-pn">2.</span><span class="t-pt">How would you know when things had improved? What would you see, feel, or hear that would be different?</span></div>
+  <div class="t-pi"><span class="t-pn">3.</span><span class="t-pt">If this situation were resolved in the ideal way, what would that look like?</span></div>
+  <div class="t-pi"><span class="t-pn">4.</span><span class="t-pt">What matters most to you in relation to this situation? What values or needs are involved?</span></div>
+  <div class="t-pi"><span class="t-pn">5.</span><span class="t-pt">Is your goal about changing the situation — or about changing how you feel about it? Or both?</span></div>
+  <label class="t-wlabel">Describe your goal as clearly as you can…</label>
+  <textarea class="t-ta" id="ta2" placeholder="What do you want to achieve, feel, or resolve…"></textarea>
+</div>
+
+<!-- Screen 3: R -->
+<div class="t-screen" id="s3">
+  <div class="t-shead">
+    <div class="t-letter">R</div>
+    <div><div class="t-stitle">Reality</div><div class="t-ssub">What is actually happening right now — the honest picture?</div></div>
+  </div>
+  <div class="t-info">This stage requires the most honesty — and the most compassion. Aim to see the situation clearly, without minimising or catastrophising. Describe facts alongside feelings, and notice where one might be influencing the other.</div>
+  <div class="t-plabel">Reflection prompts</div>
+  <div class="t-pi"><span class="t-pn">1.</span><span class="t-pt">What is happening right now, as objectively as you can describe it?</span></div>
+  <div class="t-pi"><span class="t-pn">2.</span><span class="t-pt">What have you already tried? What happened as a result?</span></div>
+  <div class="t-pi"><span class="t-pn">3.</span><span class="t-pt">Who else is involved, and what might their perspective be?</span></div>
+  <div class="t-pi"><span class="t-pn">4.</span><span class="t-pt">What feelings are you carrying about this situation? Name them as specifically as you can.</span></div>
+  <div class="t-pi"><span class="t-pn">5.</span><span class="t-pt">What assumptions might you be making that you have not yet tested?</span></div>
+  <div class="t-pi"><span class="t-pn">6.</span><span class="t-pt">Is there anything you might be avoiding thinking about? What would it mean to look at it directly?</span></div>
+  <div class="t-pi"><span class="t-pn">7.</span><span class="t-pt">What resources, strengths, or support do you already have available?</span></div>
+  <label class="t-wlabel">Describe your current reality as honestly as you can…</label>
+  <textarea class="t-ta" id="ta3" placeholder="Describe the situation as it actually is right now…"></textarea>
+</div>
+
+<!-- Screen 4: O -->
+<div class="t-screen" id="s4">
+  <div class="t-shead">
+    <div class="t-letter">O</div>
+    <div><div class="t-stitle">Options</div><div class="t-ssub">What choices do you have? What could you do next?</div></div>
+  </div>
+  <div class="t-info">This is the creative, generative part of your reflection. Generate as many options as possible before evaluating any of them. Do not dismiss an idea too quickly — even options that seem impractical can spark something useful.</div>
+  <div class="t-plabel">Reflection prompts</div>
+  <div class="t-pi"><span class="t-pn">1.</span><span class="t-pt">What are all the possible things you could do? List everything — large or small, conventional or not.</span></div>
+  <div class="t-pi"><span class="t-pn">2.</span><span class="t-pt">If fear or self-doubt were not a factor, what would you do?</span></div>
+  <div class="t-pi"><span class="t-pn">3.</span><span class="t-pt">What would a wise, caring friend or mentor suggest to you right now?</span></div>
+  <div class="t-pi"><span class="t-pn">4.</span><span class="t-pt">Is there something you have been putting off that, deep down, you already know you need to do?</span></div>
+  <div class="t-pi"><span class="t-pn">5.</span><span class="t-pt">Which option feels most aligned with your values and what matters to you?</span></div>
+  <div class="t-pi"><span class="t-pn">6.</span><span class="t-pt">What are the potential benefits and risks of each option you are considering?</span></div>
+  <label class="t-wlabel">List your options freely — don't filter yourself at this stage…</label>
+  <textarea class="t-ta" id="ta4" placeholder="What could you do? Brainstorm without judgement…"></textarea>
+</div>
+
+<!-- Screen 5: W -->
+<div class="t-screen" id="s5">
+  <div class="t-shead">
+    <div class="t-letter amber">W</div>
+    <div><div class="t-stitle">Way Forward</div><div class="t-ssub">What will you do? What is your first step?</div></div>
+  </div>
+  <div class="t-info amber">The final stage is about commitment — not to perfection, but to a single, meaningful next step. Small steps taken consistently have extraordinary power. Choose something you genuinely intend to do, however modest.</div>
+  <div class="t-plabel">Reflection prompts</div>
+  <div class="t-pi"><span class="t-pn amber">1.</span><span class="t-pt">Looking at your options, which one feels most right for you at this time?</span></div>
+  <div class="t-pi"><span class="t-pn amber">2.</span><span class="t-pt">What is the very first step you will take — and by when?</span></div>
+  <div class="t-pi"><span class="t-pn amber">3.</span><span class="t-pt">Who might you need to involve, inform, or ask for support?</span></div>
+  <div class="t-pi"><span class="t-pn amber">4.</span><span class="t-pt">What might get in the way, and how could you prepare for that?</span></div>
+  <div class="t-pi"><span class="t-pn amber">5.</span>
+    <div style="flex:1"><span class="t-pt">On a scale of 1–10, how committed do you feel to taking this step? If it is not a 9 or 10, what would make it higher?</span>
+      <div class="t-slrow"><span class="t-sllabel">1</span><input type="range" min="1" max="10" value="7" style="flex:1;accent-color:#BA7517" oninput="document.getElementById('sv2').textContent=this.value"><span class="t-sllabel">10</span><span class="t-slval amber" id="sv2">7</span></div>
+    </div>
+  </div>
+  <div class="t-pi"><span class="t-pn amber">6.</span><span class="t-pt">How will you look after yourself as you move forward? What does your wellbeing need right now?</span></div>
+  <label class="t-wlabel">Your way forward — what will you do and when?</label>
+  <textarea class="t-ta amber" id="ta5" placeholder="Describe your first step and commitment…" style="border-color:#EF9F27"></textarea>
+</div>
+
+<!-- Screen 6: Closing -->
+<div class="t-screen" id="s6">
+  <div class="t-shead">
+    <div class="t-letter"><i class="ti ti-heart" style="font-size:3.5rem;color:#1D9E75;vertical-align:middle" aria-hidden="true"></i></div>
+    <div><div class="t-stitle">A closing reflection</div><div class="t-ssub">Before you close, take a moment to notice…</div></div>
+  </div>
+  <div class="t-info">Well done for working through these stages. Take your time with these final questions — they are often where the most important insight emerges.</div>
+  <div class="t-plabel">Reflection prompts</div>
+  <div class="t-pi"><span class="t-pn">1.</span><span class="t-pt">What has shifted for you through this reflection — even slightly?</span></div>
+  <div class="t-pi"><span class="t-pn">2.</span><span class="t-pt">What are you taking away from this conversation with yourself?</span></div>
+  <div class="t-pi"><span class="t-pn">3.</span><span class="t-pt">What would you like to acknowledge yourself for today?</span></div>
+  <label class="t-wlabel">Your closing reflections…</label>
+  <textarea class="t-ta" id="ta6" placeholder="What has shifted? What are you taking away…"></textarea>
+</div>
+
+<!-- Screen 7: Complete -->
+<div class="t-screen" id="s7">
+  <div style="text-align:center;padding:2rem 0 1.5rem">
+    <div style="font-size:52px;color:#1D9E75;margin-bottom:1rem"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+    <h1 style="font-family:var(--font-serif);font-size:26px;font-weight:400;color:var(--color-text-primary);margin-bottom:.5rem">Well done for taking this time for yourself.</h1>
+    <p style="font-size:15px;color:var(--color-text-secondary);font-style:italic;margin-bottom:2rem">Reflection is a skill. The more you practise it, the more naturally resilience grows.</p>
+    <button class="t-btn" onclick="copyAll()" style="margin-right:8px"><i class="ti ti-copy" style="font-size:15px" aria-hidden="true"></i> Copy all responses</button>
+    <button class="t-btn" onclick="doRestart()"><i class="ti ti-refresh" style="font-size:15px" aria-hidden="true"></i> Start again</button>
+    <p id="copied" style="font-size:13px;color:#1D9E75;margin-top:.75rem;display:none">Copied to clipboard.</p>
+  </div>
+  <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem">
+    <p style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:.75rem">When you need more support</p>
+    <p style="font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.875rem">Using this guide is a great act of self-awareness — and sometimes reflection alone is not enough. That is not a sign of weakness; it is a sign of wisdom. If you are still feeling stuck, overwhelmed, or distressed, please reach out to:</p>
+    <div class="t-sup-item"><i class="ti ti-stethoscope" style="font-size:16px;color:#1D9E75;margin-top:1px;flex-shrink:0" aria-hidden="true"></i><span><strong>Your GP or doctor</strong> — for physical and mental health concerns</span></div>
+    <div class="t-sup-item"><i class="ti ti-brain" style="font-size:16px;color:#1D9E75;margin-top:1px;flex-shrink:0" aria-hidden="true"></i><span><strong>A qualified mental health practitioner</strong> — such as a counsellor, psychologist, or therapist</span></div>
+    <div class="t-sup-item"><i class="ti ti-users" style="font-size:16px;color:#1D9E75;margin-top:1px;flex-shrink:0" aria-hidden="true"></i><span><strong>A trusted friend, family member, or colleague</strong> — someone who listens without judgement</span></div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="t-nav" id="tnav">
+  <button class="t-btn" id="tbprev" onclick="go(-1)"><i class="ti ti-arrow-left" style="font-size:15px" aria-hidden="true"></i> Back</button>
+  <span class="t-count" id="tcnt"></span>
+  <button class="t-btn primary" id="tbnext" onclick="go(1)">Begin <i class="ti ti-arrow-right" style="font-size:15px" aria-hidden="true"></i></button>
+</div>
+</div>
+
+<script>
+var cur=0,tot=8;
+var stages=['','Topic','Goal','Reality','Options','Way Forward','Closing',''];
+
+function ui(){
+  for(var i=0;i<tot;i++){
+    var el=document.getElementById('s'+i);
+    if(el) el.style.display=(i===cur)?'block':'none';
+  }
+  var prog=document.getElementById('prog');
+  prog.style.display=(cur>0&&cur<7)?'flex':'none';
+  for(var j=1;j<=6;j++){
+    var dot=document.getElementById('d'+j);
+    var lbl=document.getElementById('dl'+j);
+    if(!dot) continue;
+    dot.className='t-dot';
+    lbl.className='t-slabel';
+    if(j<cur){dot.classList.add('done');}
+    else if(j===cur){dot.classList.add('active');lbl.classList.add('active');}
+  }
+  var prev=document.getElementById('tbprev');
+  var next=document.getElementById('tbnext');
+  var cnt=document.getElementById('tcnt');
+  var nav=document.getElementById('tnav');
+  nav.style.display=cur===7?'none':'flex';
+  prev.style.display=cur===0?'none':'inline-flex';
+  if(cur===0){
+    next.innerHTML='Begin <i class="ti ti-arrow-right" style="font-size:15px" aria-hidden="true"></i>';
+    cnt.textContent='';
+  } else if(cur===6){
+    next.innerHTML='Complete <i class="ti ti-check" style="font-size:15px" aria-hidden="true"></i>';
+    cnt.textContent='Closing reflection';
+  } else {
+    next.innerHTML='Next <i class="ti ti-arrow-right" style="font-size:15px" aria-hidden="true"></i>';
+    cnt.textContent='Stage '+cur+' of 5 — '+stages[cur];
+  }
+}
+
+function go(d){
+  cur=Math.max(0,Math.min(tot-1,cur+d));
+  ui();
+  document.getElementById('tg').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function doRestart(){
+  cur=0;
+  ['ta1','ta2','ta3','ta4','ta5','ta6'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  var s1=document.getElementById('sv1');if(s1){document.querySelector('#s1 input[type=range]').value=5;s1.textContent='5';}
+  var s2=document.getElementById('sv2');if(s2){document.querySelector('#s5 input[type=range]').value=7;s2.textContent='7';}
+  ui();
+}
+
+function copyAll(){
+  var labels=['Topic','Goal','Reality','Options','Way Forward','Closing Reflection'];
+  var ids=['ta1','ta2','ta3','ta4','ta5','ta6'];
+  var out='TGROW Resilience Reflection\n'+'='.repeat(30)+'\n\n';
+  ids.forEach(function(id,i){
+    var el=document.getElementById(id);
+    var val=el&&el.value.trim()?el.value.trim():'(no response)';
+    out+=labels[i].toUpperCase()+'\n'+'-'.repeat(labels[i].length)+'\n'+val+'\n\n';
+  });
+  navigator.clipboard.writeText(out).then(function(){
+    var cp=document.getElementById('copied');cp.style.display='block';
+    setTimeout(function(){cp.style.display='none';},3000);
+  }).catch(function(){});
+}
+
+ui();
+</script>
+
+  </main>
+  <footer class="site-foot">
+    <strong>Private.</strong> This tool runs entirely in your browser — nothing you type is sent to Apex Health or stored on a server.
+    <div class="foot-row">
+      <a href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to all guides</a>
+      <span>© Apex Health Group · Resilience Self-Help Guides</span>
+    </div>
+  </footer>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

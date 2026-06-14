@@ -1,0 +1,436 @@
+
+<h2 class="sr-only">Cognitive Reframing — interactive self-help guide with 8 sections, exercises, and habit tracker</h2>
+<style>
+.cr-nav{display:flex;gap:3px;padding:8px 0 0;border-bottom:0.5px solid var(--color-border-tertiary);overflow-x:auto;margin-bottom:1.5rem;scrollbar-width:none;}
+.cr-nav::-webkit-scrollbar{display:none;}
+.cr-tab{padding:7px 13px;font-size:12.5px;border:none;background:none;color:var(--color-text-secondary);cursor:pointer;border-radius:var(--border-radius-md) var(--border-radius-md) 0 0;white-space:nowrap;border-bottom:2.5px solid transparent;transition:all 0.15s;}
+.cr-tab:hover{color:var(--color-text-primary);background:var(--color-background-secondary);}
+.cr-tab.active{color:var(--color-text-info);border-bottom-color:var(--color-text-info);font-weight:500;}
+.cr-section{display:none;}
+.cr-section.active{display:block;}
+.cr-quote{border-left:3px solid var(--color-text-info);padding:0.75rem 1.25rem;margin:1.25rem 0;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;}
+.cr-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px;}
+.cr-callout{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem 1.25rem;margin:1rem 0;}
+.cr-body{font-size:15px;line-height:1.7;color:var(--color-text-secondary);margin:0 0 1rem;}
+.cr-ta{width:100%;min-height:90px;padding:10px 12px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);resize:vertical;background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans);line-height:1.6;box-sizing:border-box;}
+.cr-reflect{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-top:1.5rem;}
+.cr-rq{font-size:13.5px;color:var(--color-text-secondary);margin:4px 0;padding-left:18px;position:relative;line-height:1.6;}
+.cr-rq::before{content:'▸';position:absolute;left:0;color:var(--color-text-info);}
+.cr-dgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:1rem 0;}
+.cr-dist{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px;cursor:pointer;transition:all 0.15s;display:flex;gap:10px;align-items:flex-start;}
+.cr-dist:hover{background:var(--color-background-secondary);}
+.cr-dist.on{border-color:var(--color-border-info);background:var(--color-background-info);}
+.cr-dist.on .cr-dt{color:var(--color-text-info);}
+.cr-dbox{width:17px;height:17px;border:0.5px solid var(--color-border-secondary);border-radius:3px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;background:var(--color-background-primary);transition:all 0.15s;}
+.cr-dist.on .cr-dbox{background:var(--color-text-info);border-color:var(--color-text-info);}
+.cr-dt{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;}
+.cr-de{font-size:12px;color:var(--color-text-secondary);font-style:italic;}
+.cr-step{display:flex;gap:14px;align-items:flex-start;padding:12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:7px;transition:all 0.2s;cursor:pointer;}
+.cr-step.on{border-color:var(--color-border-info);background:var(--color-background-info);}
+.cr-snum{width:26px;height:26px;border-radius:50%;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--color-text-secondary);flex-shrink:0;transition:all 0.2s;}
+.cr-step.on .cr-snum{background:var(--color-text-info);color:white;}
+.cr-step.on .cr-sn{color:var(--color-text-info);}
+.cr-sn{font-size:13.5px;font-weight:500;color:var(--color-text-primary);}
+.cr-sd{font-size:13px;color:var(--color-text-secondary);margin-top:2px;}
+.cr-arow{display:flex;gap:12px;margin-bottom:12px;}
+.cr-alet{width:34px;height:34px;border-radius:50%;background:var(--color-background-info);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--color-text-info);flex-shrink:0;margin-top:4px;}
+.cr-ex{display:flex;gap:10px;margin-bottom:9px;align-items:stretch;}
+.cr-bad{flex:1;padding:10px 12px;background:var(--color-background-danger);border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-danger);border:0.5px solid var(--color-border-danger);font-style:italic;line-height:1.5;}
+.cr-arr{color:var(--color-text-tertiary);align-self:center;font-size:15px;padding:0 2px;}
+.cr-good{flex:1;padding:10px 12px;background:var(--color-background-success);border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-success);border:0.5px solid var(--color-border-success);line-height:1.5;}
+.cr-trtable{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed;}
+.cr-trtable th{text-align:left;padding:7px 8px;font-size:11px;font-weight:500;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap;}
+.cr-trtable td{border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top;padding:2px;}
+.cr-trtable td textarea{width:100%;min-height:58px;font-size:12px;border:none;background:transparent;resize:none;color:var(--color-text-primary);font-family:var(--font-sans);padding:6px;box-sizing:border-box;outline:none;line-height:1.5;}
+.cr-trtable td textarea:focus{background:var(--color-background-secondary);border-radius:4px;}
+.cr-week{margin-bottom:18px;}
+.cr-whead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.cr-wt{font-size:14px;font-weight:500;color:var(--color-text-primary);}
+.cr-days{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.cr-day{width:32px;height:32px;border-radius:6px;border:0.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;user-select:none;}
+.cr-day.on{background:var(--color-text-success);border-color:var(--color-text-success);color:white;}
+.cr-prog{display:flex;gap:3px;margin-bottom:1.25rem;}
+.cr-ps{height:3px;flex:1;border-radius:2px;background:var(--color-background-secondary);transition:background 0.3s;}
+.cr-ps.on{background:var(--color-text-info);}
+.cr-tooltabs{display:flex;gap:6px;margin-bottom:1.25rem;}
+.cr-tbtn{padding:6px 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);border-radius:var(--border-radius-md);cursor:pointer;transition:all 0.15s;}
+.cr-tbtn:hover{background:var(--color-background-secondary);}
+.cr-tbtn.on{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500;border-color:var(--color-border-primary);}
+.cr-tri{display:flex;flex-direction:column;align-items:center;gap:8px;margin:1.5rem 0;}
+.cr-trinode{padding:12px 16px;border-radius:var(--border-radius-md);text-align:center;min-width:140px;}
+.cr-tribottom{display:flex;gap:14px;}
+.cr-cxlabel{font-size:11.5px;color:var(--color-text-tertiary);text-align:center;}
+</style>
+
+<div style="padding:1rem 0;">
+
+<div style="margin-bottom:1.25rem;">
+  <p style="font-size:11.5px;font-weight:500;letter-spacing:0.06em;color:var(--color-text-tertiary);margin:0 0 4px;text-transform:uppercase;">Personal & Professional Resilience · Self-Help Guide Series</p>
+  <h1 style="font-size:22px;font-weight:500;margin:0 0 3px;color:var(--color-text-primary);">Cognitive Reframing</h1>
+  <p style="font-size:14.5px;color:var(--color-text-secondary);margin:0;">Learning to challenge, question, and reshape the thoughts that hold you back</p>
+</div>
+
+<div class="cr-prog" id="pbar"></div>
+
+<nav class="cr-nav" role="tablist">
+  <button class="cr-tab active" onclick="go(0)" role="tab">1. Thoughts</button>
+  <button class="cr-tab" onclick="go(1)" role="tab">2. Triangle</button>
+  <button class="cr-tab" onclick="go(2)" role="tab">3. Patterns</button>
+  <button class="cr-tab" onclick="go(3)" role="tab">4. Catching</button>
+  <button class="cr-tab" onclick="go(4)" role="tab">5. Challenging</button>
+  <button class="cr-tab" onclick="go(5)" role="tab">6. Reframe</button>
+  <button class="cr-tab" onclick="go(6)" role="tab">7. Toolkit</button>
+  <button class="cr-tab" onclick="go(7)" role="tab">8. Habit</button>
+</nav>
+
+<section class="cr-section active" id="s0">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 1</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 0.75rem;">How thoughts shape everything</h2>
+  <p class="cr-body">The human brain processes approximately 60,000 thoughts per day. The vast majority are automatic — we do not consciously choose, examine, or question them. They arise, feel true, and we act on them. This is efficient in normal circumstances. It becomes costly when those thoughts are inaccurate, unhelpful, or unkind — especially towards ourselves.</p>
+  <p class="cr-body">Our brains are wired for threat detection. The amygdala does not distinguish between a lion and a critical colleague: both produce a stress response. The prefrontal cortex — responsible for reasoning and perspective-taking — can be trained to engage with those automatic thoughts before they drive our behaviour. Cognitive reframing is precisely this: activating the thinking brain to examine what the reactive brain is telling us.</p>
+  <div class="cr-quote">"Between stimulus and response there is a space. In that space lies our freedom to choose."<br><span style="font-style:normal;font-size:13px;display:block;margin-top:6px;">— Viktor Frankl</span></div>
+  <div class="cr-callout">
+    <p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px;">Key principle</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.6;">Thoughts are not facts. Feelings are not facts. Both feel completely real — and both can be profoundly inaccurate. The goal of reframing is not to dismiss thoughts or feelings, but to examine them with the same rigour you would apply to any other information.</p>
+  </div>
+  <div class="cr-reflect">
+    <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin:0 0 10px;"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</p>
+    <p class="cr-rq">Think of a recent situation where you had a strong negative reaction. What was the first thought that arose?</p>
+    <p class="cr-rq">Did you treat that thought as a fact, or did you question it? What happened as a result?</p>
+    <p class="cr-rq">Looking back — was that thought entirely accurate? What were you missing or overemphasising?</p>
+    <textarea class="cr-ta" placeholder="Your reflections on how your thoughts have shaped a recent situation…" style="margin-top:12px;"></textarea>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-top:1.25rem;"><button onclick="go(1)">Next: The cognitive triangle <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</section>
+
+<section class="cr-section" id="s1">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 2</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 0.75rem;">The cognitive triangle</h2>
+  <p class="cr-body">One of the most foundational insights of CBT is the relationship between thoughts, feelings, and behaviours. They form a continuous loop — change any one element and you change the whole pattern.</p>
+  <div class="cr-tri">
+    <div class="cr-trinode" style="background:var(--color-background-info);border:0.5px solid var(--color-border-info);">
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-info);margin-bottom:2px;"><i class="ti ti-bulb" aria-hidden="true"></i> Thoughts</div>
+      <div style="font-size:11.5px;color:var(--color-text-info);">How we interpret events</div>
+      <div style="font-size:11px;font-style:italic;color:var(--color-text-secondary);margin-top:4px;">'This is my fault'</div>
+    </div>
+    <div class="cr-cxlabel">↙ each shapes the others ↘</div>
+    <div class="cr-tribottom">
+      <div class="cr-trinode" style="background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);">
+        <div style="font-size:13px;font-weight:500;color:var(--color-text-warning);margin-bottom:2px;"><i class="ti ti-heart" aria-hidden="true"></i> Feelings</div>
+        <div style="font-size:11.5px;color:var(--color-text-warning);">Emotions triggered</div>
+        <div style="font-size:11px;font-style:italic;color:var(--color-text-secondary);margin-top:4px;">Guilt, shame, anxiety</div>
+      </div>
+      <div class="cr-trinode" style="background:var(--color-background-danger);border:0.5px solid var(--color-border-danger);">
+        <div style="font-size:13px;font-weight:500;color:var(--color-text-danger);margin-bottom:2px;"><i class="ti ti-run" aria-hidden="true"></i> Behaviours</div>
+        <div style="font-size:11.5px;color:var(--color-text-danger);">What we do as a result</div>
+        <div style="font-size:11px;font-style:italic;color:var(--color-text-secondary);margin-top:4px;">Avoid, withdraw, overwork</div>
+      </div>
+    </div>
+  </div>
+  <p class="cr-body">The triangle works in both directions. Unhelpful thoughts produce painful feelings which drive unhelpful behaviours — which generate events that confirm the original thought ('See? I really am incompetent'). But reframing the thought breaks the loop: a more balanced thought produces a more manageable feeling, which produces a more considered response.</p>
+  <div class="cr-callout">
+    <p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px;">The entry point</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.6;">You cannot always control what happens to you, or even your immediate emotional reaction. But you can almost always access your thoughts — and that is where reframing begins.</p>
+  </div>
+  <div class="cr-reflect">
+    <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin:0 0 10px;"><i class="ti ti-pencil" aria-hidden="true"></i> Map your own triangle</p>
+    <p class="cr-rq">Think of a recurring difficult feeling you experience. What is the thought that tends to precede it?</p>
+    <p class="cr-rq">What behaviour does that feeling drive — that you later regret or that makes things worse?</p>
+    <p class="cr-rq">If you could change one element of the triangle, which would have the biggest positive effect? Why?</p>
+    <textarea class="cr-ta" placeholder="Your cognitive triangle for a current or recurring situation…" style="margin-top:12px;"></textarea>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-top:1.25rem;"><button onclick="go(2)">Next: Unhelpful patterns <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</section>
+
+<section class="cr-section" id="s2">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 3</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 0.75rem;">Unhelpful thinking patterns</h2>
+  <p class="cr-body">Cognitive distortions are systematic errors in thinking — patterns of inaccuracy that our minds default to, particularly under stress. First catalogued by Aaron Beck and developed by David Burns. When you can name the distortion, you can begin to question it.</p>
+  <p style="font-size:13.5px;color:var(--color-text-secondary);margin-bottom:10px;">Select any patterns you recognise in yourself — tap to check:</p>
+  <div class="cr-dgrid" id="dgrid"></div>
+  <div id="dsum" style="display:none;" class="cr-callout">
+    <p style="font-size:13px;font-weight:500;color:var(--color-text-info);margin:0 0 4px;"><i class="ti ti-check" aria-hidden="true"></i> <span id="dcnt">0</span> pattern(s) recognised</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0;">Awareness is the first step. The goal is not self-criticism — it is self-knowledge. With a name, you have a handle on the pattern.</p>
+  </div>
+  <div class="cr-reflect">
+    <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin:0 0 10px;"><i class="ti ti-pencil" aria-hidden="true"></i> Reflect &amp; explore</p>
+    <p class="cr-rq">In what kinds of situations do the patterns you recognised most tend to appear?</p>
+    <p class="cr-rq">Is there one distortion that has caused you significant difficulty at work or in your personal life?</p>
+    <p class="cr-rq">When you are tired, under pressure, or feeling criticised — which pattern tends to take over?</p>
+    <textarea class="cr-ta" placeholder="The patterns you most recognise — and the situations that trigger them…" style="margin-top:12px;"></textarea>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-top:1.25rem;"><button onclick="go(3)">Next: Catching the thought <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</section>
+
+<section class="cr-section" id="s3">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 4</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 0.75rem;">Catching the thought</h2>
+  <p class="cr-body">Before you can reframe a thought, you have to catch it. Automatic thoughts move fast, often feeling less like distinct thoughts and more like reality itself. The first practice is simply learning to notice: 'Wait. A thought just happened.' The moment of noticing is the moment of freedom.</p>
+  <div class="cr-callout">
+    <p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px;">Try this</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.6;">When you notice a strong emotion arising, ask: <em>'What just went through my mind?'</em> That question alone — asked with genuine curiosity rather than alarm — is the beginning of reframing.</p>
+  </div>
+  <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 10px;">Common signals that an automatic thought is at work</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;">
+    <div class="cr-card">
+      <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:0 0 8px;"><i class="ti ti-mood-sad" aria-hidden="true"></i> Emotional signals</p>
+      <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+        <div>▸ A sudden shift in mood, out of proportion</div>
+        <div>▸ Feeling unexpectedly defensive or ashamed</div>
+        <div>▸ A desire to withdraw or prove something</div>
+        <div>▸ A strong internal 'should', 'must', 'never'</div>
+      </div>
+    </div>
+    <div class="cr-card">
+      <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin:0 0 8px;"><i class="ti ti-activity" aria-hidden="true"></i> Physical signals</p>
+      <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+        <div>▸ Tightness in your chest or stomach</div>
+        <div>▸ Shallow breathing or a held breath</div>
+        <div>▸ Jaw clenching, shoulder tension, flushing</div>
+        <div>▸ A sudden heaviness or fatigue</div>
+      </div>
+    </div>
+  </div>
+  <div class="cr-reflect">
+    <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin:0 0 10px;"><i class="ti ti-pencil" aria-hidden="true"></i> Your personal early warning signals</p>
+    <p class="cr-rq">What are your personal signals that an automatic thought has been triggered — emotional, physical, or behavioural?</p>
+    <p class="cr-rq">Are there particular people, situations, or times of day when automatic thoughts are most frequent for you?</p>
+    <p class="cr-rq">What has helped you in the past to create a pause between a trigger and your response?</p>
+    <textarea class="cr-ta" placeholder="Your personal early warning signals…" style="margin-top:12px;"></textarea>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-top:1.25rem;"><button onclick="go(4)">Next: Challenging the thought <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</section>
+
+<section class="cr-section" id="s4">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 5</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 0.75rem;">Challenging the thought</h2>
+  <p class="cr-body">Once you have caught the thought, examine it — not to dismiss it, but to ask: is this entirely accurate? Is this the only way to see this situation? The goal is not positive thinking — it is accurate thinking. A thought that is kinder but untrue will not serve you.</p>
+  <div class="cr-callout" style="margin-bottom:1.25rem;">
+    <p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px;">The compassion test</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.6;">'What would I say to a trusted colleague who came to me with exactly this situation and this thought about themselves?' The answer is almost always more balanced and more humane than what we say to ourselves.</p>
+  </div>
+  <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;">Challenge questions — tap any to expand</p>
+  <div id="cqs"></div>
+  <div style="display:flex;justify-content:flex-end;margin-top:1.25rem;"><button onclick="go(5)">Next: The reframe <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</section>
+
+<section class="cr-section" id="s5">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 6</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 0.75rem;">The reframe</h2>
+  <p class="cr-body">The reframe does not have to be perfectly positive or erase the difficulty. It just has to be more accurate, more proportionate, and more useful than the thought it replaces. A good reframe acknowledges the real difficulty while refusing to exaggerate it.</p>
+  <div class="cr-callout" style="margin-bottom:1.25rem;">
+    <p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px;">What a good reframe is not</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.6;">Not toxic positivity. Not minimising. Not self-deception. It is the most honest, balanced, compassionate thought available — given the actual evidence.</p>
+  </div>
+  <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;">Examples of reframes in practice</p>
+  <div id="rexamples"></div>
+  <div style="display:flex;justify-content:flex-end;margin-top:1.25rem;"><button onclick="go(6)">Next: The toolkit <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</section>
+
+<section class="cr-section" id="s6">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 7</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 1rem;">The reframing toolkit</h2>
+  <div class="cr-tooltabs">
+    <button class="cr-tbtn on" onclick="tool(0)"><i class="ti ti-list-numbers" aria-hidden="true"></i> Six-step process</button>
+    <button class="cr-tbtn" onclick="tool(1)"><i class="ti ti-letters" aria-hidden="true"></i> ABCDE model</button>
+    <button class="cr-tbtn" onclick="tool(2)"><i class="ti ti-table" aria-hidden="true"></i> Thought record</button>
+  </div>
+  <div id="t0">
+    <p class="cr-body">Use this for daily, in-the-moment awareness. Practise on small, low-stakes thoughts first before applying it to your most charged experiences.</p>
+    <div id="steplist"></div>
+    <p style="font-size:12px;color:var(--color-text-tertiary);text-align:center;margin-top:6px;">Tap any step to highlight it</p>
+  </div>
+  <div id="t1" style="display:none;">
+    <p class="cr-body">Use this for structured reflection after a significant event. Work through each letter in sequence, as honestly as you can.</p>
+    <div id="abcde"></div>
+  </div>
+  <div id="t2" style="display:none;">
+    <p class="cr-body">Use this over several days or weeks for persistent patterns. Add a row for each situation. Over time you will see the patterns — and see them shifting.</p>
+    <div style="overflow-x:auto;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);">
+      <table class="cr-trtable">
+        <thead><tr>
+          <th style="width:17%;">Situation</th>
+          <th style="width:17%;">Automatic thought</th>
+          <th style="width:14%;">Emotion &amp; intensity</th>
+          <th style="width:16%;">Evidence for</th>
+          <th style="width:16%;">Evidence against</th>
+          <th style="width:20%;">Balanced reframe</th>
+        </tr></thead>
+        <tbody id="trbody"></tbody>
+      </table>
+    </div>
+    <button onclick="addRow()" style="margin-top:10px;"><i class="ti ti-plus" aria-hidden="true"></i> Add a row</button>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-top:1.5rem;"><button onclick="go(7)">Next: Building the habit <i class="ti ti-arrow-right" aria-hidden="true"></i></button></div>
+</section>
+
+<section class="cr-section" id="s7">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Section 8</p>
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 0.75rem;">Building the habit</h2>
+  <p class="cr-body">Cognitive reframing is not a one-time intervention — it is a practice. Research suggests it takes approximately three to six weeks of daily practice before cognitive habits begin to shift meaningfully. The early stages often feel effortful and slightly artificial. This is normal: your brain is building new neural pathways.</p>
+  <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin-bottom:12px;"><i class="ti ti-calendar" aria-hidden="true"></i> Four-week practice plan — tap days to mark as complete</p>
+  <div id="plan"></div>
+  <div class="cr-callout" style="margin:1.25rem 0;">
+    <p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px;">A note on self-compassion</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.6;">Cognitive reframing can sometimes be hijacked by the inner critic. If this happens, the answer is not to try harder — it is to practise self-compassion alongside reframing. Return always to: <em>'What would I say to a good colleague who came to me with exactly this struggle?'</em></p>
+  </div>
+  <div class="cr-reflect">
+    <p style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin:0 0 10px;"><i class="ti ti-pencil" aria-hidden="true"></i> Your practice commitment</p>
+    <p class="cr-rq">Which of the four weeks above feels most challenging for you — and why?</p>
+    <p class="cr-rq">What would you need to put in place to practise this consistently — time of day, a specific trigger, a journal?</p>
+    <p class="cr-rq">Who could you practise this with — a colleague, a peer coaching circle, a coach or therapist?</p>
+    <textarea class="cr-ta" placeholder="Your personal reframing practice commitment — what will you do and when?…" style="margin-top:12px;"></textarea>
+  </div>
+  <div class="cr-quote" style="text-align:center;margin-top:1.5rem;">
+    "You don't have to believe every thought you think."<br>
+    <span style="font-style:normal;font-size:14px;color:var(--color-text-primary);display:block;margin-top:8px;line-height:1.7;">That gap — between the thought and your response — is where your freedom lives.<br>Practise it. Widen it. Protect it.</span>
+  </div>
+</section>
+
+</div>
+
+<script>
+const dists=[
+  {n:'All-or-nothing thinking',e:'"If I\'m not excellent, I\'m a failure."'},
+  {n:'Catastrophising',e:'"If I make a mistake, my career is over."'},
+  {n:'Mind reading',e:'"They haven\'t responded. They must be angry."'},
+  {n:'Personalisation',e:'"The patient deteriorated. I must have missed something."'},
+  {n:'Emotional reasoning',e:'"I feel like a fraud, so I must be a fraud."'},
+  {n:'Should statements',e:'"I should be able to handle this. I shouldn\'t feel this way."'},
+  {n:'Mental filter',e:'"One person was critical — that\'s what matters."'},
+  {n:'Overgeneralisation',e:'"That went badly. Everything I do goes badly."'},
+  {n:'Labelling',e:'"I\'m useless" rather than "I made an error."'},
+  {n:'Fortune telling',e:'"I know this conversation is going to go wrong."'}
+];
+const cqs=[
+  {q:'Is this a fact — or an interpretation?',d:'If it is an interpretation, what is the actual evidence for and against it?'},
+  {q:'Am I using a thinking error?',d:'Catastrophising, mind reading, all-or-nothing, personalising? Which pattern is this?'},
+  {q:'What would a fair witness say?',d:'Not your inner critic, not your inner cheerleader — but an honest, impartial observer.'},
+  {q:'Am I holding myself to a standard I would never apply to anyone else?',d:'Would you say this to a colleague? To a friend? To yourself ten years from now?'},
+  {q:'What are the most likely outcomes here — not the worst?',d:'What does experience, rather than fear, suggest is probable?'},
+  {q:'How significant will this feel in a week? A month? A year?',d:'Perspective shifts both the urgency and the intensity of the thought.'},
+  {q:'What am I ignoring or discounting?',d:'What strengths, successes, and contextual factors am I filtering out?'},
+  {q:'What would a compassionate response to myself look like right now?',d:'Not dismissing the difficulty — but responding to yourself as you would to someone you love.'}
+];
+const rexs=[
+  {b:'I made a mistake — I am incompetent.',g:'I made an error. Errors are part of learning. I can reflect, correct, and do better.'},
+  {b:"They haven't replied — they must be angry.",g:"I don't have enough information to know how they feel. I'll ask rather than assume."},
+  {b:"I'm struggling — I must be weak.",g:'I am struggling with something genuinely hard. That is human, not weak.'},
+  {b:"If I can't do this perfectly, I shouldn't do it at all.",g:'I can do this imperfectly and still make a meaningful contribution.'},
+  {b:"Everyone else seems fine — what's wrong with me?",g:"I can only see others' surfaces. Most people are managing difficulty I cannot see."},
+  {b:'This always happens to me.',g:'This has happened again. It is not a life sentence — it is a pattern I can work with.'}
+];
+const steps=[
+  {n:'Notice',d:'Something has triggered a strong thought or feeling.'},
+  {n:'Name it',d:'What is the thought? What is the feeling? Say it clearly.'},
+  {n:'Pause',d:'Breathe. Create a gap between the thought and your response.'},
+  {n:'Question',d:'Is this thought a fact — or an interpretation? Is it helpful?'},
+  {n:'Reframe',d:'What is a more balanced, realistic, and compassionate alternative?'},
+  {n:'Act',d:'From this new perspective, choose how you respond.'}
+];
+const abcItems=[
+  {l:'A',n:'Activating event',h:'What happened? The situation or trigger that set things off…',eg:'e.g. A senior colleague criticised my work in a team meeting.'},
+  {l:'B',n:'Belief',h:'The thought or interpretation you had in response…',eg:'e.g. "I am not competent. Everyone thinks I am failing."'},
+  {l:'C',n:'Consequence',h:'How you felt and what you did as a result…',eg:'e.g. Felt ashamed and withdrew. Avoided speaking in the next two meetings.'},
+  {l:'D',n:'Disputation',h:'Challenge the belief — what is the evidence? What distortion might this be?',eg:'e.g. One critical comment ≠ incompetent. I have positive feedback from others.'},
+  {l:'E',n:'Effective new belief',h:'A more balanced, accurate, and helpful way of seeing this situation…',eg:'e.g. "I received one piece of critical feedback. I can reflect and grow. It does not define me."'}
+];
+const weeks=[
+  {w:1,n:'Notice',d:'Focus only on catching automatic thoughts. You do not need to challenge them yet. Simply notice: "A thought just happened." Write down one each evening.'},
+  {w:2,n:'Name',d:'When you notice an automatic thought, name the distortion if you can. "That\'s catastrophising." "That\'s personalisation." Naming reduces intensity without requiring a full reframe.'},
+  {w:3,n:'Question',d:'Apply the challenge questions from Section 5 to at least one thought per day. You do not need all eight — choose one or two that resonate.'},
+  {w:4,n:'Reframe',d:'Complete a brief ABCDE or thought record entry once a day. Choose situations with emotional charge. This is where the deeper work happens.'}
+];
+
+let cur=0;
+const checked=new Set();
+
+function initProg(){const b=document.getElementById('pbar');for(let i=0;i<8;i++){const d=document.createElement('div');d.className='cr-ps'+(i<=cur?' on':'');d.id='p'+i;b.appendChild(d);}}
+
+function go(n){
+  document.querySelectorAll('.cr-section').forEach((s,i)=>s.classList.toggle('active',i===n));
+  document.querySelectorAll('.cr-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+  for(let i=0;i<8;i++){const p=document.getElementById('p'+i);if(p)p.classList.toggle('on',i<=n);}
+  cur=n;window.scrollTo(0,0);
+}
+
+function buildDists(){
+  const g=document.getElementById('dgrid');
+  dists.forEach((d,i)=>{
+    const el=document.createElement('div');
+    el.className='cr-dist';el.id='d'+i;
+    el.innerHTML=`<div class="cr-dbox" id="db${i}"><i class="ti ti-check" style="font-size:11px;color:white;display:none;" id="dk${i}" aria-hidden="true"></i></div><div><div class="cr-dt">${d.n}</div><div class="cr-de">${d.e}</div></div>`;
+    el.onclick=()=>{
+      if(checked.has(i)){checked.delete(i);el.classList.remove('on');document.getElementById('dk'+i).style.display='none';}
+      else{checked.add(i);el.classList.add('on');document.getElementById('dk'+i).style.display='';}
+      const c=checked.size;document.getElementById('dcnt').textContent=c;document.getElementById('dsum').style.display=c>0?'block':'none';
+    };
+    g.appendChild(el);
+  });
+}
+
+function buildCQs(){
+  const el=document.getElementById('cqs');
+  cqs.forEach((q,i)=>{
+    const d=document.createElement('div');
+    d.className='cr-card';d.style.cursor='pointer';
+    d.innerHTML=`<div style="display:flex;gap:10px;align-items:center;"><div style="width:22px;height:22px;border-radius:50%;background:var(--color-background-info);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--color-text-info);flex-shrink:0;">${i+1}</div><div style="font-size:13.5px;font-weight:500;color:var(--color-text-primary);">${q.q}</div><i class="ti ti-chevron-down" style="margin-left:auto;font-size:14px;color:var(--color-text-tertiary);" id="cqic${i}" aria-hidden="true"></i></div><div id="cqd${i}" style="display:none;margin-top:8px;padding-left:32px;font-size:13px;color:var(--color-text-secondary);line-height:1.6;">${q.d}</div>`;
+    d.onclick=()=>{const det=document.getElementById('cqd'+i);const ic=document.getElementById('cqic'+i);const open=det.style.display==='none';det.style.display=open?'block':'none';ic.style.transform=open?'rotate(180deg)':'';};
+    el.appendChild(d);
+  });
+}
+
+function buildRExamples(){
+  const el=document.getElementById('rexamples');
+  rexs.forEach(r=>{
+    const row=document.createElement('div');row.className='cr-ex';
+    row.innerHTML=`<div class="cr-bad"><i class="ti ti-x" style="font-size:11px;margin-right:3px;" aria-hidden="true"></i>${r.b}</div><span class="cr-arr">→</span><div class="cr-good"><i class="ti ti-check" style="font-size:11px;margin-right:3px;" aria-hidden="true"></i>${r.g}</div>`;
+    el.appendChild(row);
+  });
+}
+
+function buildSteps(){
+  const el=document.getElementById('steplist');
+  steps.forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='cr-step'+(i===0?' on':'');d.id='st'+i;
+    d.innerHTML=`<div class="cr-snum">${i+1}</div><div><div class="cr-sn">${s.n}</div><div class="cr-sd">${s.d}</div></div>`;
+    d.onclick=()=>{document.querySelectorAll('.cr-step').forEach(x=>x.classList.remove('on'));d.classList.add('on');};
+    el.appendChild(d);
+  });
+}
+
+function buildABCDE(){
+  const el=document.getElementById('abcde');
+  abcItems.forEach(item=>{
+    const row=document.createElement('div');row.className='cr-arow';
+    row.innerHTML=`<div class="cr-alet">${item.l}</div><div style="flex:1;"><div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:3px;">${item.n}</div><p style="font-size:11.5px;color:var(--color-text-tertiary);font-style:italic;margin:0 0 6px;">${item.eg}</p><textarea class="cr-ta" placeholder="${item.h}" style="min-height:65px;"></textarea></div>`;
+    el.appendChild(row);
+  });
+}
+
+function addRow(){
+  const tb=document.getElementById('trbody');const tr=document.createElement('tr');
+  let c='';for(let i=0;i<6;i++)c+=`<td><textarea placeholder="…"></textarea></td>`;
+  tr.innerHTML=c;tb.appendChild(tr);
+}
+
+function buildPlan(){
+  const el=document.getElementById('plan');
+  weeks.forEach(w=>{
+    const div=document.createElement('div');div.className='cr-week';
+    const days=Array.from({length:7},(_,i)=>`<div class="cr-day" id="wd${w.w}_${i}" onclick="toggleDay(${w.w},${i})" role="checkbox" aria-checked="false" aria-label="Week ${w.w} day ${i+1}">${i+1}</div>`).join('');
+    div.innerHTML=`<div class="cr-whead"><span class="cr-wt">Week ${w.w} — ${w.n}</span><span style="font-size:11px;font-weight:500;padding:2px 10px;border-radius:20px;background:var(--color-background-secondary);color:var(--color-text-secondary);">7 days</span></div><p style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin:0;">${w.d}</p><div class="cr-days">${days}</div>`;
+    el.appendChild(div);
+  });
+}
+
+function toggleDay(w,d){const el=document.getElementById(`wd${w}_${d}`);const on=el.classList.toggle('on');el.setAttribute('aria-checked',on);}
+
+function tool(n){
+  [0,1,2].forEach(i=>document.getElementById('t'+i).style.display=i===n?'':'none');
+  document.querySelectorAll('.cr-tbtn').forEach((b,i)=>b.classList.toggle('on',i===n));
+}
+
+initProg();buildDists();buildCQs();buildRExamples();buildSteps();buildABCDE();addRow();addRow();buildPlan();
+</script>

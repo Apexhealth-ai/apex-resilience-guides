@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy Management & Recovery — Apex Health Resilience Self-Help Guides</title>
+<meta name="description" content="Audit your physical, emotional, mental, and spiritual energy, and design recovery rituals that actually replenish you.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="site-shell">
+  <header class="site-bar">
+    <a href="index.html" class="brand" aria-label="Apex Health — Resilience Self-Help Guides">
+      <img src="assets/apex-logo.png" alt="Apex Health" class="brand-logo">
+      <span class="brand-divider" aria-hidden="true"></span>
+      <span class="brand-series">Resilience Self-Help Guides</span>
+    </a>
+    <div class="bar-actions">
+      <a class="bar-link" href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i><span class="label">All guides</span></a>
+      <button id="themeBtn" class="theme-btn" aria-label="Toggle theme"><i class="ti ti-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+  <main class="guide-frame">
+
+<h2 class="sr-only">Energy Management and Recovery — Interactive Self-Help Guide for Healthcare Professionals. Eight sections: energy audit, four energy dimensions, recovery science, energy map, and action plan.</h2>
+<style>
+:root{--ph-bg:#FAEEDA;--ph-t:#854F0B;--ph-a:#EF9F27;--em-bg:#FBEAF0;--em-t:#993556;--em-a:#ED93B1;--mn-bg:#E1F5EE;--mn-t:#0F6E56;--mn-a:#5DCAA5;--pu-bg:#EEEDFE;--pu-t:#534AB7;--pu-a:#AFA9EC;--dr-bg:#FAECE7;--dr-bd:#F5C4B3;--dr-t:#993C1D;--so-bg:#EAF3DE;--so-bd:#C0DD97;--so-t:#3B6D11}
+@media(prefers-color-scheme:dark){:root{--ph-bg:#412402;--ph-t:#FAC775;--em-bg:#4B1528;--em-t:#F4C0D1;--mn-bg:#04342C;--mn-t:#9FE1CB;--pu-bg:#26215C;--pu-t:#CECBF6;--dr-bg:#4A1B0C;--dr-bd:#712B13;--dr-t:#F5C4B3;--so-bg:#173404;--so-bd:#3B6D11;--so-t:#C0DD97}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.snav{display:flex;gap:3px;margin-bottom:1.5rem;flex-wrap:wrap}
+.sb{flex:1;min-width:52px;padding:7px 3px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;font-size:10px;color:var(--color-text-secondary);display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.3;text-align:center;transition:background 0.1s}
+.sb:hover{background:var(--color-background-secondary)}
+.sb.active{border-color:var(--color-border-primary);color:var(--color-text-primary);background:var(--color-background-secondary)}
+.sb i{font-size:16px}
+.sec{display:none}.sec.active{display:block}
+.sh{display:flex;align-items:flex-start;gap:10px;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.badge{width:36px;height:36px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.badge.p{background:var(--ph-bg);color:var(--ph-t)}.badge.e{background:var(--em-bg);color:var(--em-t)}.badge.m{background:var(--mn-bg);color:var(--mn-t)}.badge.u{background:var(--pu-bg);color:var(--pu-t)}
+.stitle{font-size:16px;font-weight:500;margin:0 0 2px;color:var(--color-text-primary)}.ssub{font-size:12px;color:var(--color-text-secondary);margin:0}
+.ag{margin-bottom:1rem}
+.agl{font-size:11px;font-weight:500;padding:3px 8px;border-radius:var(--border-radius-md);display:inline-flex;align-items:center;gap:5px;margin-bottom:6px}
+.agl.p{background:var(--ph-bg);color:var(--ph-t)}.agl.e{background:var(--em-bg);color:var(--em-t)}.agl.m{background:var(--mn-bg);color:var(--mn-t)}.agl.u{background:var(--pu-bg);color:var(--pu-t)}
+.ar{display:flex;align-items:center;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);gap:10px}.ar:last-child{border-bottom:none}
+.albl{flex:1;font-size:12px;color:var(--color-text-secondary);line-height:1.4}
+.rating{display:flex;gap:4px}
+.dot{width:20px;height:20px;border-radius:50%;border:0.5px solid var(--color-border-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--color-text-tertiary);flex-shrink:0;transition:all 0.1s;background:transparent}
+.dot:hover{border-color:var(--color-border-primary)}
+.dot.fp{background:var(--ph-bg);border-color:var(--ph-a);color:var(--ph-t)}.dot.fe{background:var(--em-bg);border-color:var(--em-a);color:var(--em-t)}.dot.fm{background:var(--mn-bg);border-color:var(--mn-a);color:var(--mn-t)}.dot.fu{background:var(--pu-bg);border-color:var(--pu-a);color:var(--pu-t)}
+.dbars{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:1rem 0}
+.dbi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px}
+.dbil{font-size:11px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;color:var(--color-text-secondary)}
+.dbil strong{font-weight:500;color:var(--color-text-primary)}
+.dbt{height:5px;background:var(--color-border-tertiary);border-radius:3px;overflow:hidden}
+.dbf{height:100%;border-radius:3px;transition:width 0.35s ease;width:0%}
+.dbf.p{background:var(--ph-a)}.dbf.e{background:var(--em-a)}.dbf.m{background:var(--mn-a)}.dbf.u{background:var(--pu-a)}
+.insight{font-size:12px;color:var(--color-text-tertiary);margin:0.5rem 0 0;text-align:center;min-height:18px}
+.dsg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0.75rem 0}
+.dsh{font-size:11px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.drain-h{color:#D85A30}.source-h{color:#1D9E75}
+.dsi{font-size:12px;padding:5px 8px;border-radius:var(--border-radius-md);margin-bottom:3px;line-height:1.5;border:0.5px solid transparent}
+.dsi.d{background:var(--dr-bg);border-color:var(--dr-bd);color:var(--dr-t)}.dsi.s{background:var(--so-bg);border-color:var(--so-bd);color:var(--so-t)}
+.rbox{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin:0.75rem 0;font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+.rbox strong{color:var(--color-text-primary);font-weight:500}
+.rfq{font-size:12px;color:var(--color-text-secondary);margin:4px 0;padding-left:12px;position:relative;line-height:1.5}
+.rfq::before{content:'▸';position:absolute;left:0;color:var(--color-text-tertiary)}
+.qbox{border-left:2px solid var(--color-border-secondary);padding:6px 12px;margin:0.75rem 0;font-size:13px;color:var(--color-text-secondary);font-style:italic;font-family:var(--font-serif);border-radius:0}
+textarea{width:100%;box-sizing:border-box;min-height:72px;font-size:12px;padding:7px 9px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);resize:vertical;font-family:var(--font-sans);line-height:1.5;margin-top:5px}
+textarea:focus{outline:none;border-color:var(--color-border-primary)}
+textarea::placeholder{color:var(--color-text-tertiary)}
+.rc{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:8px}
+.rch{padding:10px 12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--color-background-secondary);font-size:13px;font-weight:500;color:var(--color-text-primary);user-select:none}
+.rcb{padding:10px 12px;font-size:12px;color:var(--color-text-secondary);line-height:1.7;display:none;border-top:0.5px solid var(--color-border-tertiary)}
+.rcb.open{display:block}
+.rcb ul{margin:4px 0;padding-left:16px}.rcb li{margin-bottom:6px}.rcb strong{color:var(--color-text-primary);font-weight:500}
+.emg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0.75rem 0}
+.emi label{font-size:11px;font-weight:500;color:var(--color-text-secondary);display:block;margin-bottom:3px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0.75rem 0}
+.pd{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px}
+.pd label{font-size:11px;font-weight:500;display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.pd label.p{color:var(--ph-t)}.pd label.e{color:var(--em-t)}.pd label.m{color:var(--mn-t)}.pd label.u{color:var(--pu-t)}
+.cg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0.75rem 0}
+.ci{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px}
+.ci label{font-size:11px;font-weight:500;display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.ci.st label{color:#1D9E75}.ci.sp label{color:#D85A30}.ci.pr label{color:#7F77DD}
+.supbox{background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:12px;margin:1rem 0;font-size:12px;color:var(--color-text-info)}
+.supbox strong{font-weight:500;display:block;margin-bottom:5px;font-size:13px}
+.supbox ul{margin:5px 0 0;padding-left:16px;line-height:1.9}
+.nc{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)}
+.nc-ctr{font-size:12px;color:var(--color-text-tertiary)}
+.intro-p{font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:0 0 0.75rem}
+.sl{font-size:12px;color:var(--color-text-secondary);font-weight:500;margin:0.75rem 0 0.25rem}
+input[type=date]{font-size:12px;padding:5px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans)}
+</style>
+
+<div style="padding:1rem 0 2rem">
+<nav class="snav" id="snav" aria-label="Guide sections"></nav>
+<main id="main"></main>
+<div class="nc">
+  <button id="prev" aria-label="Previous section">← Previous</button>
+  <span class="nc-ctr" id="ctr">1 / 8</span>
+  <button id="next" aria-label="Next section">Next →</button>
+</div>
+</div>
+
+<script>
+const DCSS=['p','e','m','u'];
+const DLABELS=['Physical','Emotional','Mental','Purpose'];
+const DICONS=['ti-run','ti-mood-smile','ti-brain','ti-star'];
+const DTAGS=['The non-negotiable foundation — sleep, movement, nutrition, rest','The quality of your inner life and your connections','Focus, clarity, and the hidden cost of cognitive overload','Meaning, values, and the fuel that makes everything possible'];
+
+const AUDIT=[
+  {l:'Sleep quality and quantity',d:0},{l:'Physical movement and exercise',d:0},
+  {l:'Nutrition and hydration',d:0},{l:'Rest and micro-recovery during the day',d:0},
+  {l:'Quality of key relationships',d:1},{l:'Emotional regulation and resilience',d:1},
+  {l:'Boundaries with draining interactions',d:1},{l:'Ability to experience joy and connection',d:1},
+  {l:'Ability to focus and concentrate',d:2},{l:'Decision-making clarity',d:2},
+  {l:'Management of information and cognitive load',d:2},{l:'Mental rest and switching off',d:2},
+  {l:'Sense of meaning in your work',d:3},{l:'Connection to your values',d:3},
+  {l:'Feeling that what you do matters',d:3},{l:'Hope and direction for the future',d:3}
+];
+
+const SECS=[
+  {id:'audit',label:'Energy Audit',icon:'ti-clipboard-list'},
+  {id:'physical',label:'Physical',icon:'ti-run'},
+  {id:'emotional',label:'Emotional',icon:'ti-mood-smile'},
+  {id:'mental',label:'Mental',icon:'ti-brain'},
+  {id:'purpose',label:'Purpose',icon:'ti-star'},
+  {id:'recovery',label:'Recovery',icon:'ti-refresh'},
+  {id:'map',label:'Energy Map',icon:'ti-bolt'},
+  {id:'plan',label:'Action Plan',icon:'ti-target'}
+];
+
+const DD=[
+  {
+    res:'Matthew Walker\'s research demonstrates that adults need 7–9 hours of sleep for full function. There is no adaptation to chronic sleep restriction — only a diminishing awareness of how impaired you have become.',
+    dr:['Chronic sleep debt — fewer than 7 hours regularly','Shift work without deliberate circadian recovery','Prolonged sitting or standing without movement breaks','Skipping meals or relying on caffeine and sugar','Physical symptoms being ignored or pushed through','No deliberate transition between work and rest'],
+    so:['Consistent sleep schedule, including on days off','Brief movement breaks every 60–90 minutes during work','Eating substantially before and after demanding shifts','Hydration — a water bottle at the desk or in the ward','A physical wind-down transition after work (walk, shower, change)','One form of movement you genuinely enjoy, not just tolerate'],
+    rq:['Honestly — how many hours of sleep are you regularly getting? What is the quality like?','When did you last feel physically rested? What was different about that period?','What is one physical drain you have the most direct control over?','What physical recovery practices have you stopped doing that once helped?']
+  },
+  {
+    res:'Studies on emotional labour consistently find that authentic, regulated emotional expression — even of difficult feelings — is associated with lower burnout than suppression or performance. Genuine connection, even brief, restores emotional energy in ways that professional distance does not.',
+    dr:['Unprocessed incidents, losses, or conflicts from work','Relationships characterised by criticism, unpredictability, or conflict','Isolation — going through difficulty alone without support','Emotional suppression as a professional or personal habit','Carrying others\' distress without adequate processing','Never receiving care because receiving feels uncomfortable'],
+    so:['At least one relationship in which you can be fully honest','Regular, even brief, moments of genuine human connection at work','Naming emotions clearly rather than suppressing or performing them','A processing practice: journalling, talking, creative expression','Allowing yourself to receive care as readily as you give it','Deliberate joy — activities that produce genuine pleasure, not duty'],
+    rq:['Who in your life genuinely refills your emotional tank? How often do you spend time with them?','Are there relationships or environments that consistently drain your emotional energy?','How do you process difficult emotions from work — or do they tend to accumulate unprocessed?','When did you last experience genuine joy or lightness? What produced it?']
+  },
+  {
+    res:'Roy Baumeister\'s research shows decision-making quality degrades significantly over the course of a day. Healthcare professionals making clinical decisions at end of a long shift are doing so with genuinely compromised cognitive capacity — a structural risk, not a personal failure.',
+    dr:['Constant interruptions without recovery time','More than 3–5 significant decisions in quick succession','Unfinished tasks competing for attention simultaneously','Screen time and information consumption without limit','No boundaries between work-think and personal-think','Perfectionism — applying full cognitive effort to everything equally'],
+    so:['Single-tasking: one thing, fully, before the next','Brief mental rest between cognitively demanding tasks (2–5 minutes)','A clear end to the working day: rituals that signal \'done\'','Deliberate low-stimulation time: walks without podcasts, meals without screens','Writing things down to free working memory from holding tasks','Choosing what does not need your full attention and giving it less'],
+    rq:['When in your working day does your mental energy feel sharpest? When most depleted?','How many times are you interrupted in a typical working hour? What is the cumulative cost?','Do you have any rituals that signal the end of your working day and allow genuine rest?','What would single-tasking for even part of your day look and feel like?']
+  },
+  {
+    res:'Studies on meaning at work consistently show that purpose is one of the strongest predictors of psychological wellbeing, burnout resistance, and sustained engagement — with measurable physiological effects including reduced cortisol and improved immune function.',
+    dr:['Work that consistently requires acting against your values','No visibility of the impact or outcome of your efforts','Feeling like a cog rather than a person who makes a difference','Loss of connection to why you chose this work originally','Moral injury — witnessing things that violate what you believe is right','Hope depletion — the gradual erosion of belief that things can improve'],
+    so:['Regular reconnection with your original calling and values','Noticing and naming moments where your presence mattered','Connection with colleagues who share your values and your \'why\'','Small acts of advocacy and meaning-making, even within constraints','Allowing yourself to be moved by moments of genuine human connection','Hope maintenance: stories of change, improvement, and recovery'],
+    rq:['What sustains your sense of purpose most reliably in your current role? What erodes it?','Is there a specific aspect of your work where you most clearly feel you make a difference?','When did you last feel genuinely hopeful about something related to your work?','If purpose energy is depleted right now — what do you think it would take to restore it?']
+  }
+];
+
+const MAP=[
+  {l:'People who consistently drain my energy',ph:'Interactions that leave me feeling worse than before…'},
+  {l:'People who consistently amplify my energy',ph:'Interactions that leave me more capable, more alive…'},
+  {l:'Environments or situations that reliably drain me',ph:'Specific meetings, spaces, or circumstances…'},
+  {l:'Environments or situations that reliably restore me',ph:'Places, activities, or contexts that replenish…'},
+  {l:'Habits or patterns of my own that deplete me',ph:'Perfectionism, over-commitment, checking work at midnight…'},
+  {l:'Activities that consistently leave me more energised',ph:'Creative work, time in nature, physical exercise, deep conversation…'}
+];
+
+let cur=0;
+let scores=new Array(16).fill(0);
+let notes={};
+
+function save(sec,key,val){if(!notes[sec])notes[sec]={};notes[sec][key]=val}
+
+function tval(sec,key){return(notes[sec]&&notes[sec][key])||''}
+
+function updateBars(){
+  for(let d=0;d<4;d++){
+    const items=AUDIT.filter(a=>a.d===d);
+    const s=items.reduce((t,item)=>t+(scores[AUDIT.indexOf(item)]||0),0);
+    const pct=Math.round((s/20)*100);
+    const bf=document.getElementById('bf'+d);
+    const sc=document.getElementById('sc'+d);
+    if(bf)bf.style.width=pct+'%';
+    if(sc)sc.textContent=s+'/20';
+  }
+  const ins=document.getElementById('insight');
+  if(!ins)return;
+  const rated=scores.filter(s=>s>0).length;
+  if(rated===16){
+    const tots=DLABELS.map((_,d)=>AUDIT.filter(a=>a.d===d).reduce((t,item)=>t+(scores[AUDIT.indexOf(item)]||0),0));
+    const mn=tots.indexOf(Math.min(...tots)),mx=tots.indexOf(Math.max(...tots));
+    ins.textContent='Strongest: '+DLABELS[mx]+' ('+tots[mx]+'/20) · Most depleted: '+DLABELS[mn]+' ('+tots[mn]+'/20)';
+  } else if(rated>0){
+    ins.textContent=rated+' of 16 areas rated';
+  }
+}
+
+function setupRatings(){
+  document.querySelectorAll('.rating').forEach(r=>{
+    const idx=parseInt(r.dataset.idx);
+    const dim=r.dataset.dim;
+    r.querySelectorAll('.dot').forEach(dot=>{
+      const v=parseInt(dot.dataset.v);
+      dot.onclick=()=>{
+        scores[idx]=v;
+        r.querySelectorAll('.dot').forEach(d2=>{
+          d2.classList.toggle('f'+dim,parseInt(d2.dataset.v)<=v);
+        });
+        updateBars();
+      };
+    });
+  });
+}
+
+function toggleCard(i){
+  const b=document.getElementById('rcb'+i),ic=document.getElementById('rci'+i);
+  if(b.classList.contains('open')){b.classList.remove('open');ic.style.transform=''}
+  else{b.classList.add('open');ic.style.transform='rotate(180deg)'}
+}
+
+function buildAudit(){
+  let h=`<div class="sh"><div class="badge"><i class="ti ti-clipboard-list" aria-hidden="true"></i></div><div><p class="stitle">Your energy audit</p><p class="ssub">Rate each area from 1 (very low) to 5 (strong)</p></div></div>`;
+  h+=`<p class="intro-p">The crisis in healthcare is not primarily a time crisis — it is an energy crisis. Energy, unlike time, is renewable — but only when we understand what depletes it and what restores it. This audit covers 16 areas. Be honest rather than optimistic. The purpose is clarity, not reassurance.</p>`;
+  const glabels=['Physical energy','Emotional energy','Mental energy','Purpose energy'];
+  for(let d=0;d<4;d++){
+    h+=`<div class="ag"><div class="agl ${DCSS[d]}"><i class="ti ${DICONS[d]}" aria-hidden="true"></i>${glabels[d]}</div>`;
+    AUDIT.filter(a=>a.d===d).forEach(item=>{
+      const idx=AUDIT.indexOf(item);
+      h+=`<div class="ar"><span class="albl">${item.l}</span><div class="rating" data-idx="${idx}" data-dim="${DCSS[d]}">`;
+      for(let v=1;v<=5;v++)h+=`<div class="dot" data-v="${v}" title="Rate ${v}">${v}</div>`;
+      h+=`</div></div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`<div class="dbars">`;
+  for(let d=0;d<4;d++)h+=`<div class="dbi"><div class="dbil"><strong>${DLABELS[d]}</strong><span id="sc${d}">0/20</span></div><div class="dbt"><div class="dbf ${DCSS[d]}" id="bf${d}"></div></div></div>`;
+  h+=`</div><p class="insight" id="insight">Rate the items above to see your energy profile.</p>`;
+  h+=`<div class="rbox"><strong>Reflect on your scores</strong><p class="rfq" style="margin-top:6px">Looking at your scores — which dimension is most depleted right now? Does that surprise you?</p><p class="rfq">Which specific area scored lowest? How long has it been like this?</p><p class="rfq">What is the cumulative effect of these depletions on how you show up at work and at home?</p></div>`;
+  h+=`<textarea placeholder="Your honest overall picture — what your energy audit is telling you…" oninput="save('audit','r',this.value)">${tval('audit','r')}</textarea>`;
+  return h;
+}
+
+function buildDim(d){
+  const dd=DD[d];
+  let h=`<div class="sh"><div class="badge ${DCSS[d]}"><i class="ti ${DICONS[d]}" aria-hidden="true"></i></div><div><p class="stitle">${DLABELS[d]} energy</p><p class="ssub">${DTAGS[d]}</p></div></div>`;
+  h+=`<div class="rbox"><strong>Research note</strong>&nbsp; ${dd.res}</div>`;
+  h+=`<div class="dsg"><div><div class="dsh drain-h"><i class="ti ti-arrow-down" aria-hidden="true"></i> Drains</div>`;
+  dd.dr.forEach(s=>h+=`<div class="dsi d">${s}</div>`);
+  h+=`</div><div><div class="dsh source-h"><i class="ti ti-arrow-up" aria-hidden="true"></i> Sources</div>`;
+  dd.so.forEach(s=>h+=`<div class="dsi s">${s}</div>`);
+  h+=`</div></div>`;
+  h+=`<div class="rbox"><strong>Reflect &amp; explore</strong>`;
+  dd.rq.forEach(q=>h+=`<p class="rfq">${q}</p>`);
+  h+=`</div>`;
+  h+=`<textarea placeholder="Your reflection on your ${DLABELS[d].toLowerCase()} energy — what drains it, what restores it, and one change you will make…" oninput="save('dim${d}','r',this.value)">${tval('dim'+d,'r')}</textarea>`;
+  return h;
+}
+
+function buildRecovery(){
+  let h=`<div class="sh"><div class="badge"><i class="ti ti-refresh" aria-hidden="true"></i></div><div><p class="stitle">The science of recovery</p><p class="ssub">Why rest is not a reward — and how to do it properly</p></div></div>`;
+  h+=`<p class="intro-p">Recovery is not the absence of doing. It is the active process of restoring capacity. There are two kinds: micro-recovery (brief, within the working day) and macro-recovery (longer, between shifts or during leave). Neither can substitute for the other. And the most important thing: recovery must be genuinely disengaged from work to be restorative.</p>`;
+  h+=`<div class="rbox"><strong>The detachment principle</strong>&nbsp; Research by Sabine Sonnentag shows that psychological detachment from work is the single strongest predictor of recovery quality. Duration of time off is less important than the degree of mental disengagement during that time.</div>`;
+  const cards=[
+    {t:'Micro-recovery — within the working day',items:[
+      {h:'The 90-minute rhythm',b:'Human attention naturally oscillates in 90-minute cycles. Working with this rhythm — taking 5–10 minutes of genuine rest between intense periods — significantly improves output and reduces fatigue.'},
+      {h:'Transition rituals',b:'A brief, deliberate ritual between very different tasks or emotional demands signals to the nervous system that a shift has occurred. Even 60 seconds of conscious breathing at a threshold counts.'},
+      {h:'Single-focus breaks',b:'The most restorative micro-breaks involve attention that is fully outward and non-work: a brief walk, looking at a view, a real conversation about something unrelated to work. Scrolling a phone is not a break — it is continued cognitive loading.'},
+      {h:'Eating as recovery',b:'A proper meal break, taken away from your work environment and without work-related conversation, is a recovery intervention. It restores blood glucose, reduces cortisol, and provides genuine mental respite.'}
+    ]},
+    {t:'Macro-recovery — between shifts, days off, and leave',items:[
+      {h:'The commute as decompression',b:'The journey between work and home is a transition zone. Use it deliberately: music, a podcast unrelated to healthcare, or simply silence. Resist the urge to process the day until you have physically separated from it.'},
+      {h:'A leaving ritual',b:'Healthcare professionals who develop a consistent end-of-shift ritual report better recovery. This might be changing clothes, a specific walk, a brief written note of what was hard and what was good, or a breathing practice.'},
+      {h:'Days off as genuinely off',b:'A day off spent answering work messages is not a day off. Protect at least one day per week from which work is fully excluded — no checking, no responding, no preparing.'},
+      {h:'Leave as prescribed medicine',b:'Annual leave is not a reward — it is a physiological requirement. The physical and psychological benefits of leave begin to decay within three days of return if underlying conditions have not changed.'}
+    ]}
+  ];
+  cards.forEach((c,i)=>{
+    h+=`<div class="rc"><div class="rch" onclick="toggleCard(${i})"><span>${c.t}</span><i class="ti ti-chevron-down" id="rci${i}" aria-hidden="true" style="transition:transform 0.2s"></i></div><div class="rcb" id="rcb${i}"><ul>`;
+    c.items.forEach(item=>h+=`<li><strong>${item.h}:</strong> ${item.b}</li>`);
+    h+=`</ul></div></div>`;
+  });
+  h+=`<div class="qbox">"Almost everything will work again if you unplug it for a few minutes. Including you." — Anne Lamott</div>`;
+  h+=`<div class="rbox"><strong>Reflect</strong><p class="rfq">When did you last take a break during the working day that was genuinely restorative? What made it so?</p><p class="rfq">What does genuine rest look like for you — not what you think it should look like, but what actually restores you?</p><p class="rfq">Is there a form of rest you have abandoned that once helped? What got in the way of keeping it?</p></div>`;
+  h+=`<textarea placeholder="Your recovery practices — what works, what is missing, and what you will restore…" oninput="save('rec','r',this.value)">${tval('rec','r')}</textarea>`;
+  return h;
+}
+
+function buildMap(){
+  let h=`<div class="sh"><div class="badge"><i class="ti ti-bolt" aria-hidden="true"></i></div><div><p class="stitle">Energy vampires &amp; amplifiers</p><p class="ssub">Naming what consistently depletes or multiplies your capacity</p></div></div>`;
+  h+=`<div class="rbox"><strong>The 'after' test</strong>&nbsp; Pay attention to how you feel immediately after a particular interaction, activity, or environment. Not during — after. After is a more reliable guide to its energy impact than the experience in the moment.</div>`;
+  h+=`<div class="emg">`;
+  MAP.forEach((item,i)=>h+=`<div class="emi"><label>${item.l}</label><textarea placeholder="${item.ph}" rows="3" oninput="save('map','m${i}',this.value)">${tval('map','m'+i)}</textarea></div>`);
+  h+=`</div>`;
+  return h;
+}
+
+function buildPlan(){
+  let h=`<div class="sh"><div class="badge"><i class="ti ti-target" aria-hidden="true"></i></div><div><p class="stitle">My energy management plan</p><p class="ssub">Translating awareness into deliberate, sustained action</p></div></div>`;
+  h+=`<p class="intro-p">The most powerful outcome of this guide is a personal plan — specific, realistic, and genuinely owned by you. Not a list of aspirations, but a set of deliberate commitments: what you will do, how often, and what you will stop doing to create the space for it.</p>`;
+  h+=`<div class="pg">`;
+  for(let d=0;d<4;d++)h+=`<div class="pd"><label class="${DCSS[d]}"><i class="ti ${DICONS[d]}" aria-hidden="true"></i>${DLABELS[d]} energy</label><textarea placeholder="What I will do to protect and restore my ${DLABELS[d].toLowerCase()} energy…" oninput="save('plan','d${d}',this.value)">${tval('plan','d'+d)}</textarea></div>`;
+  h+=`</div>`;
+  h+=`<p class="sl">Three commitments — from everything in this guide, choose three concrete actions</p>`;
+  h+=`<div class="cg">`;
+  h+=`<div class="ci st"><label><i class="ti ti-plus" aria-hidden="true"></i> I will start</label><textarea placeholder="Something new — a recovery practice, a boundary, a habit…" oninput="save('plan','start',this.value)">${tval('plan','start')}</textarea></div>`;
+  h+=`<div class="ci sp"><label><i class="ti ti-x" aria-hidden="true"></i> I will stop</label><textarea placeholder="Something draining that I have the power to change…" oninput="save('plan','stop',this.value)">${tval('plan','stop')}</textarea></div>`;
+  h+=`<div class="ci pr"><label><i class="ti ti-shield" aria-hidden="true"></i> I will protect</label><textarea placeholder="Something already working that I commit not to sacrifice…" oninput="save('plan','protect',this.value)">${tval('plan','protect')}</textarea></div>`;
+  h+=`</div>`;
+  h+=`<p class="sl">I will review my energy and these commitments on</p>`;
+  h+=`<input type="date" oninput="save('plan','date',this.value)" value="${tval('plan','date')}">`;
+  h+=`<div class="supbox" style="margin-top:1rem"><strong><i class="ti ti-heart-handshake" aria-hidden="true"></i> When you need more support</strong>If your energy has been depleted for weeks or months, this is not something to manage alone. Persistent exhaustion, loss of motivation, inability to recover despite rest — all warrant professional attention.<ul><li>Your GP or doctor — persistent fatigue and burnout have physical dimensions needing clinical assessment</li><li>A mental health practitioner — burnout, depression, and chronic stress require professional support, not just better habits</li><li>A trusted friend, family member, or colleague — sometimes the most powerful recovery is simply being genuinely heard</li></ul></div>`;
+  h+=`<div class="qbox">"Your energy is not a luxury. It is the source of everything you give. Protect it with the same diligence you bring to everything else that matters."</div>`;
+  return h;
+}
+
+function buildSection(i){
+  if(i===0)return buildAudit();
+  if(i>=1&&i<=4)return buildDim(i-1);
+  if(i===5)return buildRecovery();
+  if(i===6)return buildMap();
+  return buildPlan();
+}
+
+function goTo(i){
+  document.querySelectorAll('.sec').forEach((s,j)=>s.className='sec'+(j===i?' active':''));
+  document.querySelectorAll('.sb').forEach((b,j)=>b.className='sb'+(j===i?' active':''));
+  cur=i;
+  document.getElementById('ctr').textContent=(i+1)+' / '+SECS.length;
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===SECS.length-1;
+  window.scrollTo(0,0);
+}
+
+function init(){
+  const nav=document.getElementById('snav');
+  SECS.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.className='sb'+(i===0?' active':'');
+    b.innerHTML=`<i class="ti ${s.icon}" aria-hidden="true"></i>${s.label}`;
+    b.onclick=()=>goTo(i);
+    nav.appendChild(b);
+  });
+  const main=document.getElementById('main');
+  SECS.forEach((s,i)=>{
+    const div=document.createElement('div');
+    div.className='sec'+(i===0?' active':'');
+    div.innerHTML=buildSection(i);
+    main.appendChild(div);
+  });
+  document.getElementById('prev').onclick=()=>{if(cur>0)goTo(cur-1)};
+  document.getElementById('next').onclick=()=>{if(cur<SECS.length-1)goTo(cur+1)};
+  document.getElementById('prev').disabled=true;
+  setupRatings();
+}
+
+init();
+</script>
+  </main>
+  <footer class="site-foot">
+    <strong>Private.</strong> This tool runs entirely in your browser — nothing you type is sent to Apex Health or stored on a server.
+    <div class="foot-row">
+      <a href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to all guides</a>
+      <span>© Apex Health Group · Resilience Self-Help Guides</span>
+    </div>
+  </footer>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

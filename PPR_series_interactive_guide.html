@@ -1,0 +1,360 @@
+
+<style>
+  h2.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-sans)}
+  .ppr-wrap{width:100%;padding:0}
+  .hero{padding:2rem 1.5rem 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:#0C447C;background:#E6F1FB;padding:4px 10px;border-radius:20px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:12px}
+  .hero-title{font-size:22px;font-weight:500;color:var(--color-text-primary);line-height:1.3;margin-bottom:6px}
+  .hero-sub{font-size:14px;color:var(--color-text-secondary);margin-bottom:14px}
+  .hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{font-size:12px;padding:4px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary);background:var(--color-background-secondary)}
+  .nav{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);padding:0 1.5rem;overflow-x:auto;background:var(--color-background-primary);position:sticky;top:0;z-index:10}
+  .nav-btn{padding:12px 16px;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s}
+  .nav-btn.active{color:#185FA5;border-bottom-color:#185FA5}
+  .nav-btn:hover:not(.active){color:var(--color-text-primary)}
+  .panel{padding:1.5rem;display:none}
+  .panel.active{display:block}
+  .section-title{font-size:16px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+  .section-desc{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.5rem;line-height:1.6}
+  .assessment-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .assessment-row:last-of-type{border-bottom:none}
+  .area-label{font-size:13px;color:var(--color-text-primary);line-height:1.4}
+  .dots{display:flex;gap:6px}
+  .dot{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--color-border-secondary);cursor:pointer;background:none;transition:all .1s;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--color-text-secondary)}
+  .dot:hover{border-color:#378ADD;color:#185FA5}
+  .dot.active{background:#E6F1FB;border-color:#378ADD;color:#185FA5}
+  .dot.low.active{background:#FAEEDA;border-color:#EF9F27;color:#633806}
+  .dot.mid.active{background:#EAF3DE;border-color:#639922;color:#27500A}
+  .score-summary{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary)}
+  .score-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .score-avg{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+  .score-label{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+  .score-bar-wrap{margin-bottom:8px}
+  .score-bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+  .score-bar-track{height:6px;background:var(--color-background-primary);border-radius:4px;border:0.5px solid var(--color-border-tertiary);overflow:hidden}
+  .score-bar-fill{height:100%;border-radius:4px;background:#378ADD;transition:width .4s ease}
+  .score-bar-fill.low{background:#EF9F27}
+  .score-bar-fill.mid{background:#639922}
+  .reco-box{margin-top:1rem;padding:12px;border-radius:var(--border-radius-md);border:0.5px solid #85B7EB;background:#E6F1FB}
+  .reco-label{font-size:11px;font-weight:500;color:#0C447C;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+  .reco-text{font-size:13px;color:#185FA5}
+  .finder-grid{display:grid;gap:8px}
+  .finder-btn{width:100%;text-align:left;padding:12px 14px;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;font-size:13px;color:var(--color-text-primary);transition:all .15s;line-height:1.4}
+  .finder-btn:hover{border-color:#378ADD;background:#E6F1FB;color:#185FA5}
+  .finder-btn.selected{border-color:#185FA5;background:#E6F1FB;color:#185FA5}
+  .finder-result{margin-top:1.5rem;padding:1.25rem;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);display:none}
+  .finder-result.show{display:block}
+  .fr-num{font-size:11px;font-weight:500;color:#0C447C;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+  .fr-title{font-size:16px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
+  .fr-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px}
+  .fr-badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:#E6F1FB;color:#0C447C;border:0.5px solid #B5D4F4}
+  .guides-grid{display:grid;gap:10px}
+  .guide-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-primary)}
+  .guide-header{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;transition:background .1s}
+  .guide-header:hover{background:var(--color-background-secondary)}
+  .guide-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+  .guide-info{flex:1}
+  .guide-name{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+  .guide-tagline{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+  .guide-chevron{transition:transform .2s;color:var(--color-text-secondary);font-size:16px}
+  .guide-body{padding:0 14px 14px;display:none;border-top:0.5px solid var(--color-border-tertiary)}
+  .guide-body.open{display:block}
+  .guide-body-inner{padding-top:12px;font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+  .guide-best{margin-top:10px;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-size:12px;color:var(--color-text-secondary)}
+  .guide-best strong{color:var(--color-text-primary);font-weight:500}
+  .how-grid{display:grid;gap:10px}
+  .how-card{padding:14px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);display:flex;gap:12px;align-items:flex-start;background:var(--color-background-primary)}
+  .how-icon{width:32px;height:32px;border-radius:var(--border-radius-md);background:#E6F1FB;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+  .how-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+  .how-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+  .quote-box{margin-top:1.5rem;padding:1rem 1.25rem;border-left:3px solid #85B7EB;background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+  .quote-text{font-size:13px;color:var(--color-text-secondary);font-style:italic;line-height:1.7}
+  .privacy-card{margin-top:1.5rem;padding:1rem 1.25rem;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);background:var(--color-background-secondary)}
+  .privacy-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+  .privacy-items{display:flex;flex-direction:column;gap:6px}
+  .privacy-item{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+  .reset-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 14px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:none;cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
+  .reset-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+</style>
+
+<h2 class="sr-only">Personal and Professional Resilience Series — interactive guide for Apex Health Group staff</h2>
+<div class="ppr-wrap">
+
+  <div class="hero">
+    <div class="hero-badge"><i class="ti ti-heart" aria-hidden="true"></i> Apex Health Group</div>
+    <div class="hero-title">Personal &amp; Professional Resilience</div>
+    <div class="hero-sub">A seven-guide self-help series — for the people who care for others</div>
+    <div class="hero-pills">
+      <span class="pill"><i class="ti ti-lock" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>Private</span>
+      <span class="pill"><i class="ti ti-bulb" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>Evidence-based</span>
+      <span class="pill"><i class="ti ti-stethoscope" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>Designed for healthcare</span>
+    </div>
+  </div>
+
+  <nav class="nav" role="tablist">
+    <button class="nav-btn active" onclick="switchTab('assessment',this)" role="tab" aria-selected="true">Self-assessment</button>
+    <button class="nav-btn" onclick="switchTab('finder',this)" role="tab" aria-selected="false">Find your guide</button>
+    <button class="nav-btn" onclick="switchTab('guides',this)" role="tab" aria-selected="false">The 7 guides</button>
+    <button class="nav-btn" onclick="switchTab('howto',this)" role="tab" aria-selected="false">How to use</button>
+  </nav>
+
+  <div id="tab-assessment" class="panel active" role="tabpanel">
+    <div class="section-title">Wellbeing self-assessment</div>
+    <div class="section-desc">Rate each area honestly from 1 (very low) to 5 (strong). Your lowest-scoring area is your invitation to begin. You can return to this every few weeks to track how you are doing.</div>
+
+    <div id="assessment-rows"></div>
+
+    <div class="score-summary" id="score-summary">
+      <div class="score-header">
+        <div>
+          <div class="score-avg" id="score-avg">—</div>
+          <div class="score-label">Overall average score</div>
+        </div>
+        <button class="reset-btn" onclick="resetAssessment()"><i class="ti ti-refresh" aria-hidden="true"></i>Reset</button>
+      </div>
+      <div id="score-bars"></div>
+      <div class="reco-box" id="reco-box" style="display:none">
+        <div class="reco-label">Suggested starting point</div>
+        <div class="reco-text" id="reco-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-finder" class="panel" role="tabpanel">
+    <div class="section-title">Which guide is right for you right now?</div>
+    <div class="section-desc">Select what resonates most with how you are feeling today.</div>
+    <div class="finder-grid" id="finder-grid"></div>
+    <div class="finder-result" id="finder-result">
+      <div class="fr-num" id="fr-num"></div>
+      <div class="fr-title" id="fr-title"></div>
+      <div class="fr-desc" id="fr-desc"></div>
+      <div id="fr-tags"></div>
+    </div>
+  </div>
+
+  <div id="tab-guides" class="panel" role="tabpanel">
+    <div class="section-title">The seven guides at a glance</div>
+    <div class="section-desc">Tap any guide to see what it covers, when to use it, and what to expect.</div>
+    <div class="guides-grid" id="guides-grid"></div>
+  </div>
+
+  <div id="tab-howto" class="panel" role="tabpanel">
+    <div class="section-title">How to use this series</div>
+    <div class="section-desc">There is no prescribed order, no completion deadline, and no expectation that you will use all seven guides. This series is a resource — not a curriculum.</div>
+    <div class="how-grid" id="how-grid"></div>
+    <div class="quote-box">
+      <div class="quote-text">"Resilience is not about bouncing back to who you were. It is about growing into who you need to become."</div>
+    </div>
+    <div class="privacy-card">
+      <div class="privacy-title"><i class="ti ti-shield-check" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px;color:#185FA5"></i>Confidentiality &amp; privacy</div>
+      <div class="privacy-items" id="privacy-items"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const areas=[
+  {label:"My sense of purpose and meaning at work",guide:3},
+  {label:"My emotional resilience and ability to regulate stress",guide:2},
+  {label:"My physical energy and recovery",guide:7},
+  {label:"My ability to manage unhelpful thoughts",guide:6},
+  {label:"My ability to reflect clearly on challenging situations",guide:1},
+  {label:"My support from colleagues and peers",guide:5},
+  {label:"My ability to process difficult incidents",guide:4},
+  {label:"My overall sense of professional wellbeing",guide:null}
+];
+
+const finderItems=[
+  {feeling:"I feel stuck with a specific situation at work",guide:1,label:"Guide 1: TGROW"},
+  {feeling:"I am feeling anxious, overwhelmed, or stressed right now",guide:2,label:"Guide 2: Mindfulness & Regulation"},
+  {feeling:"I have lost sight of why I do this work",guide:3,label:"Guide 3: Values, Compassion & Empathy"},
+  {feeling:"I have experienced a difficult or distressing incident",guide:4,label:"Guide 4: Post-Incident Debrief"},
+  {feeling:"I want to build better support with my team or colleagues",guide:5,label:"Guide 5: Peer Coaching Circle"},
+  {feeling:"I am being hard on myself or caught in negative thoughts",guide:6,label:"Guide 6: Cognitive Reframing"},
+  {feeling:"I am exhausted, running on empty, or struggling to recover",guide:7,label:"Guide 7: Energy Management & Recovery"}
+];
+
+const guides=[
+  {num:1,icon:"ti-target",color:"#185FA5",bg:"#E6F1FB",name:"TGROW",tagline:"A reflective conversation with yourself",body:"A structured, coaching-based self-reflection tool using the internationally recognised TGROW framework. Guides you through a situation using five stages: Topic, Goal, Reality, Options, and Way Forward.",best:"Getting unstuck, clarifying a situation, decision-making, preparing for a difficult conversation"},
+  {num:2,icon:"ti-leaf",color:"#0F6E56",bg:"#E1F5EE",name:"Mindfulness & Regulation Skills",tagline:"Practical tools to calm your nervous system",body:"Introduces the Window of Tolerance, five grounding techniques, four breathing methods, body scan practice, emotional regulation skills, and everyday mindfulness practices. Includes a Personal Regulation Plan.",best:"Anxiety, overwhelm, emotional flooding, stress, difficulty switching off"},
+  {num:3,icon:"ti-heart",color:"#993556",bg:"#FBEAF0",name:"Values, Compassion & Empathy",tagline:"Reconnecting with why you chose this work",body:"Six sections exploring your original calling, your personal values, compassion and compassion fatigue, healthy empathy, your needs as a carer, and how to reconnect when purpose feels distant.",best:"Feeling disconnected, compassion fatigue, loss of purpose, moral injury, needing to be heard"},
+  {num:4,icon:"ti-shield",color:"#3B6D11",bg:"#EAF3DE",name:"Post-Incident Structured Debrief",tagline:"A seven-stage guide to processing difficult events",body:"A trauma-informed, structured debriefing tool covering: grounding, the facts, thoughts, feelings, body responses, meaning and learning, and moving forward. Includes safety guidance and a recovery plan.",best:"After a distressing or difficult incident, near-miss, patient loss, or morally challenging situation"},
+  {num:5,icon:"ti-users",color:"#533aB7",bg:"#EEEDFE",name:"Peer Coaching Circle",tagline:"A complete guide to running a peer support group",body:"Full setup guide, three role descriptions, seven-phase session structure, four coaching question banks, session record template, personal reflection sheet, and sustainability guidance.",best:"Building team support, structured peer learning, reducing professional isolation"},
+  {num:6,icon:"ti-bulb",color:"#854F0B",bg:"#FAEEDA",name:"Cognitive Reframing",tagline:"Learning to challenge the thoughts that hold you back",body:"Eight sections covering the thinking brain, the cognitive triangle, ten common thinking distortions, catching thoughts, challenging them, reframing, and building the habit. Includes ABCDE model and full Thought Record.",best:"Negative self-talk, self-critical thoughts, anxiety, perfectionism, persistent unhelpful patterns"},
+  {num:7,icon:"ti-bolt",color:"#185FA5",bg:"#E6F1FB",name:"Energy Management & Recovery",tagline:"Understanding and replenishing the energy behind everything",body:"Eight sections covering the four dimensions of energy (physical, emotional, mental, purpose), a 16-area audit, dimension-specific drains and sources, the science of recovery, and a personal plan.",best:"Exhaustion, depletion, difficulty recovering, burnout risk, loss of vitality"}
+];
+
+const howItems=[
+  {icon:"ti-user",title:"Individually",desc:"All guides are designed for private, solo use. Find a quiet space, give yourself time, and move through at your own pace. No expectation to complete in one sitting."},
+  {icon:"ti-users",title:"As a team",desc:"Any guide can be used as the basis for a team discussion or peer coaching circle session. Consider agreeing on one guide per quarter to explore collectively."},
+  {icon:"ti-message-circle",title:"With a peer coaching circle",desc:"Guide 5 establishes the peer coaching circle framework. The other six guides can be used to introduce topics for group reflection within that structure."},
+  {icon:"ti-user-check",title:"With a manager or supervisor",desc:"These guides can complement one-to-one manager or clinical supervision conversations. Complete a guide before a session and bring your reflections to discuss."},
+  {icon:"ti-clock",title:"In your own time",desc:"No deadline, no assessment, no reporting requirement. Use these guides when they are useful to you, in the way that is most helpful."},
+  {icon:"ti-refresh",title:"Repeatedly",desc:"A guide returned to over months or years — as circumstances change — becomes a map of your growth. These are living tools, not one-time exercises."}
+];
+
+const privacyItems=[
+  "Nothing you write is collected, monitored, or reviewed by your organisation. These are private tools for your own reflection.",
+  "These guides are self-help resources — they are not a substitute for clinical support, therapy, or formal occupational health services.",
+  "If you are in acute distress at any time, please contact your GP, a mental health professional, or go to your nearest emergency department."
+];
+
+const scores={};
+
+function buildAssessment(){
+  const wrap=document.getElementById('assessment-rows');
+  areas.forEach((a,i)=>{
+    const row=document.createElement('div');
+    row.className='assessment-row';
+    const lbl=document.createElement('div');
+    lbl.className='area-label';
+    lbl.textContent=a.label;
+    const dots=document.createElement('div');
+    dots.className='dots';
+    [1,2,3,4,5].forEach(v=>{
+      const btn=document.createElement('button');
+      btn.className='dot'+(v<=2?' low':v<=4?' mid':'');
+      btn.textContent=v;
+      btn.setAttribute('aria-label','Rate '+v+' for: '+a.label);
+      btn.onclick=()=>setScore(i,v);
+      dots.appendChild(btn);
+    });
+    row.appendChild(lbl);
+    row.appendChild(dots);
+    wrap.appendChild(row);
+  });
+}
+
+function setScore(idx,val){
+  scores[idx]=val;
+  const rows=document.querySelectorAll('.assessment-row');
+  const dotBtns=rows[idx].querySelectorAll('.dot');
+  dotBtns.forEach((d,di)=>{d.classList.toggle('active',di<val)});
+  updateScoreSummary();
+}
+
+function updateScoreSummary(){
+  const vals=Object.values(scores);
+  if(!vals.length)return;
+  const avg=(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
+  document.getElementById('score-avg').textContent=avg+' / 5';
+  const bars=document.getElementById('score-bars');
+  bars.innerHTML='';
+  areas.forEach((a,i)=>{
+    if(scores[i]===undefined)return;
+    const pct=Math.round((scores[i]/5)*100);
+    const isLow=scores[i]<=2;
+    const isMid=scores[i]===3;
+    const div=document.createElement('div');
+    div.className='score-bar-wrap';
+    div.innerHTML=`<div class="score-bar-label"><span>${a.label.length>45?a.label.slice(0,45)+'…':a.label}</span><span>${scores[i]}/5</span></div><div class="score-bar-track"><div class="score-bar-fill${isLow?' low':isMid?' mid':''}" style="width:${pct}%"></div></div>`;
+    bars.appendChild(div);
+  });
+  const lowestIdx=Object.keys(scores).reduce((a,b)=>scores[a]<scores[b]?a:b);
+  const lowestArea=areas[lowestIdx];
+  const recoBox=document.getElementById('reco-box');
+  if(lowestArea.guide){
+    const g=guides[lowestArea.guide-1];
+    document.getElementById('reco-text').textContent='Based on your lowest score, consider starting with Guide '+g.num+': '+g.name;
+    recoBox.style.display='block';
+  }
+}
+
+function resetAssessment(){
+  Object.keys(scores).forEach(k=>delete scores[k]);
+  document.querySelectorAll('.dot').forEach(d=>d.classList.remove('active'));
+  document.getElementById('score-avg').textContent='—';
+  document.getElementById('score-bars').innerHTML='';
+  document.getElementById('reco-box').style.display='none';
+}
+
+function buildFinder(){
+  const wrap=document.getElementById('finder-grid');
+  finderItems.forEach((item,i)=>{
+    const btn=document.createElement('button');
+    btn.className='finder-btn';
+    btn.textContent=item.feeling;
+    btn.onclick=()=>showFinderResult(i,btn);
+    wrap.appendChild(btn);
+  });
+}
+
+function showFinderResult(idx,btn){
+  document.querySelectorAll('.finder-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const item=finderItems[idx];
+  const g=guides[item.guide-1];
+  document.getElementById('fr-num').textContent='Guide '+g.num+' of 7';
+  document.getElementById('fr-title').textContent=g.name;
+  document.getElementById('fr-desc').textContent=g.body;
+  const tags=document.getElementById('fr-tags');
+  tags.innerHTML='<span class="fr-badge">Best for: '+g.best+'</span>';
+  const result=document.getElementById('finder-result');
+  result.classList.add('show');
+  result.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function buildGuides(){
+  const wrap=document.getElementById('guides-grid');
+  guides.forEach((g,i)=>{
+    const card=document.createElement('div');
+    card.className='guide-card';
+    card.innerHTML=`<div class="guide-header" onclick="toggleGuide(${i})" role="button" aria-expanded="false" id="gh-${i}">
+      <div class="guide-num" style="background:${g.bg};color:${g.color}">${g.num}</div>
+      <div class="guide-info">
+        <div class="guide-name">${g.name}</div>
+        <div class="guide-tagline">${g.tagline}</div>
+      </div>
+      <i class="ti ${g.icon}" style="color:${g.color};font-size:18px;flex-shrink:0;margin-right:4px" aria-hidden="true"></i>
+      <i class="ti ti-chevron-down guide-chevron" id="gc-${i}" aria-hidden="true"></i>
+    </div>
+    <div class="guide-body" id="gb-${i}">
+      <div class="guide-body-inner">${g.body}<div class="guide-best"><strong>Best for:</strong> ${g.best}</div></div>
+    </div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function toggleGuide(i){
+  const body=document.getElementById('gb-'+i);
+  const chev=document.getElementById('gc-'+i);
+  const hdr=document.getElementById('gh-'+i);
+  const open=body.classList.toggle('open');
+  chev.style.transform=open?'rotate(180deg)':'';
+  hdr.setAttribute('aria-expanded',open);
+}
+
+function buildHow(){
+  const wrap=document.getElementById('how-grid');
+  howItems.forEach(h=>{
+    const card=document.createElement('div');
+    card.className='how-card';
+    card.innerHTML=`<div class="how-icon"><i class="ti ${h.icon}" aria-hidden="true" style="color:#185FA5"></i></div>
+    <div><div class="how-title">${h.title}</div><div class="how-desc">${h.desc}</div></div>`;
+    wrap.appendChild(card);
+  });
+  const priv=document.getElementById('privacy-items');
+  privacyItems.forEach(p=>{
+    const item=document.createElement('div');
+    item.className='privacy-item';
+    item.innerHTML=`<i class="ti ti-check" aria-hidden="true" style="color:#185FA5;font-size:14px;flex-shrink:0;margin-top:2px"></i><span>${p}</span>`;
+    priv.appendChild(item);
+  });
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false')});
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+}
+
+buildAssessment();
+buildFinder();
+buildGuides();
+buildHow();
+</script>
