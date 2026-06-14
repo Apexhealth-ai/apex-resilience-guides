@@ -73,4 +73,4 @@ node build.mjs
 | Secret | What it is |
 | ----------------------- | ----------- |
 | `CLOUDFLARE_API_TOKEN`  | Token with **Cloudflare Pages — Edit** scope on the account |
-| `CLOUDFLARE_ACCOUNT_ID` | `c45c11e260df73142163454abbec722f` |
+| `CLOUDFLARE_ACCOUNT_ID` | Apex Health Cloudflare account ID |
