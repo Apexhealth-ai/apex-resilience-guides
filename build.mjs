@@ -99,12 +99,97 @@ function buildMindfulness() {
     return;
   }
   let content = fs.readFileSync(src, 'utf8');
-  const injection = `<a href="index.html" style="position:fixed;top:14px;left:14px;z-index:1000;display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;color:#1F2C5C;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;padding:6px 12px 6px 8px;border-radius:24px;border:1px solid #DDD9D3;box-shadow:0 2px 8px rgba(0,0,0,0.06);text-decoration:none;transition:all .15s" onmouseover="this.style.background='#E8EBF3';this.style.borderColor='#1F2C5C';" onmouseout="this.style.background='#FFFFFF';this.style.borderColor='#DDD9D3';"><img src="assets/apex-logo.png" alt="Apex Health" style="height:18px;width:auto;display:block"><span style="border-left:1px solid #DDD9D3;padding-left:8px">&larr; All guides</span></a>`;
-  content = content.replace(/(<body[^>]*>)/, '$1\n' + injection);
+
+  // ── 1. Back-link pill (top-left, Apex-branded) ─────────────────
+  const backLink = `<a href="index.html" style="position:fixed;top:14px;left:14px;z-index:1000;display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;color:#1F2C5C;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;padding:6px 12px 6px 8px;border-radius:24px;border:1px solid #DDD9D3;box-shadow:0 2px 8px rgba(0,0,0,0.06);text-decoration:none;transition:all .15s" onmouseover="this.style.background='#E8EBF3';this.style.borderColor='#1F2C5C';" onmouseout="this.style.background='#FFFFFF';this.style.borderColor='#DDD9D3';"><img src="assets/apex-logo.png" alt="Apex Health" style="height:18px;width:auto;display:block"><span style="border-left:1px solid #DDD9D3;padding-left:8px">&larr; All guides</span></a>`;
+  content = content.replace(/(<body[^>]*>)/, '$1\n' + backLink);
+
+  // ── 2. Audio-player CSS + helper script (one copy, end of body) ────
+  const audioStyleAndScript = `
+<style>
+.apex-audio{display:flex;align-items:center;gap:14px;padding:14px 16px;margin:0 0 1.25rem;background:#E6F0EC;border:1px solid #C7DDD3;border-radius:12px;font-family:'DM Sans',sans-serif}
+.apex-audio-btn{flex-shrink:0;width:42px;height:42px;border-radius:50%;border:none;background:#4A7C6B;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;padding:0}
+.apex-audio-btn:hover{background:#2D5247}
+.apex-audio-btn:focus{outline:2px solid #2D5247;outline-offset:2px}
+.apex-audio-info{flex:1;min-width:0}
+.apex-audio-title{font-size:13px;font-weight:500;color:#2D5247;line-height:1.3;margin-bottom:2px}
+.apex-audio-credit{font-size:11px;color:#5C5C5C;line-height:1.3}
+.apex-audio-vol{flex-shrink:0;width:90px;height:4px;-webkit-appearance:none;appearance:none;background:#C7DDD3;border-radius:4px;outline:none;cursor:pointer}
+.apex-audio-vol::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
+.apex-audio-vol::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
+.apex-audio-vol-wrap{display:flex;align-items:center;gap:6px;color:#8A8A8A;font-size:13px}
+@media (max-width:480px){.apex-audio{flex-wrap:wrap}.apex-audio-vol-wrap{order:3;width:100%;justify-content:flex-end}.apex-audio-vol{flex:1;max-width:none}}
+</style>
+<script>
+(function(){
+  function setupAudio(card){
+    var audio = card.querySelector('audio');
+    var btn   = card.querySelector('.apex-audio-btn');
+    var vol   = card.querySelector('.apex-audio-vol');
+    if(!audio || !btn) return;
+    audio.volume = vol ? (vol.value/100) : 0.6;
+    btn.addEventListener('click', function(){
+      // pause every other player on the page when one starts
+      if(audio.paused){
+        document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){ if(a!==audio && !a.paused){ a.pause(); var b=a.parentElement.querySelector('.apex-audio-btn'); if(b) b.innerHTML='&#9654;'; }});
+        audio.play();
+        btn.innerHTML = '&#10074;&#10074;';
+        btn.setAttribute('aria-label','Pause');
+      } else {
+        audio.pause();
+        btn.innerHTML = '&#9654;';
+        btn.setAttribute('aria-label','Play');
+      }
+    });
+    if(vol){ vol.addEventListener('input', function(){ audio.volume = vol.value/100; }); }
+  }
+  document.querySelectorAll('.apex-audio').forEach(setupAudio);
+})();
+</script>`;
+
+  // ── 3. The two audio cards, scoped to each section ────────────────
+  function audioCard(title, credit, src) {
+    return `<div class="apex-audio" role="region" aria-label="${title}">
+  <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
+  <div class="apex-audio-info">
+    <div class="apex-audio-title">${title}</div>
+    <div class="apex-audio-credit">${credit}</div>
+  </div>
+  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="60" aria-label="Volume"></div>
+  <audio src="${src}" loop preload="none" data-apex-audio></audio>
+</div>`;
+  }
+
+  const breathingCard = audioCard(
+    'Background ambient — Voxscape',
+    'Eugenio Mininni · Mixkit Free License · loops while you practise',
+    'assets/audio/breathing-voxscape.mp3'
+  );
+  const bodyScanCard = audioCard(
+    'Background ambient — Rest Now',
+    'Eugenio Mininni · Mixkit Free License · 5 minutes, loops for longer scans',
+    'assets/audio/bodyscan-rest-now.mp3'
+  );
+
+  // Inject right after the s-head of each panel
+  content = content.replace(
+    /(<div class="panel" id="p-breath">\s*<div class="s-head">.*?<\/div><\/div>)/s,
+    '$1\n    ' + breathingCard
+  );
+  content = content.replace(
+    /(<div class="panel" id="p-scan">\s*<div class="s-head">.*?<\/div><\/div>)/s,
+    '$1\n    ' + bodyScanCard
+  );
+
+  // Inject the player CSS + JS before </body>
+  content = content.replace(/<\/body>/i, audioStyleAndScript + '\n</body>');
+
+  // ── 4. Title + favicon ────────────────────────────────────────────
   content = content.replace(/<title>[^<]*<\/title>/, '<title>Mindfulness &amp; Regulation Skills — Apex Health Resilience Self-Help Guides</title>');
   content = content.replace(/(<\/title>)/, '$1\n<link rel="icon" type="image/png" href="assets/favicon.png">');
+
   fs.writeFileSync(dst, content, 'utf8');
-  console.log('  built  mindfulness.html');
+  console.log('  built  mindfulness.html  (+ audio players for breathing & body scan)');
 }
 
 console.log('Building Apex Health Resilience Self-Help Guides …');
