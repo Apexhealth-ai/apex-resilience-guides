@@ -111,142 +111,59 @@ function buildMindfulness() {
   const backLink = `<a href="index.html" style="position:fixed;top:14px;left:14px;z-index:1000;display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;color:#1F2C5C;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;padding:6px 12px 6px 8px;border-radius:24px;border:1px solid #DDD9D3;box-shadow:0 2px 8px rgba(0,0,0,0.06);text-decoration:none;transition:all .15s" onmouseover="this.style.background='#E8EBF3';this.style.borderColor='#1F2C5C';" onmouseout="this.style.background='#FFFFFF';this.style.borderColor='#DDD9D3';"><img src="assets/apex-logo.png" alt="Apex Health" style="height:18px;width:auto;display:block"><span style="border-left:1px solid #DDD9D3;padding-left:8px">&larr; All guides</span></a>`;
   content = content.replace(/(<body[^>]*>)/, '$1\n' + backLink);
 
-  // ── 2. Audio-player CSS + helper script (one copy, end of body) ────
-  const audioStyleAndScript = `
-<style>
-.apex-audio{display:flex;align-items:center;gap:14px;padding:14px 16px;margin:0 0 1.25rem;background:#E6F0EC;border:1px solid #C7DDD3;border-radius:12px;font-family:'DM Sans',sans-serif}
-.apex-audio-btn{flex-shrink:0;width:42px;height:42px;border-radius:50%;border:none;background:#4A7C6B;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;padding:0}
-.apex-audio-btn:hover{background:#2D5247}
-.apex-audio-btn:focus{outline:2px solid #2D5247;outline-offset:2px}
-.apex-audio-info{flex:1;min-width:0}
-.apex-audio-title{font-size:13px;font-weight:500;color:#2D5247;line-height:1.3;margin-bottom:2px}
-.apex-audio-credit{font-size:11px;color:#5C5C5C;line-height:1.3}
-.apex-audio-vol{flex-shrink:0;width:90px;height:4px;-webkit-appearance:none;appearance:none;background:#C7DDD3;border-radius:4px;outline:none;cursor:pointer}
-.apex-audio-vol::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
-.apex-audio-vol::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
-.apex-audio-vol-wrap{display:flex;align-items:center;gap:6px;color:#8A8A8A;font-size:13px}
-.apex-breathe-toggle{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
-.apex-pat{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:500;padding:4px 11px;border-radius:20px;border:1px solid #C7DDD3;background:#fff;color:#4A7C6B;cursor:pointer;transition:all .15s}
-.apex-pat:hover{border-color:#4A7C6B}
-.apex-pat.active{background:#4A7C6B;border-color:#4A7C6B;color:#fff}
-@media (max-width:480px){.apex-audio{flex-wrap:wrap}.apex-audio-vol-wrap{order:3;width:100%;justify-content:flex-end}.apex-audio-vol{flex:1;max-width:none}}
-</style>
+  // ── 2. Guided audio, driven by Jane's own Start buttons ───────────
+  // No separate players: pressing "Start" (breathing) plays the selected
+  // pattern's audio; pressing "Start scan" plays the body-scan voice;
+  // Pause/Reset stop it; switching tabs stops everything. We wrap Jane's
+  // global functions so her visuals and our audio stay in lock-step.
+  const audioScript = `
+<audio id="apexBreathAudio" loop preload="none" data-box="assets/audio/breathing-box.mp3" data-478="assets/audio/breathing-478.mp3"></audio>
+<audio id="apexScanAudio" preload="none" src="assets/audio/bodyscan-voice.mp3"></audio>
 <script>
 (function(){
-  function icon(btn,playing){ btn.innerHTML = playing ? '&#10074;&#10074;' : '&#9654;'; btn.setAttribute('aria-label', playing ? 'Pause' : 'Play'); }
-  // Pause every other player that shares the same group (group 'bg' = ambient
-  // music, group 'voice' = guides). Different groups can play together, so
-  // ambient music + a breathing/scan voice run at the same time.
-  function pauseGroup(except){
-    var grp = except.getAttribute('data-apex-group');
-    document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){
-      if(a!==except && a.getAttribute('data-apex-group')===grp && !a.paused){
-        a.pause(); var b=a.closest('.apex-audio').querySelector('.apex-audio-btn'); if(b) icon(b,false);
-      }
-    });
-  }
-  function setupAudio(card){
-    var audio = card.querySelector('audio');
-    var btn   = card.querySelector('.apex-audio-btn');
-    var vol   = card.querySelector('.apex-audio-vol');
-    if(!audio || !btn) return;
-    audio.volume = vol ? (vol.value/100) : 0.6;
-    btn.addEventListener('click', function(){
-      if(audio.paused){ pauseGroup(audio); audio.play(); icon(btn,true); }
-      else { audio.pause(); icon(btn,false); }
-    });
-    if(vol){ vol.addEventListener('input', function(){ audio.volume = vol.value/100; }); }
-    audio.addEventListener('ended', function(){ icon(btn,false); });
-    // Breathing pattern toggle: swap source, keep playing if already playing.
-    card.querySelectorAll('.apex-pat').forEach(function(pat){
-      pat.addEventListener('click', function(){
-        card.querySelectorAll('.apex-pat').forEach(function(p){ p.classList.remove('active'); });
-        pat.classList.add('active');
-        var wasPlaying = !audio.paused;
-        audio.src = pat.getAttribute('data-src');
-        var t = card.querySelector('.apex-audio-title'); if(t && pat.getAttribute('data-title')) t.textContent = pat.getAttribute('data-title');
-        if(wasPlaying){ audio.play(); icon(btn,true); }
-      });
-    });
-  }
-  document.querySelectorAll('.apex-audio').forEach(setupAudio);
-  // Stop any audio when switching tabs so nothing bleeds across sections.
+  var bAudio = document.getElementById('apexBreathAudio');
+  var sAudio = document.getElementById('apexScanAudio');
+  if(!bAudio || !sAudio) return;
+  var curTech = 'box';
+  function srcFor(t){ return t==='box' ? bAudio.getAttribute('data-box') : t==='478' ? bAudio.getAttribute('data-478') : null; }
+  function loadBreath(t){ var s=srcFor(t); if(s){ if(!bAudio.src || bAudio.src.indexOf(s)<0){ bAudio.src=s; } } }
+  function stopBreath(){ bAudio.pause(); try{bAudio.currentTime=0;}catch(e){} }
+  function stopScan(){ sAudio.pause(); try{sAudio.currentTime=0;}catch(e){} }
+  function wrap(name, after){ if(typeof window[name]==='function'){ var orig=window[name]; window[name]=function(){ var r=orig.apply(this,arguments); try{ after.apply(this,arguments); }catch(e){} return r; }; } }
+
+  // Breathing technique chosen → load matching audio (sigh has no track).
+  wrap('selBreath', function(t){ curTech=t; stopBreath(); loadBreath(t); });
+  // Start / Pause / Resume → mirror the circle's running state.
+  wrap('toggleBreath', function(){
+    var running = (document.getElementById('bstart')||{}).textContent === 'Pause';
+    if(running){ if(curTech==='sigh'){ stopBreath(); } else { loadBreath(curTech); bAudio.play().catch(function(){}); } }
+    else { bAudio.pause(); }
+  });
+  wrap('resetBreath', stopBreath);
+
+  // Body scan Start → play the 10-min voice; Pause stops it; Reset rewinds.
+  wrap('startScan', function(){
+    var running = (document.getElementById('scanbtn')||{}).textContent === 'Pause';
+    if(running){ sAudio.play().catch(function(){}); } else { sAudio.pause(); }
+  });
+  wrap('resetScan', stopScan);
+
+  // Switching tabs stops all audio so nothing bleeds across sections.
   document.querySelectorAll('.nav-btn').forEach(function(nav){
-    nav.addEventListener('click', function(){
-      document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){
-        if(!a.paused){ a.pause(); var b=a.closest('.apex-audio').querySelector('.apex-audio-btn'); if(b) icon(b,false); }
-      });
-    });
+    nav.addEventListener('click', function(){ stopBreath(); stopScan(); });
   });
 })();
 </script>`;
 
-  // ── 3. The audio cards, scoped to each section ────────────────────
-  // group 'bg' = ambient music, group 'voice' = guides; different groups can
-  // play together (music + voice). loop=false for finite voice tracks.
-  function audioCard(title, credit, src, opts) {
-    opts = opts || {};
-    const loopAttr = opts.loop === false ? '' : ' loop';
-    const group = opts.group || 'bg';
-    return `<div class="apex-audio${opts.voice ? ' apex-audio--voice' : ''}" role="region" aria-label="${title}">
-  <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
-  <div class="apex-audio-info">
-    <div class="apex-audio-title">${title}</div>
-    <div class="apex-audio-credit">${credit}</div>
-  </div>
-  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="${opts.voice ? 100 : 55}" aria-label="Volume"></div>
-  <audio src="${src}"${loopAttr} preload="none" data-apex-audio data-apex-group="${group}"></audio>
-</div>`;
-  }
-
-  // Breathing — ambient music (optional background, Jane likes it).
-  const breathingMusicCard = audioCard(
-    'Background music — Voxscape (optional)',
-    'Eugenio Mininni · Mixkit Free License · loops while you practise',
-    'assets/audio/breathing-voxscape.mp3',
-    { group: 'bg' }
-  );
-  // Breathing — guided pacing per pattern; plays OVER the music (voice group).
-  const breathingGuideCard = `<div class="apex-audio apex-audio--voice" role="region" aria-label="Guided breathing">
-  <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
-  <div class="apex-audio-info">
-    <div class="apex-audio-title">Box breathing · 4-4-4-4</div>
-    <div class="apex-audio-credit">Audio guide · loops · plays over the music if you want both</div>
-    <div class="apex-breathe-toggle">
-      <button type="button" class="apex-pat active" data-src="assets/audio/breathing-box.mp3" data-title="Box breathing · 4-4-4-4">Box · 4-4-4-4</button>
-      <button type="button" class="apex-pat" data-src="assets/audio/breathing-478.mp3" data-title="4-7-8 calming breath">4-7-8 calming</button>
-    </div>
-  </div>
-  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="100" aria-label="Volume"></div>
-  <audio src="assets/audio/breathing-box.mp3" loop preload="none" data-apex-audio data-apex-group="voice"></audio>
-</div>`;
-  // Body scan: guided VOICE only (no music), Jane's request. Does not loop.
-  const bodyScanCard = audioCard(
-    'Guided body scan — press play and close your eyes',
-    '10-minute voice meditation · courtesy of Fostering Resilience',
-    'assets/audio/bodyscan-voice.mp3',
-    { loop: false, voice: true, group: 'voice' }
-  );
-
-  // Inject right after the s-head of each panel
-  content = content.replace(
-    /(<div class="panel" id="p-breath">\s*<div class="s-head">.*?<\/div><\/div>)/s,
-    '$1\n    ' + breathingMusicCard + '\n    ' + breathingGuideCard
-  );
-  content = content.replace(
-    /(<div class="panel" id="p-scan">\s*<div class="s-head">.*?<\/div><\/div>)/s,
-    '$1\n    ' + bodyScanCard
-  );
-
-  // Inject the player CSS + JS before </body>
-  content = content.replace(/<\/body>/i, audioStyleAndScript + '\n</body>');
+  // Inject the hidden audio + wrapper script before </body>
+  content = content.replace(/<\/body>/i, audioScript + '\n</body>');
 
   // ── 4. Title + favicon ────────────────────────────────────────────
   content = content.replace(/<title>[^<]*<\/title>/, '<title>Mindfulness &amp; Regulation Skills — Apex Health Resilience Self-Help Guides</title>');
   content = content.replace(/(<\/title>)/, '$1\n<link rel="icon" type="image/png" href="assets/favicon.png">');
 
   fs.writeFileSync(dst, content, 'utf8');
-  console.log('  built  mindfulness.html  (+ audio players for breathing & body scan)');
+  console.log('  built  mindfulness.html  (+ button-driven guided audio)');
 }
 
 console.log('Building Apex Health Resilience Self-Help Guides …');
