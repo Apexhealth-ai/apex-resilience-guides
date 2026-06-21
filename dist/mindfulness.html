@@ -674,14 +674,14 @@ button.secondary:disabled { opacity: 0.45; cursor: not-allowed; }
   <!-- ═══ BODY SCAN ═══ -->
   <div class="panel" id="p-scan">
     <div class="s-head"><div class="s-icon">🧘</div><div class="s-title">Body awareness &amp; scan</div></div>
-    <div class="apex-audio" role="region" aria-label="Background ambient — Rest Now">
+    <div class="apex-audio apex-audio--voice" role="region" aria-label="Guided body scan — press play and close your eyes">
   <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
   <div class="apex-audio-info">
-    <div class="apex-audio-title">Background ambient — Rest Now</div>
-    <div class="apex-audio-credit">Eugenio Mininni · Mixkit Free License · 5 minutes, loops for longer scans</div>
+    <div class="apex-audio-title">Guided body scan — press play and close your eyes</div>
+    <div class="apex-audio-credit">10-minute voice meditation · courtesy of Fostering Resilience</div>
   </div>
-  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="60" aria-label="Volume"></div>
-  <audio src="assets/audio/bodyscan-rest-now.mp3" loop preload="none" data-apex-audio></audio>
+  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="100" aria-label="Volume"></div>
+  <audio src="assets/audio/bodyscan-voice.mp3" preload="none" data-apex-audio></audio>
 </div>
     <p class="s-intro">Much of our stress and emotion is stored not in our thoughts, but in our bodies — in tension, tightness, fatigue, or discomfort. A body scan trains you to notice these physical experiences with curiosity rather than judgement.</p>
     <div class="why"><strong>Why this helps:</strong> Research by Jon Kabat-Zinn and others shows that body scan practices significantly reduce symptoms of anxiety, chronic pain, and exhaustion when practised regularly — even for as little as ten minutes.</div>
@@ -1114,6 +1114,7 @@ function copyPlan() {
       }
     });
     if(vol){ vol.addEventListener('input', function(){ audio.volume = vol.value/100; }); }
+    audio.addEventListener('ended', function(){ btn.innerHTML='&#9654;'; btn.setAttribute('aria-label','Play'); });
   }
   document.querySelectorAll('.apex-audio').forEach(setupAudio);
 })();

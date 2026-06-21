@@ -149,21 +149,25 @@ function buildMindfulness() {
       }
     });
     if(vol){ vol.addEventListener('input', function(){ audio.volume = vol.value/100; }); }
+    audio.addEventListener('ended', function(){ btn.innerHTML='&#9654;'; btn.setAttribute('aria-label','Play'); });
   }
   document.querySelectorAll('.apex-audio').forEach(setupAudio);
 })();
 </script>`;
 
-  // ── 3. The two audio cards, scoped to each section ────────────────
-  function audioCard(title, credit, src) {
-    return `<div class="apex-audio" role="region" aria-label="${title}">
+  // ── 3. The audio cards, scoped to each section ────────────────────
+  // loop = true for ambient music; false for a finite guided voice track.
+  function audioCard(title, credit, src, opts) {
+    opts = opts || {};
+    const loopAttr = opts.loop === false ? '' : ' loop';
+    return `<div class="apex-audio${opts.voice ? ' apex-audio--voice' : ''}" role="region" aria-label="${title}">
   <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
   <div class="apex-audio-info">
     <div class="apex-audio-title">${title}</div>
     <div class="apex-audio-credit">${credit}</div>
   </div>
-  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="60" aria-label="Volume"></div>
-  <audio src="${src}" loop preload="none" data-apex-audio></audio>
+  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="${opts.voice ? 100 : 60}" aria-label="Volume"></div>
+  <audio src="${src}"${loopAttr} preload="none" data-apex-audio></audio>
 </div>`;
   }
 
@@ -172,10 +176,12 @@ function buildMindfulness() {
     'Eugenio Mininni · Mixkit Free License · loops while you practise',
     'assets/audio/breathing-voxscape.mp3'
   );
+  // Body scan: guided VOICE only (no music), Jane's request. Does not loop.
   const bodyScanCard = audioCard(
-    'Background ambient — Rest Now',
-    'Eugenio Mininni · Mixkit Free License · 5 minutes, loops for longer scans',
-    'assets/audio/bodyscan-rest-now.mp3'
+    'Guided body scan — press play and close your eyes',
+    '10-minute voice meditation · courtesy of Fostering Resilience',
+    'assets/audio/bodyscan-voice.mp3',
+    { loop: false, voice: true }
   );
 
   // Inject right after the s-head of each panel
