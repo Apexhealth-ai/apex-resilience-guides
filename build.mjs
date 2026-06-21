@@ -125,10 +125,26 @@ function buildMindfulness() {
 .apex-audio-vol::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
 .apex-audio-vol::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
 .apex-audio-vol-wrap{display:flex;align-items:center;gap:6px;color:#8A8A8A;font-size:13px}
+.apex-breathe-toggle{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.apex-pat{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:500;padding:4px 11px;border-radius:20px;border:1px solid #C7DDD3;background:#fff;color:#4A7C6B;cursor:pointer;transition:all .15s}
+.apex-pat:hover{border-color:#4A7C6B}
+.apex-pat.active{background:#4A7C6B;border-color:#4A7C6B;color:#fff}
 @media (max-width:480px){.apex-audio{flex-wrap:wrap}.apex-audio-vol-wrap{order:3;width:100%;justify-content:flex-end}.apex-audio-vol{flex:1;max-width:none}}
 </style>
 <script>
 (function(){
+  function icon(btn,playing){ btn.innerHTML = playing ? '&#10074;&#10074;' : '&#9654;'; btn.setAttribute('aria-label', playing ? 'Pause' : 'Play'); }
+  // Pause every other player that shares the same group (group 'bg' = ambient
+  // music, group 'voice' = guides). Different groups can play together, so
+  // ambient music + a breathing/scan voice run at the same time.
+  function pauseGroup(except){
+    var grp = except.getAttribute('data-apex-group');
+    document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){
+      if(a!==except && a.getAttribute('data-apex-group')===grp && !a.paused){
+        a.pause(); var b=a.closest('.apex-audio').querySelector('.apex-audio-btn'); if(b) icon(b,false);
+      }
+    });
+  }
   function setupAudio(card){
     var audio = card.querySelector('audio');
     var btn   = card.querySelector('.apex-audio-btn');
@@ -136,58 +152,86 @@ function buildMindfulness() {
     if(!audio || !btn) return;
     audio.volume = vol ? (vol.value/100) : 0.6;
     btn.addEventListener('click', function(){
-      // pause every other player on the page when one starts
-      if(audio.paused){
-        document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){ if(a!==audio && !a.paused){ a.pause(); var b=a.parentElement.querySelector('.apex-audio-btn'); if(b) b.innerHTML='&#9654;'; }});
-        audio.play();
-        btn.innerHTML = '&#10074;&#10074;';
-        btn.setAttribute('aria-label','Pause');
-      } else {
-        audio.pause();
-        btn.innerHTML = '&#9654;';
-        btn.setAttribute('aria-label','Play');
-      }
+      if(audio.paused){ pauseGroup(audio); audio.play(); icon(btn,true); }
+      else { audio.pause(); icon(btn,false); }
     });
     if(vol){ vol.addEventListener('input', function(){ audio.volume = vol.value/100; }); }
-    audio.addEventListener('ended', function(){ btn.innerHTML='&#9654;'; btn.setAttribute('aria-label','Play'); });
+    audio.addEventListener('ended', function(){ icon(btn,false); });
+    // Breathing pattern toggle: swap source, keep playing if already playing.
+    card.querySelectorAll('.apex-pat').forEach(function(pat){
+      pat.addEventListener('click', function(){
+        card.querySelectorAll('.apex-pat').forEach(function(p){ p.classList.remove('active'); });
+        pat.classList.add('active');
+        var wasPlaying = !audio.paused;
+        audio.src = pat.getAttribute('data-src');
+        var t = card.querySelector('.apex-audio-title'); if(t && pat.getAttribute('data-title')) t.textContent = pat.getAttribute('data-title');
+        if(wasPlaying){ audio.play(); icon(btn,true); }
+      });
+    });
   }
   document.querySelectorAll('.apex-audio').forEach(setupAudio);
+  // Stop any audio when switching tabs so nothing bleeds across sections.
+  document.querySelectorAll('.nav-btn').forEach(function(nav){
+    nav.addEventListener('click', function(){
+      document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){
+        if(!a.paused){ a.pause(); var b=a.closest('.apex-audio').querySelector('.apex-audio-btn'); if(b) icon(b,false); }
+      });
+    });
+  });
 })();
 </script>`;
 
   // ── 3. The audio cards, scoped to each section ────────────────────
-  // loop = true for ambient music; false for a finite guided voice track.
+  // group 'bg' = ambient music, group 'voice' = guides; different groups can
+  // play together (music + voice). loop=false for finite voice tracks.
   function audioCard(title, credit, src, opts) {
     opts = opts || {};
     const loopAttr = opts.loop === false ? '' : ' loop';
+    const group = opts.group || 'bg';
     return `<div class="apex-audio${opts.voice ? ' apex-audio--voice' : ''}" role="region" aria-label="${title}">
   <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
   <div class="apex-audio-info">
     <div class="apex-audio-title">${title}</div>
     <div class="apex-audio-credit">${credit}</div>
   </div>
-  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="${opts.voice ? 100 : 60}" aria-label="Volume"></div>
-  <audio src="${src}"${loopAttr} preload="none" data-apex-audio></audio>
+  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="${opts.voice ? 100 : 55}" aria-label="Volume"></div>
+  <audio src="${src}"${loopAttr} preload="none" data-apex-audio data-apex-group="${group}"></audio>
 </div>`;
   }
 
-  const breathingCard = audioCard(
-    'Background ambient — Voxscape',
+  // Breathing — ambient music (optional background, Jane likes it).
+  const breathingMusicCard = audioCard(
+    'Background music — Voxscape (optional)',
     'Eugenio Mininni · Mixkit Free License · loops while you practise',
-    'assets/audio/breathing-voxscape.mp3'
+    'assets/audio/breathing-voxscape.mp3',
+    { group: 'bg' }
   );
+  // Breathing — guided pacing per pattern; plays OVER the music (voice group).
+  const breathingGuideCard = `<div class="apex-audio apex-audio--voice" role="region" aria-label="Guided breathing">
+  <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
+  <div class="apex-audio-info">
+    <div class="apex-audio-title">Box breathing · 4-4-4-4</div>
+    <div class="apex-audio-credit">Audio guide · loops · plays over the music if you want both</div>
+    <div class="apex-breathe-toggle">
+      <button type="button" class="apex-pat active" data-src="assets/audio/breathing-box.mp3" data-title="Box breathing · 4-4-4-4">Box · 4-4-4-4</button>
+      <button type="button" class="apex-pat" data-src="assets/audio/breathing-478.mp3" data-title="4-7-8 calming breath">4-7-8 calming</button>
+    </div>
+  </div>
+  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="100" aria-label="Volume"></div>
+  <audio src="assets/audio/breathing-box.mp3" loop preload="none" data-apex-audio data-apex-group="voice"></audio>
+</div>`;
   // Body scan: guided VOICE only (no music), Jane's request. Does not loop.
   const bodyScanCard = audioCard(
     'Guided body scan — press play and close your eyes',
     '10-minute voice meditation · courtesy of Fostering Resilience',
     'assets/audio/bodyscan-voice.mp3',
-    { loop: false, voice: true }
+    { loop: false, voice: true, group: 'voice' }
   );
 
   // Inject right after the s-head of each panel
   content = content.replace(
     /(<div class="panel" id="p-breath">\s*<div class="s-head">.*?<\/div><\/div>)/s,
-    '$1\n    ' + breathingCard
+    '$1\n    ' + breathingMusicCard + '\n    ' + breathingGuideCard
   );
   content = content.replace(
     /(<div class="panel" id="p-scan">\s*<div class="s-head">.*?<\/div><\/div>)/s,

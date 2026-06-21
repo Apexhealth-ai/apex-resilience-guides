@@ -629,14 +629,27 @@ button.secondary:disabled { opacity: 0.45; cursor: not-allowed; }
   <!-- ═══ BREATHING ═══ -->
   <div class="panel" id="p-breath">
     <div class="s-head"><div class="s-icon">🌬️</div><div class="s-title">Breathing for regulation</div></div>
-    <div class="apex-audio" role="region" aria-label="Background ambient — Voxscape">
+    <div class="apex-audio" role="region" aria-label="Background music — Voxscape (optional)">
   <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
   <div class="apex-audio-info">
-    <div class="apex-audio-title">Background ambient — Voxscape</div>
+    <div class="apex-audio-title">Background music — Voxscape (optional)</div>
     <div class="apex-audio-credit">Eugenio Mininni · Mixkit Free License · loops while you practise</div>
   </div>
-  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="60" aria-label="Volume"></div>
-  <audio src="assets/audio/breathing-voxscape.mp3" loop preload="none" data-apex-audio></audio>
+  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="55" aria-label="Volume"></div>
+  <audio src="assets/audio/breathing-voxscape.mp3" loop preload="none" data-apex-audio data-apex-group="bg"></audio>
+</div>
+    <div class="apex-audio apex-audio--voice" role="region" aria-label="Guided breathing">
+  <button class="apex-audio-btn" type="button" aria-label="Play">&#9654;</button>
+  <div class="apex-audio-info">
+    <div class="apex-audio-title">Box breathing · 4-4-4-4</div>
+    <div class="apex-audio-credit">Audio guide · loops · plays over the music if you want both</div>
+    <div class="apex-breathe-toggle">
+      <button type="button" class="apex-pat active" data-src="assets/audio/breathing-box.mp3" data-title="Box breathing · 4-4-4-4">Box · 4-4-4-4</button>
+      <button type="button" class="apex-pat" data-src="assets/audio/breathing-478.mp3" data-title="4-7-8 calming breath">4-7-8 calming</button>
+    </div>
+  </div>
+  <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="100" aria-label="Volume"></div>
+  <audio src="assets/audio/breathing-box.mp3" loop preload="none" data-apex-audio data-apex-group="voice"></audio>
 </div>
     <p class="s-intro">Your breath is the one part of the autonomic nervous system you can consciously control — and this makes it your most immediately accessible regulation tool. Making your exhale longer than your inhale activates the parasympathetic nervous system.</p>
     <div class="why"><strong>Why this helps:</strong> Research shows that slow, controlled breathing reduces cortisol, lowers blood pressure, and improves cognitive performance. It is one of the fastest evidence-based interventions for acute stress.</div>
@@ -681,7 +694,7 @@ button.secondary:disabled { opacity: 0.45; cursor: not-allowed; }
     <div class="apex-audio-credit">10-minute voice meditation · courtesy of Fostering Resilience</div>
   </div>
   <div class="apex-audio-vol-wrap" title="Volume"><span aria-hidden="true">&#128264;</span><input class="apex-audio-vol" type="range" min="0" max="100" value="100" aria-label="Volume"></div>
-  <audio src="assets/audio/bodyscan-voice.mp3" preload="none" data-apex-audio></audio>
+  <audio src="assets/audio/bodyscan-voice.mp3" preload="none" data-apex-audio data-apex-group="voice"></audio>
 </div>
     <p class="s-intro">Much of our stress and emotion is stored not in our thoughts, but in our bodies — in tension, tightness, fatigue, or discomfort. A body scan trains you to notice these physical experiences with curiosity rather than judgement.</p>
     <div class="why"><strong>Why this helps:</strong> Research by Jon Kabat-Zinn and others shows that body scan practices significantly reduce symptoms of anxiety, chronic pain, and exhaustion when practised regularly — even for as little as ten minutes.</div>
@@ -1090,10 +1103,26 @@ function copyPlan() {
 .apex-audio-vol::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
 .apex-audio-vol::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#4A7C6B;cursor:pointer;border:0}
 .apex-audio-vol-wrap{display:flex;align-items:center;gap:6px;color:#8A8A8A;font-size:13px}
+.apex-breathe-toggle{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.apex-pat{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:500;padding:4px 11px;border-radius:20px;border:1px solid #C7DDD3;background:#fff;color:#4A7C6B;cursor:pointer;transition:all .15s}
+.apex-pat:hover{border-color:#4A7C6B}
+.apex-pat.active{background:#4A7C6B;border-color:#4A7C6B;color:#fff}
 @media (max-width:480px){.apex-audio{flex-wrap:wrap}.apex-audio-vol-wrap{order:3;width:100%;justify-content:flex-end}.apex-audio-vol{flex:1;max-width:none}}
 </style>
 <script>
 (function(){
+  function icon(btn,playing){ btn.innerHTML = playing ? '&#10074;&#10074;' : '&#9654;'; btn.setAttribute('aria-label', playing ? 'Pause' : 'Play'); }
+  // Pause every other player that shares the same group (group 'bg' = ambient
+  // music, group 'voice' = guides). Different groups can play together, so
+  // ambient music + a breathing/scan voice run at the same time.
+  function pauseGroup(except){
+    var grp = except.getAttribute('data-apex-group');
+    document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){
+      if(a!==except && a.getAttribute('data-apex-group')===grp && !a.paused){
+        a.pause(); var b=a.closest('.apex-audio').querySelector('.apex-audio-btn'); if(b) icon(b,false);
+      }
+    });
+  }
   function setupAudio(card){
     var audio = card.querySelector('audio');
     var btn   = card.querySelector('.apex-audio-btn');
@@ -1101,22 +1130,32 @@ function copyPlan() {
     if(!audio || !btn) return;
     audio.volume = vol ? (vol.value/100) : 0.6;
     btn.addEventListener('click', function(){
-      // pause every other player on the page when one starts
-      if(audio.paused){
-        document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){ if(a!==audio && !a.paused){ a.pause(); var b=a.parentElement.querySelector('.apex-audio-btn'); if(b) b.innerHTML='&#9654;'; }});
-        audio.play();
-        btn.innerHTML = '&#10074;&#10074;';
-        btn.setAttribute('aria-label','Pause');
-      } else {
-        audio.pause();
-        btn.innerHTML = '&#9654;';
-        btn.setAttribute('aria-label','Play');
-      }
+      if(audio.paused){ pauseGroup(audio); audio.play(); icon(btn,true); }
+      else { audio.pause(); icon(btn,false); }
     });
     if(vol){ vol.addEventListener('input', function(){ audio.volume = vol.value/100; }); }
-    audio.addEventListener('ended', function(){ btn.innerHTML='&#9654;'; btn.setAttribute('aria-label','Play'); });
+    audio.addEventListener('ended', function(){ icon(btn,false); });
+    // Breathing pattern toggle: swap source, keep playing if already playing.
+    card.querySelectorAll('.apex-pat').forEach(function(pat){
+      pat.addEventListener('click', function(){
+        card.querySelectorAll('.apex-pat').forEach(function(p){ p.classList.remove('active'); });
+        pat.classList.add('active');
+        var wasPlaying = !audio.paused;
+        audio.src = pat.getAttribute('data-src');
+        var t = card.querySelector('.apex-audio-title'); if(t && pat.getAttribute('data-title')) t.textContent = pat.getAttribute('data-title');
+        if(wasPlaying){ audio.play(); icon(btn,true); }
+      });
+    });
   }
   document.querySelectorAll('.apex-audio').forEach(setupAudio);
+  // Stop any audio when switching tabs so nothing bleeds across sections.
+  document.querySelectorAll('.nav-btn').forEach(function(nav){
+    nav.addEventListener('click', function(){
+      document.querySelectorAll('audio[data-apex-audio]').forEach(function(a){
+        if(!a.paused){ a.pause(); var b=a.closest('.apex-audio').querySelector('.apex-audio-btn'); if(b) icon(b,false); }
+      });
+    });
+  });
 })();
 </script>
 </body>
